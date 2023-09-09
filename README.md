@@ -42,18 +42,36 @@ Planet and station facility
 
 * Get missions
 * Go to a bar
- * Discuss news with patrons
+  * Discuss news with patrons
 * Visit a market
- * Visit a black market if available
+  * Visit a black market if available
   * Visit a smuggler if available and if faction rank is adequate
 * Repair and modify ship facilities, furniture and room positions
 * Go to a refinery
 * Go to a furniture store
 * Go to a grocery store (yes, really)
 * Go to a University
- * Attend a lecture 
- * Visit a professor (if available)
+  * Attend a lecture 
+  * Visit a professor (if available)
 
 ### UI
 
-While seated in the player's ship, the player can look left and right revealing panels. These panels show information. The player can respond to this information with keybind inputs. These keybinds can be customized, allowing for the support of HOTAS
+The ship dashboard reveals the following information
+* Proximity
+* Star Map
+* Ammunition
+* Shield, Armour, Hull
+
+The player can stand up and interact with facilities to see the following information
+* Kitchen - Sink water preassure
+* Kitchen - What's in the fridge
+* Storage - Cargo manifest
+* Reactor - Rod durability (x6)
+* Reactor - Temperature
+* Reactor - Water preassure
+* Reactor - Emergency coolant
+* Gunnary - Temperature
+* Gunnery - Ammunition
+* Gunnery - Condition
+* Medical - Cargo manifest
+* Living Quaters - (no function)

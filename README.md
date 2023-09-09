@@ -24,4 +24,6 @@ A singleplayer first-person VR space and survival game
 * Toggle between manual and automatic
   * Automatic involves right-clicking on nodes and clicking 'warp toward', or 'rotate around'
   * Manual involves adjusting a HOTUS thruster and adjusting roll and pitch via a joystick. Alternatively, using WSAD
-* Players can stand from their captains chair, interact with and diagnose ship facilities 
+* Player characters can stand from their captains chair, interact with and diagnose ship facilities
+ * Player characters cannot leave their ship while on stations or while on planets
+* Have auto pilot warp between systems 

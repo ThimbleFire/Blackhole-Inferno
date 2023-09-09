@@ -33,17 +33,27 @@ A singleplayer first-person VR space and survival game
 The screen fades in from black. The player character is standing up in their ship. Red lights are flashing, the navigation panel is on fire. The player character picks up a fire extinguisher and douses the flame. The light stops flashing, the character lets out a deep sigh and says "Guess I'm flying manual". The tutorial is now in effect. It can be skipped, however the ship will remain damaged until repaired. The player has the character sit and can control the ship. Sitting causes an enemy to spawn and a radio broadcast to start from said enemy, explaining why the ship is in such disarray. After the ship is destroyed they can tractor some loot. The ship as it currently is can't salvage ship remains.
 The player character will announce they should return to the nearest station, what alignment they should face, and how far they need to travel. A popup will alert the player to their Star Map for further guidance.
 Landing the ship, our protagonist will be outraged by the cost of repairs, announcing how the mission the player just completed is only just enough to pay for the services. As such, they're forced to get another mission.
-The station facility options pop-up allowing the player to do the following:
+
+<ins>The game has now entered its primary gameplay loop</ins>
+
+### Planet and station facilities
+
+Planet and station facility 
+
 * Get missions
 * Go to a bar
  * Discuss news with patrons
 * Visit a market
  * Visit a black market if available
   * Visit a smuggler if available and if faction rank is adequate
-* Repair ship
+* Repair and modify ship facilities, furniture and room positions
 * Go to a refinery
 * Go to a furniture store
 * Go to a grocery store (yes, really)
 * Go to a University
  * Attend a lecture 
- * Visit a professor (if available) 
+ * Visit a professor (if available)
+
+### UI
+
+While seated in the player's ship, the player can look left and right revealing panels. These panels show information. The player can respond to this information with keybind inputs. These keybinds can be customized, allowing for the support of HOTAS

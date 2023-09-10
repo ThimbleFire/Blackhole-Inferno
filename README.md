@@ -14,6 +14,10 @@ A singleplayer first-person VR space and survival game
   * mine a resource
   * assist a pilot in pursuing and neutralising a target by using specialized equipment, and arranging tactics (equipment loadout) in advance
   * salvage ship wrecks of all size
+  * assist in fixing jump gates using the engineering skill, allowing for instantly travelling across the galaxy
+  * collapse wormholes by draining them of kinetic energy and storing it
+  * Ignite a planets atmosphere
+  * harvest space radiation to allow a faction to traverse easier
 * Mine astroids
 * Process minerals on stations or on planets
 * Research engineering

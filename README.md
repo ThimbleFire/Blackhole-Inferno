@@ -4,10 +4,16 @@ A singleplayer first-person VR space and survival game
 ### What's there to do?
 
 * Get contracts and complete missions
-  * Destroy under 30 ships solo
-  * Destroy over 30 or more ships ( a fleet ) with assistance from an allied fleet
-  * Destroy a space station in addition to a set number of ships
-  * Destroy a planet-side facility in addition to a set number of ships
+  * Bounty
+  * Hostage recovery
+  * Item recovery and delivery
+  * Destroy facility
+  * Gather intel, an item or threaten a patron at another bar
+  * Win a space race
+  * negotiate a peace treaty between two hostile factions
+  * mine a resource
+  * assist a pilot in pursuing and neutralising a target by using specialized equipment, and arranging tactics (equipment loadout) in advance
+  * salvage ship wrecks of all size
 * Mine astroids
 * Process minerals on stations or on planets
 * Research engineering

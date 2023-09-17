@@ -8,4 +8,5 @@ A singleplayer first-person VR space and survival game
 
 ```https://imgur.com/a/pIsOooj```
 
-![image](https://github.com/ThimbleFire/Blackhole-Inferno/assets/14812476/735f4c82-64f0-49b4-89bf-bc5c1b095656)
+![image](https://github.com/ThimbleFire/Blackhole-Inferno/assets/14812476/a520caf6-19de-4b69-a858-b3cf640d2506)
+

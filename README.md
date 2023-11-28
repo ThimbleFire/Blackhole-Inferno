@@ -3,6 +3,14 @@ strategy spaceship game
 
 Todo
 replace planet UI with circle, add the ability to select UI elements (not just teleport to them), add ability to examine selected elements, ability to warp, ability to dock.
+
+each system has global objects - these are objects that can be selected from anywhere in the system. warping to these locations might reveal local objects - these are objects that only show up while you're nearby, things like rocks, wrecks, gasses and ships.
+
+1 unit = 1km
+1 au = 150M km
+
+create a test system modelled after the universe
+
 add galaxy map
 add dock features
 

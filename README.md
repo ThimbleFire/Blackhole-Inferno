@@ -3,13 +3,9 @@ strategy spaceship game
 
 Todo
 
-* make left-clicking on HUDSticker select them
-* create Station, Planet, Ship and JumpGate classes and have them inherit HUDSticker
-* add signatureRadius to HUDSticker
 * add align to selected
 * add warp to selected station, planet, jump-gate
 * add dock on selected station
-
 
 each system has global objects - these are objects that can be selected from anywhere in the system. warping to these locations might reveal local objects - these are objects that only show up while you're nearby, things like rocks, wrecks, gasses and ships.
 

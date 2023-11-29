@@ -4,8 +4,6 @@ strategy spaceship game
 Todo
 
 * add gameplay events for the context menu to call
-* add warp to selected station, planet, jump-gate
-* add dock on selected station
 
 each system has global objects - these are objects that can be selected from anywhere in the system. warping to these locations might reveal local objects - these are objects that only show up while you're nearby, things like rocks, wrecks, gasses and ships.
 

@@ -1,5 +1,21 @@
 # Blackhole-Inferno
-A singleplayer first-person VR space and survival game
+strategy spaceship game
+
+Todo
+
+* add gameplay events for the context menu to call
+
+each system has global objects - these are objects that can be selected from anywhere in the system. warping to these locations might reveal local objects - these are objects that only show up while you're nearby, things like rocks, wrecks, gasses and ships.
+
+1 unit = 1km
+1 au = 150M km
+
+create a test system modelled after the universe
+
+add galaxy map
+add dock features
+
+add sims and ship customisation (much later)
 
 
 ```https://imgur.com/a/uFh01Qa```

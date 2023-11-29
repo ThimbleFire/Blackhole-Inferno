@@ -25,8 +25,9 @@ public class CameraMove : MonoBehaviour
     }
 
     public void RotateCameraToTarget(Transform _target) => target = _target;
-    public void ResetDistance(Vector3 dir) => targetPosition = target.position - dir * 65f;
-    
+
+    // orbit the the target
+    public void ResetDistance(Vector3 dir, float signatureRadius) => targetPosition = target.position - dir * signatureRadius;
 
     private void MouseWheel()
     {

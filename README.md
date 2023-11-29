@@ -3,6 +3,7 @@ strategy spaceship game
 
 Todo
 
+* create classes for Ship, Station, JumpGate, Planet, Sun, Moon, etc
 * add align to selected
 * add warp to selected station, planet, jump-gate
 * add dock on selected station

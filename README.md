@@ -2,7 +2,16 @@
 strategy spaceship game
 
 Todo
-replace planet UI with circle, add the ability to select UI elements (not just teleport to them), add ability to examine selected elements, ability to warp, ability to dock.
+rename Entity class HUDSticker
+make planet HUDSticker an opaque circle
+make player ship HUDSticker a transparent triangle
+make left-clicking on HUDSticker select them
+create Station, Planet, Ship and JumpGate classes and have them inherit HUDSticker
+add public floating point called signature to HUDSticker
+add warp to selected station, planet, jump-gate
+add dock on selected station
+add a 2D shopping mall experience
+
 
 each system has global objects - these are objects that can be selected from anywhere in the system. warping to these locations might reveal local objects - these are objects that only show up while you're nearby, things like rocks, wrecks, gasses and ships.
 

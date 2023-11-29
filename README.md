@@ -3,9 +3,6 @@ strategy spaceship game
 
 Todo
 
-* rename Entity class HUDSticker
-* make planet HUDSticker an opaque circle
-* make player ship HUDSticker a transparent triangle
 * make left-clicking on HUDSticker select them
 * create Station, Planet, Ship and JumpGate classes and have them inherit HUDSticker
 * add signatureRadius to HUDSticker

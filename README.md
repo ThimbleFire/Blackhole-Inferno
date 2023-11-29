@@ -2,15 +2,21 @@
 strategy spaceship game
 
 Todo
-rename Entity class HUDSticker
-make planet HUDSticker an opaque circle
-make player ship HUDSticker a transparent triangle
-make left-clicking on HUDSticker select them
-create Station, Planet, Ship and JumpGate classes and have them inherit HUDSticker
-add public floating point called signature to HUDSticker
-add warp to selected station, planet, jump-gate
-add dock on selected station
-add a 2D shopping mall experience
+* think of an efficient way to handle coordinates
+
+maybe instead of having HUDStickers projected toward the camera, the camera projects the stickers outward toward their absoluteWorldPosition, but clamped by render distance.
+
+if distance between absoluteWorldPosition and the camera position is below 1k km the object becomes visible.
+
+* rename Entity class HUDSticker
+* make planet HUDSticker an opaque circle
+* make player ship HUDSticker a transparent triangle
+* make left-clicking on HUDSticker select them
+* create Station, Planet, Ship and JumpGate classes and have them inherit HUDSticker
+* add public floating point called signature to HUDSticker
+* add warp to selected station, planet, jump-gate
+* add dock on selected station
+* add a 2D shopping mall experience
 
 
 each system has global objects - these are objects that can be selected from anywhere in the system. warping to these locations might reveal local objects - these are objects that only show up while you're nearby, things like rocks, wrecks, gasses and ships.

@@ -62,10 +62,16 @@ public class ContextMenu : MonoBehaviour
                     {
                         ContextMenuOption cmo = Instantiate(option, child.transform).GetComponent<ContextMenuOption>();
                        
-                        cmo.GetComponent<Button>().onClick.AddListener(() =>
-                        CMOS_OnClick_Align(HUDSticker.highlightedHUDSticker.transform.position));
-
-                        cmo.SetText(HUDSticker.highlightedHUDSticker.CMOCommands[i].ToString());
+                        switch(HUDSticker.highlightedHUDSticker.CMOCommands[i])
+                        {
+                            case CMOCommands.Align:
+                               cmo.SetText(Align);
+                               cmo.GetComponent<Button>().onClick.AddListener(() =>
+                               CMOS_OnClick_Align(HUDSticker.highlightedHUDSticker.transform.position));                       
+                            break;
+                        }
+// Align, Orbit, Dock, Approach, WarpTo, LookAt, Examine, Lock,
+                        
 
                         cmos.Add(cmo);
                     }

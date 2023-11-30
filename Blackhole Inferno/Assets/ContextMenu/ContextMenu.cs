@@ -64,7 +64,7 @@ public class ContextMenu : MonoBehaviour
                        
                         switch(HUDSticker.highlightedHUDSticker.CMOCommands[i])
                         {
-                            case CMOCommands.Align:
+                            case ContextMenuOption.Commands:
                                cmo.SetText(Align);
                                cmo.GetComponent<Button>().onClick.AddListener(() =>
                                CMOS_OnClick_Align(HUDSticker.highlightedHUDSticker.transform.position));                       

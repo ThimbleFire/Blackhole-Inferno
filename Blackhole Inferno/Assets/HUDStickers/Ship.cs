@@ -13,6 +13,7 @@ public class Ship : HUDSticker
     private float accelerationRate = 0.01f;
     private float accelerationRate2 = 0.01f;
     private float distanceAtTimeOfWarp = 0.0f;
+    private float initialAngleToRotate = 0.0f;
 
     void Awake()
     {
@@ -39,19 +40,30 @@ public class Ship : HUDSticker
 
         // rotate the theoretical direction to allow for accurate forward propulsion
         // transform rotation is reserved for facing the camera
-        if (finishedRotating == false)
+        if (!finishedRotating)
         {
             float rotationSpeed = 3.5f;
             float t = Mathf.Clamp01(Time.deltaTime * rotationSpeed);
+
+            // Calculate the remaining angle to rotate
+            float remainingAngle = Vector3.Angle(rot, interactingWithSticker.absoluteWorldPosition);
+
+            // Perform the rotation
             rot = Vector3.Slerp(rot, interactingWithSticker.absoluteWorldPosition, t);
 
             // Check if the rotation is complete
-            if (Vector3.Angle(rot, interactingWithSticker.absoluteWorldPosition) < 0.1f)
+            if (remainingAngle < 0.1f)
             {
                 rot = interactingWithSticker.absoluteWorldPosition;
                 finishedRotating = true;
                 Debug.Log("aligned");
             }
+
+            // Calculate the percentage of rotation completion
+            float percentageCompletion = Mathf.Clamp01(1.0f - (remainingAngle / initialAngleToRotate));
+
+            // Debug statement for troubleshooting
+            controlProgress.Set(percentageCompletion);
         }
         else if (!finishedWarping)
         {
@@ -89,14 +101,21 @@ public class Ship : HUDSticker
             Debug.Log("Unable to align. Already aligning");
             return;
         }
-        
+
         interactingWithSticker = sticker;
         finishedRotating = false;
+        initialAngleToRotate = Vector3.Angle(rot, sticker.absoluteWorldPosition);
+
+        controlProgress.RunProgram("Align", sticker.Sprite);
     }
     
     public void SetWarpTo(HUDSticker sticker) {
         if(!finishedWarping) {
-            Debug.Log("Unable to warp. Already warping");
+            Debug.LogError("Unable to warp. Already warping");
+            return;
+        }
+        if(rot != sticker.absoluteWorldPosition) {
+            Debug.LogError("Unable to warp. Align first");
             return;
         }
 

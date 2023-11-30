@@ -1,9 +1,11 @@
 # Blackhole-Inferno
-A 2.5D spaceship game in which you can run missions and explore vast ruins to accumulate wealth, then use that wealth to buy bigger ships. Ships are multi-layered grids limited in size by the ship class. modules can be placed inside these grid cells. there must be enough room for crew members to also walk around the ship and the ship can only generate so much power.
 
 Todo
 
 * add gameplay events for the context menu to call
+   * Warp
+   * Align
+   * Dock
 
 each system has global objects - these are objects that can be selected from anywhere in the system. warping to these locations might reveal local objects - these are objects that only show up while you're nearby, things like rocks, wrecks, gasses and ships.
 

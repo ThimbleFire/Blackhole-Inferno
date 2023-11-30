@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -20,6 +21,8 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
 
     // theoretical rotation
     public Vector3 rot = Vector3.zero;
+
+    public Sprite Sprite {get{return GetComponent<UnityEngine.UI.Image>().sprite; } }
 
     private void Awake() => absoluteWorldPosition = transform.position;
 

@@ -15,6 +15,11 @@ public class ControlProgress : MonoBehaviour
         txtProgram.text = "PROGRAM: " + programName.ToUpper();
         imgIcon.sprite = sprite;
         txtProgress.text = "00.00% COMPLETE";
+        txtStatus.text = $"IN PROGRESS";
+    }
+
+    public void Complete() {
+        txtStatus.text = $"SHUTTING DOWN";
     }
 
     /// <summary>where 1.0f equals 100%</summary>
@@ -24,7 +29,15 @@ public class ControlProgress : MonoBehaviour
         string formattedString = (percent * 100.0f).ToString("F2");
         formattedString = formattedString.PadLeft(5, '0');
 
-        txtProgress.text = percent > 0.99f ? "100.00% COMPLETE" : $"{formattedString}% COMPLETE";
+        if (percent >= 0.99f)
+        {
+            txtProgress.text = "100.00% COMPLETE";
+        }
+        else
+        {
+            txtProgress.text = $"{formattedString}% COMPLETE";
+        }
+
         imgProgress.sizeDelta = new Vector2( 285.2f * percent, 36);
     
         if(warpSpeed != 0.0f)

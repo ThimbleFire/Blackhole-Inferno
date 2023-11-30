@@ -14,6 +14,7 @@ public class Ship : HUDSticker
     private float accelerationRate2 = 0.01f;
     private float distanceAtTimeOfWarp = 0.0f;
     private float initialAngleToRotate = 0.0f;
+    private bool warpAfterAlign = false;
 
     void Awake()
     {
@@ -44,55 +45,52 @@ public class Ship : HUDSticker
         {
             float rotationSpeed = 3.5f;
             float t = Mathf.Clamp01(Time.deltaTime * rotationSpeed);
-
             // Calculate the remaining angle to rotate
             float remainingAngle = Vector3.Angle(rot, interactingWithSticker.absoluteWorldPosition);
-
             // Perform the rotation
             rot = Vector3.Slerp(rot, interactingWithSticker.absoluteWorldPosition, t);
+            // Calculate the percentage of rotation completion
+            float percentageCompletion = Mathf.Clamp01(1.0f - (remainingAngle / initialAngleToRotate));
+            // Debug statement for troubleshooting
+            controlProgress.Set(percentageCompletion);
 
             // Check if the rotation is complete
             if (remainingAngle < 0.1f)
             {
                 rot = interactingWithSticker.absoluteWorldPosition;
                 finishedRotating = true;
-                Debug.Log("aligned");
+                controlProgress.Complete();
+                // if we initiate align because of a warp program, automatically perform warp after finished aligning
+                if(warpAfterAlign) {
+                    SetWarpTo(interactingWithSticker);
+                    warpAfterAlign = false;
+                }
             }
 
-            // Calculate the percentage of rotation completion
-            float percentageCompletion = Mathf.Clamp01(1.0f - (remainingAngle / initialAngleToRotate));
-
-            // Debug statement for troubleshooting
-            controlProgress.Set(percentageCompletion);
         }
         else if (!finishedWarping)
         {
             // Move transform forward in the direction of rot
             float warpStep = Mathf.Clamp(currentWarpSpeed, 0.0f, 3.5f) * Time.deltaTime;
-
             // Calculate the remaining distance
             float remainingDistance = Vector3.Distance(absoluteWorldPosition, interactingWithSticker.absoluteWorldPosition) - interactingWithSticker.signatureRadius;
-
             // Ensure remainingDistance is non-negative
             remainingDistance = Mathf.Max(remainingDistance, 0f);
-
             // Calculate the percentage of travel completion
             float percentageCompletion = Mathf.Clamp01(1.0f - (remainingDistance / distanceAtTimeOfWarp));
-
-
             absoluteWorldPosition = Vector3.Lerp(absoluteWorldPosition, interactingWithSticker.absoluteWorldPosition, warpStep);
             transform.position = absoluteWorldPosition;
-
+            //
+            controlProgress.Set(percentageCompletion, currentWarpSpeed);
             // Check if the warping is complete
-            if (Vector3.Distance(absoluteWorldPosition, interactingWithSticker.absoluteWorldPosition) < interactingWithSticker.signatureRadius)
+            if (Vector3.Distance(absoluteWorldPosition, interactingWithSticker.absoluteWorldPosition) < interactingWithSticker.signatureRadius) {
                 finishedWarping = true;
-            else
-            {
+                controlProgress.Complete();
+            }
+            else {
                 accelerationRate += accelerationRate2 * Time.deltaTime;
                 currentWarpSpeed += accelerationRate * Time.deltaTime;
             }
-
-            controlProgress.Set(percentageCompletion, currentWarpSpeed);
         }
     }
 
@@ -115,7 +113,8 @@ public class Ship : HUDSticker
             return;
         }
         if(rot != sticker.absoluteWorldPosition) {
-            Debug.LogError("Unable to warp. Align first");
+            SetRotateTo(sticker);
+            warpAfterAlign = true;
             return;
         }
 

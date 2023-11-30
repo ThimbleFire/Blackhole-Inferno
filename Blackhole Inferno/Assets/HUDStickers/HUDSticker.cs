@@ -7,22 +7,26 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
     public static HUDSticker selectedHUDSticker = null;
     public static HUDSticker highlightedHUDSticker = null;
 
-    [HideInInspector]
-    public List<ContextMenuOption.Commands> CMOCommands;
+    // context menu options 
+    [HideInInspector] public List<ContextMenuOption.Commands> CMOCommands;
 
+    // input
     private float lastClickTime = 0f;
+
+    // warp to
     protected float signatureRadius = 65.0f;
 
-    private Vector3 theoreticalFacingDirection = Vector3.zero;
+    // theoretical position
     private Vector3 absoluteWorldPosition;
 
-    // Align
+    // theoretical rotation
     private Vector3 rot = Vector3.zero;
     private Vector3 toRot = Vector3.zero;
     private bool finishedRotating = true;
     private float rotationSpeed = 2f;
 
     private void Awake() => absoluteWorldPosition = transform.position;
+
     public void OnPointerClick(PointerEventData eventData)
     {
         float currentTime = Time.time;
@@ -42,16 +46,19 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
             selectedHUDSticker = this;
         }
     }
+
     public void Deselect()
     {
         GetComponent<UnityEngine.UI.Image>().color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
     }
+
     public void OnPointerEnter(PointerEventData eventData)
     {
         Tooltip.instance.Set($"{gameObject.name} ({Vector3.Distance(absoluteWorldPosition, CameraMove.instance.target.position)}) ");
         
         highlightedHUDSticker = this;
     }
+
     public void OnPointerExit(PointerEventData eventData)
     {
         Tooltip.instance.Hide();
@@ -61,7 +68,7 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
         }
     }
     
-    void Update() {
+    private void Update() {
         // Make the canvas face the camera
         transform.LookAt(transform.position + Camera.main.transform.rotation * Vector3.forward,
                          Camera.main.transform.rotation * Vector3.up);

@@ -4,8 +4,8 @@ using UnityEngine.EventSystems;
 
 public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler {
 
-    public static HUDSticker selectedHUDSticker = null;
     public static HUDSticker highlightedHUDSticker = null;
+    private HUDSticker interactingWithSticker = null;
 
     // context menu options 
     [HideInInspector] public List<ContextMenuOption.Commands> CMOCommands;
@@ -17,16 +17,14 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
     protected float signatureRadius = 65.0f;
     private bool finishedWarping = true;
     private float warpSpeed = 3.5f;
-    private Vector3 toPos = Vector3.zero;
 
     // theoretical position
-    private Vector3 absoluteWorldPosition;
+    public Vector3 absoluteWorldPosition;
 
     // theoretical rotation
-    private Vector3 rot = Vector3.zero;
-    private Vector3 toRot = Vector3.zero;
+    public Vector3 rot = Vector3.zero;
     private bool finishedRotating = true;
-    private float rotationSpeed = 2f;
+    private float rotationSpeed = 3.5f;
 
     private void Awake() => absoluteWorldPosition = transform.position;
 
@@ -37,39 +35,21 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
             float currentTime = Time.time;
             float doubleClickTimeThreshold = 0.3f;
 
-            if (currentTime - lastClickTime < doubleClickTimeThreshold) // double-click
+            // double-click
+            if (currentTime - lastClickTime < doubleClickTimeThreshold) 
             {
                 CameraMove.instance.ResetDistance(transform.forward, signatureRadius);        
             }
-            else // single-click
+            // single-click
+            else 
             {
                 lastClickTime = currentTime;
-
-                // deselect the currently selected sticker
-                if(selectedHUDSticker != null)
-                    selectedHUDSticker.Deselect();
-                
-                // Select the new sticker (this)
-                Select();
             }
         }
         if(eventData.button == PointerEventData.InputButton.Right)
         {
-            Select();
             ContextMenu.instance.OpenContextMenu(this);
         }
-    }
-
-    public void Select()
-    {
-        GetComponent<UnityEngine.UI.Image>().color = new Color(1.0f, 1.0f, 0.0f, 1.0f);
-        selectedHUDSticker = this;
-    }
-
-    public void Deselect()
-    {
-        GetComponent<UnityEngine.UI.Image>().color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
-        selectedHUDSticker = null;
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -95,51 +75,48 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
 
         // Resize the UI element so that regardless of zoom, it shows at the correct size. we can entirely remove this segment by using screen space overlay, might be more to it though
         var size = (Camera.main.transform.position - transform.position).magnitude; 
-        float scale = 0.005f;
+        
+        float scale = 0.003f;
         transform.localScale = new Vector3(size,size,size) * scale; 
-
-        // Set the transform position at most 995 distance away to prevent clipping
-        // This is not the true position of the Entity, just its UI element
-        float distanceFromCamera = Vector3.Distance(absoluteWorldPosition, Camera.main.transform.position);
-        if( distanceFromCamera > 995)        
-            transform.position = absoluteWorldPosition - transform.forward * (distanceFromCamera - 995.0f);
-        else        
-            transform.position = absoluteWorldPosition;
 
         // rotate the theoretical direction to allow for accurate forward propulsion
         // transform rotation is reserved for facing the camera
         if (finishedRotating == false)
         {
             float t = Mathf.Clamp01(Time.deltaTime * rotationSpeed);
-            rot = Vector3.Slerp(rot, toRot, t);
-            
+            rot = Vector3.Slerp(rot, interactingWithSticker.absoluteWorldPosition, t);
+
             // Check if the rotation is complete
-            if (Vector3.Angle(rot, toRot) < 0.1f) {
-                rot = toRot;
+            if (Vector3.Angle(rot, interactingWithSticker.absoluteWorldPosition) < 0.1f)
+            {
+                rot = interactingWithSticker.absoluteWorldPosition;
                 finishedRotating = true;
+                Debug.Log("aligned");
             }
         }
         else if (finishedWarping == false)
         {
             // Move transform forward in the direction of rot
             float warpStep = warpSpeed * Time.deltaTime;
-            transform.position = Vector3.Lerp(transform.position, transform.position + transform.forward, warpStep);
+            absoluteWorldPosition = Vector3.Lerp(absoluteWorldPosition, interactingWithSticker.absoluteWorldPosition, warpStep);
+            transform.position = absoluteWorldPosition;
+            
+            Debug.Log(Vector3.Distance(absoluteWorldPosition, interactingWithSticker.absoluteWorldPosition));
 
             // Check if the warping is complete
-            if (Vector3.Distance(transform.position, toPos) < 0.1f) {
-                transform.position = toPos;
+            if (Vector3.Distance(absoluteWorldPosition, interactingWithSticker.absoluteWorldPosition) < interactingWithSticker.signatureRadius) {
                 finishedWarping = true;
             }
         }
     }
 
-    public void SetRotateTo(Vector3 r) {
-        toRot = r;
+    public void SetRotateTo(HUDSticker sticker) {
+        interactingWithSticker = sticker;
         finishedRotating = false;
     }
-    public void SetWarpTo(Vector3 position)
-    {
-        toPos = position;
+    
+    public void SetWarpTo(HUDSticker sticker) {
+        interactingWithSticker = sticker;
         finishedWarping = false;
     }
 }

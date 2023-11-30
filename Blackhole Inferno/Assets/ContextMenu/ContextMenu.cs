@@ -8,9 +8,10 @@ public class ContextMenu : MonoBehaviour
 
     public bool Opened {get; set;} = false;
     private List<ContextMenuOption> cmos = new List<ContextMenuOption>();
-    public GameObject child;
+    public RectTransform child;
     public GameObject option;
     public HUDSticker currentSticker = null;
+    public HUDSticker playerShip;
 
     private void Awake() => instance = this;
 
@@ -21,14 +22,14 @@ public class ContextMenu : MonoBehaviour
             float distanceX = Input.mousePosition.x - transform.position.x;
             float distanceY = Input.mousePosition.y - transform.position.y;
 
-            Vector2 trasnformSizeDelta = child.GetComponent<RectTransform>().sizeDelta;
+            Vector2 transformSizeDelta = child.sizeDelta;
 
             float externalPadding = 20.0f;
 
-            if( distanceX > trasnformSizeDelta.x  / 2 + externalPadding ||
-                distanceX < -trasnformSizeDelta.x / 2 - externalPadding ||
-                distanceY > trasnformSizeDelta.y  / 2 + externalPadding ||
-                distanceY < -trasnformSizeDelta.y / 2 - externalPadding ) {
+            if( distanceX > transformSizeDelta.x  / 2 + externalPadding ||
+                distanceX < -transformSizeDelta.x / 2 - externalPadding ||
+                distanceY > transformSizeDelta.y  / 2 + externalPadding ||
+                distanceY < -transformSizeDelta.y / 2 - externalPadding ) {
 
                 ClearCMOS();
             }
@@ -49,9 +50,7 @@ public class ContextMenu : MonoBehaviour
                 // nothing is selected
                 
                 ContextMenuOption cmo = Instantiate(option, child.transform).GetComponent<ContextMenuOption>();
-
                 cmo.SetText("no context menus available");
-
                 cmos.Add(cmo);
             }
             else
@@ -64,18 +63,18 @@ public class ContextMenu : MonoBehaviour
                     {
                         case ContextMenuOption.Commands.Align:
                             cmo.SetText("Align");
-                            cmo.GetComponent<Button>().onClick.AddListener(() =>
-                            CMOS_OnClick_Align(sticker.transform.position));                       
+                            cmo.GetComponent<Button>().onClick.AddListener(() => playerShip.SetRotateTo(sticker));
+                            cmo.GetComponent<Button>().onClick.AddListener(() => ClearCMOS());                       
                         break;
                         case ContextMenuOption.Commands.WarpTo:
                             cmo.SetText("Warp");
-                            cmo.GetComponent<Button>().onClick.AddListener(() =>
-                            CMOS_OnClick_Warp(sticker.transform.position));                       
+                            cmo.GetComponent<Button>().onClick.AddListener(() => playerShip.SetWarpTo(sticker));
+                            cmo.GetComponent<Button>().onClick.AddListener(() => ClearCMOS());  
                         break;
                         case ContextMenuOption.Commands.Dock:
                             cmo.SetText("Dock");
-                            cmo.GetComponent<Button>().onClick.AddListener(() =>
-                            CMOS_OnClick_Dock(sticker.GetComponent<Station>()));                       
+                            //cmo.GetComponent<Button>().onClick.AddListener(() => CMOS_OnClick_Dock(sticker.GetComponent<Station>()));
+                            cmo.GetComponent<Button>().onClick.AddListener(() => ClearCMOS());  
                         break;
                     }                        
 
@@ -85,10 +84,12 @@ public class ContextMenu : MonoBehaviour
 
             // Reposition the context menu so the cursor isn't directly over any options
             float optionHeight = option.GetComponent<RectTransform>().sizeDelta.y;
-            //Vector3 offset = new Vector3(-15, -(optionHeight * cmos.Count / 2 + 10));
-            transform.position = Input.mousePosition/* + offset*/;
+            Vector3 offset = new Vector3(-15, -(optionHeight * cmos.Count / 2));
+            transform.position = Input.mousePosition + offset;
+
+            LayoutRebuilder.ForceRebuildLayoutImmediate(child);
         }
-    }
+    }    
 
     private void ClearCMOS()
     {
@@ -98,22 +99,7 @@ public class ContextMenu : MonoBehaviour
             cmos.RemoveAt(0);
         }
         cmos.Clear();
-        if(currentSticker != null)
-                currentSticker.Deselect();
         currentSticker = null;
         Opened = false;
-    }
-
-    private void CMOS_OnClick_Align(Vector3 position) {
-        Debug.Log("Align to " + position);
-        ClearCMOS();
-    }
-    private void CMOS_OnClick_Warp(Vector3 position) {
-        Debug.Log("Warp to " + position);
-        ClearCMOS();
-    }
-    private void CMOS_OnClick_Dock(Station station) {
-        Debug.Log("Dock at " + station.name);
-        ClearCMOS();
     }
 }

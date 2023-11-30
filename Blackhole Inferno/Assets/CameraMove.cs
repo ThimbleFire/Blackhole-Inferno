@@ -11,6 +11,13 @@ public class CameraMove : MonoBehaviour
     public float zoomSpeed = 25f;
     private Vector3 targetPosition = Vector3.zero;
 
+
+    public float dragSpeed = 1.0f;
+    public float inertiaFactor = 1.0f;
+    private bool isDragging = false;
+    private Vector3 lastMousePos;
+    private Vector3 dragVelocity;
+
     void Awake()
     {
         // Ensure only one instance of the CameraController exists
@@ -29,22 +36,37 @@ public class CameraMove : MonoBehaviour
     // orbit the the target
     public void ResetDistance(Vector3 dir, float signatureRadius) => targetPosition = target.position - dir * signatureRadius;
 
-    private void MouseWheel()
+    private void Update()
     {
-        float scrollWheel = Input.GetAxis("Mouse ScrollWheel");
-        float zoomAmount = scrollWheel * zoomSpeed;
+        if (target == null)
+            return;
 
-        transform.Translate(Vector3.forward * zoomAmount, Space.Self);
-    }
-    private void FaceTarget() {
-        
+        // Calculate target rotation based on the target's position
         Quaternion targetRotation = Quaternion.LookRotation(target.position - transform.position);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-    }
-    private void Pan()
-    {
+
+        // Zooming functionality
+        float scrollWheel = Input.GetAxis("Mouse ScrollWheel");
+        float zoomAmount = scrollWheel * zoomSpeed;
+        float currentZoomDistance = Vector3.Distance(transform.position, target.position);
+        float newZoomDistance = Mathf.Clamp(currentZoomDistance - zoomAmount, 16, 64);
+
+        // Update camera position based on the new zoom distance
+        transform.position = target.position - transform.forward * newZoomDistance;
+
         // Orbit around the target when left mouse button is held down
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButtonDown(0))
+        {
+            isDragging = true;
+            lastMousePos = Input.mousePosition;
+            dragVelocity = Vector3.zero;
+        }
+        else if (Input.GetMouseButtonUp(0))
+        {
+            isDragging = false;
+        }
+
+        if (isDragging)
         {
             float mouseX = Input.GetAxis("Mouse X");
             float mouseY = Input.GetAxis("Mouse Y");
@@ -55,30 +77,21 @@ public class CameraMove : MonoBehaviour
             // Apply rotation to the camera
             transform.RotateAround(target.position, transform.right, orbitRotation.x);
             transform.RotateAround(target.position, Vector3.up, orbitRotation.y);
-        }
-    }
 
-    private void Update()
-    {
-        if (target == null)
-            return;
-        
-        if(targetPosition != Vector3.zero)
+            // Calculate drag velocity
+            Vector3 currentMousePos = Input.mousePosition;
+            dragVelocity = (currentMousePos - lastMousePos) * dragSpeed;
+            lastMousePos = currentMousePos;
+        }
+        else
         {
-            float distance = Vector3.Distance(transform.position, targetPosition);
-            float epsilon = .5f; // Adjust this threshold as needed
-            if (distance > epsilon)
-                transform.position = Vector3.Lerp(transform.position, targetPosition, rotationSpeed * Time.deltaTime);            
-            else {
-                // If the distance is small enough, consider the position reached
-                transform.position = targetPosition;
-                targetPosition = Vector3.zero;
-            }
-        }
+            // Apply inertia/drag effect
+            transform.RotateAround(target.position, transform.right, -dragVelocity.y * Time.deltaTime);
+            transform.RotateAround(target.position, Vector3.up, dragVelocity.x * Time.deltaTime);
 
-        FaceTarget();
-        MouseWheel();
-        Pan();
+            // Gradually decrease drag velocity over time
+            dragVelocity = Vector3.Lerp(dragVelocity, Vector3.zero, Time.deltaTime * inertiaFactor);
+        }
     }
 
     private Vector3 GetDirection(Vector3 from, Vector3 to)

@@ -1,5 +1,5 @@
 # Blackhole-Inferno
-strategy spaceship game
+A 2.5D spaceship game in which you can run missions and explore vast ruins to accumulate wealth, then use that wealth to buy bigger ships. Ships are multi-layered grids limited in size by the ship class. modules can be placed inside these grid cells. there must be enough room for crew members to also walk around the ship and the ship can only generate so much power.
 
 Todo
 

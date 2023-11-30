@@ -76,7 +76,7 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
         transform.LookAt(transform.position + Camera.main.transform.rotation * Vector3.forward,
                          Camera.main.transform.rotation * Vector3.up);
 
-        // Resize the UI element so that regardless of zoom, it shows at the correct size
+        // Resize the UI element so that regardless of zoom, it shows at the correct size. we can entirely remove this segment by using screen space overlay, might be more to it though
         var size = (Camera.main.transform.position - transform.position).magnitude; 
         float scale = 0.005f;
         transform.localScale = new Vector3(size,size,size) * scale; 
@@ -109,8 +109,7 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
             transform.position = Vector3.Lerp(transform.position, transform.position + transform.forward, warpStep);
 
             // Check if the warping is complete
-            if (Vector3.Distance(transform.position, toPos) < 0.1f)
-            {
+            if (Vector3.Distance(transform.position, toPos) < 0.1f) {
                 transform.position = toPos;
                 finishedWarping = true;
             }

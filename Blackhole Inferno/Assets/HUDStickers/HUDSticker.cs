@@ -13,7 +13,14 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
     private float lastClickTime = 0f;
     protected float signatureRadius = 65.0f;
 
+    private Vector3 theoreticalFacingDirection = Vector3.zero;
     private Vector3 absoluteWorldPosition;
+
+    // Align
+    private Vector3 rot = Vector3.zero;
+    private Vector3 toRot = Vector3.zero;
+    private bool finishedRotating = true;
+    private float rotationSpeed = 2f;
 
     private void Awake() => absoluteWorldPosition = transform.position;
     public void OnPointerClick(PointerEventData eventData)
@@ -71,6 +78,23 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
             transform.position = absoluteWorldPosition - transform.forward * (distanceFromCamera - 995.0f);
         else        
             transform.position = absoluteWorldPosition;
-        
+
+        //
+        if (finishedRotating == false)
+        {
+            float t = Mathf.Clamp01(Time.deltaTime * rotationSpeed);
+            rot = Vector3.Slerp(rot, toRot, t);
+            
+            // Check if the rotation is complete
+            if (Vector3.Angle(rot, toRot) < 0.1f) {
+                rot = toRot;
+                finishedRotating = true;
+            }
+        }
+    }
+
+    public void SetRotateTo(Vector3 r) {
+        toRot = r;
+        finishedRotating = false;
     }
 }

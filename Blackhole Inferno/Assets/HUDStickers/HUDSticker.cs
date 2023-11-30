@@ -79,7 +79,8 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
         else        
             transform.position = absoluteWorldPosition;
 
-        //
+        // rotate the theoretical direction to allow for accurate forward propulsion
+        // transform rotation is reserved for facing the camera
         if (finishedRotating == false)
         {
             float t = Mathf.Clamp01(Time.deltaTime * rotationSpeed);

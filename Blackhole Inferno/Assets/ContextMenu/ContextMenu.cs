@@ -50,9 +50,9 @@ public class ContextMenu : MonoBehaviour
 
                     ContextMenuOption cmo = Instantiate(option, child.transform).GetComponent<ContextMenuOption>();
 
-                    cmo.SetText("no context menus available, try mousing over a sticker");
+                    cmo.SetText("no context menus available");
 
-                    cmos.Add(cmo_align);
+                    cmos.Add(cmo);
                 }
                 else
                 {
@@ -64,10 +64,20 @@ public class ContextMenu : MonoBehaviour
                        
                         switch(HUDSticker.highlightedHUDSticker.CMOCommands[i])
                         {
-                            case ContextMenuOption.Commands:
-                               cmo.SetText(Align);
+                            case ContextMenuOption.Commands.Align:
+                               cmo.SetText("Align");
                                cmo.GetComponent<Button>().onClick.AddListener(() =>
                                CMOS_OnClick_Align(HUDSticker.highlightedHUDSticker.transform.position));                       
+                            break;
+                            case ContextMenuOption.Commands.WarpTo:
+                               cmo.SetText("Warp");
+                               cmo.GetComponent<Button>().onClick.AddListener(() =>
+                               CMOS_OnClick_Warp(HUDSticker.highlightedHUDSticker.transform.position));                       
+                            break;
+                            case ContextMenuOption.Commands.Dock:
+                               cmo.SetText("Dock");
+                               cmo.GetComponent<Button>().onClick.AddListener(() =>
+                               CMOS_OnClick_Dock(HUDSticker.highlightedHUDSticker.GetComponent<Station>()));                       
                             break;
                         }
 // Align, Orbit, Dock, Approach, WarpTo, LookAt, Examine, Lock,
@@ -96,6 +106,12 @@ public class ContextMenu : MonoBehaviour
     }
 
     private void CMOS_OnClick_Align(Vector3 position) {
+
+    }
+    private void CMOS_OnClick_Warp(Vector3 position) {
+
+    }
+    private void CMOS_OnClick_Dock(Station station) {
 
     }
 }

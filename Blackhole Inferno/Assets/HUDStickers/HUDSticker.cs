@@ -17,7 +17,7 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
     protected float signatureRadius = 65.0f;
     private bool finishedWarping = true;
     private float warpSpeed = 3.5f
-    Vector3 toPos = Vector3.zero;
+    private Vector3 toPos = Vector3.zero;
 
     // theoretical position
     private Vector3 absoluteWorldPosition;

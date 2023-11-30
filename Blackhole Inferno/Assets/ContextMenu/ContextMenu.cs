@@ -4,15 +4,15 @@ using UnityEngine.UI;
 
 public class ContextMenu : MonoBehaviour
 {
+    public static ContextMenu instance;
+
     public bool Opened {get; set;} = false;
     private List<ContextMenuOption> cmos = new List<ContextMenuOption>();
     public GameObject child;
     public GameObject option;
+    public HUDSticker currentSticker = null;
 
-    private void Awake()
-    {
-        Debug.Log(gameObject.name);
-    }
+    private void Awake() => instance = this;
 
     private void Update() {
         
@@ -31,67 +31,62 @@ public class ContextMenu : MonoBehaviour
                 distanceY < -trasnformSizeDelta.y / 2 - externalPadding ) {
 
                 ClearCMOS();
-                Opened = false;
             }
         }
-        else if (Input.GetMouseButton(1))
+    }
+
+    public void OpenContextMenu(HUDSticker sticker)
+    {
+        if(Opened == false)
         {
-            if(Opened == false)
+            Opened = true;
+            currentSticker = sticker;
+
+            // Build the context menu options then calculate its position to the right of the cursor
+
+            if(HUDSticker.highlightedHUDSticker == null)
             {
-                Opened = true;
+                // nothing is selected
+                
+                ContextMenuOption cmo = Instantiate(option, child.transform).GetComponent<ContextMenuOption>();
 
-                // Build the context menu options then calculate its position to the right of the cursor
+                cmo.SetText("no context menus available");
 
-                if(HUDSticker.highlightedHUDSticker == null)
+                cmos.Add(cmo);
+            }
+            else
+            {
+                for(int i = 0; i < sticker.CMOCommands.Count; i++)
                 {
-                    // nothing is selected
-
-                    ClearCMOS();
-
                     ContextMenuOption cmo = Instantiate(option, child.transform).GetComponent<ContextMenuOption>();
-
-                    cmo.SetText("no context menus available");
+                    
+                    switch(sticker.CMOCommands[i])
+                    {
+                        case ContextMenuOption.Commands.Align:
+                            cmo.SetText("Align");
+                            cmo.GetComponent<Button>().onClick.AddListener(() =>
+                            CMOS_OnClick_Align(sticker.transform.position));                       
+                        break;
+                        case ContextMenuOption.Commands.WarpTo:
+                            cmo.SetText("Warp");
+                            cmo.GetComponent<Button>().onClick.AddListener(() =>
+                            CMOS_OnClick_Warp(sticker.transform.position));                       
+                        break;
+                        case ContextMenuOption.Commands.Dock:
+                            cmo.SetText("Dock");
+                            cmo.GetComponent<Button>().onClick.AddListener(() =>
+                            CMOS_OnClick_Dock(sticker.GetComponent<Station>()));                       
+                        break;
+                    }                        
 
                     cmos.Add(cmo);
                 }
-                else
-                {
-                    ClearCMOS();
-
-                    for(int i = 0; i < HUDSticker.highlightedHUDSticker.CMOCommands.Count; i++)
-                    {
-                        ContextMenuOption cmo = Instantiate(option, child.transform).GetComponent<ContextMenuOption>();
-                       
-                        switch(HUDSticker.highlightedHUDSticker.CMOCommands[i])
-                        {
-                            case ContextMenuOption.Commands.Align:
-                               cmo.SetText("Align");
-                               cmo.GetComponent<Button>().onClick.AddListener(() =>
-                               CMOS_OnClick_Align(HUDSticker.highlightedHUDSticker.transform.position));                       
-                            break;
-                            case ContextMenuOption.Commands.WarpTo:
-                               cmo.SetText("Warp");
-                               cmo.GetComponent<Button>().onClick.AddListener(() =>
-                               CMOS_OnClick_Warp(HUDSticker.highlightedHUDSticker.transform.position));                       
-                            break;
-                            case ContextMenuOption.Commands.Dock:
-                               cmo.SetText("Dock");
-                               cmo.GetComponent<Button>().onClick.AddListener(() =>
-                               CMOS_OnClick_Dock(HUDSticker.highlightedHUDSticker.GetComponent<Station>()));                       
-                            break;
-                        }
-// Align, Orbit, Dock, Approach, WarpTo, LookAt, Examine, Lock,
-                        
-
-                        cmos.Add(cmo);
-                    }
-                }
-
-                // Reposition the context menu so the cursor isn't directly over any options
-                float optionHeight = option.GetComponent<RectTransform>().sizeDelta.y;
-                Vector3 offset = new Vector3(-35, -(optionHeight * cmos.Count / 2 + 18));
-                transform.position = Input.mousePosition + offset;
             }
+
+            // Reposition the context menu so the cursor isn't directly over any options
+            float optionHeight = option.GetComponent<RectTransform>().sizeDelta.y;
+            //Vector3 offset = new Vector3(-15, -(optionHeight * cmos.Count / 2 + 10));
+            transform.position = Input.mousePosition/* + offset*/;
         }
     }
 
@@ -103,15 +98,22 @@ public class ContextMenu : MonoBehaviour
             cmos.RemoveAt(0);
         }
         cmos.Clear();
+        if(currentSticker != null)
+                currentSticker.Deselect();
+        currentSticker = null;
+        Opened = false;
     }
 
     private void CMOS_OnClick_Align(Vector3 position) {
-
+        Debug.Log("Align to " + position);
+        ClearCMOS();
     }
     private void CMOS_OnClick_Warp(Vector3 position) {
-
+        Debug.Log("Warp to " + position);
+        ClearCMOS();
     }
     private void CMOS_OnClick_Dock(Station station) {
-
+        Debug.Log("Dock at " + station.name);
+        ClearCMOS();
     }
 }

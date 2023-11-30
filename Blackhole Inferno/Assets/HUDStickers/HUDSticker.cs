@@ -16,7 +16,7 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
     // warp to
     protected float signatureRadius = 65.0f;
     private bool finishedWarping = true;
-    private float warpSpeed = 3.5f
+    private float warpSpeed = 3.5f;
     private Vector3 toPos = Vector3.zero;
 
     // theoretical position
@@ -32,27 +32,44 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        float currentTime = Time.time;
-        float doubleClickTimeThreshold = 0.3f;
+        if(eventData.button == PointerEventData.InputButton.Left)
+        {
+            float currentTime = Time.time;
+            float doubleClickTimeThreshold = 0.3f;
 
-        if (currentTime - lastClickTime < doubleClickTimeThreshold)
-        {
-            CameraMove.instance.ResetDistance(transform.forward, signatureRadius);        
+            if (currentTime - lastClickTime < doubleClickTimeThreshold) // double-click
+            {
+                CameraMove.instance.ResetDistance(transform.forward, signatureRadius);        
+            }
+            else // single-click
+            {
+                lastClickTime = currentTime;
+
+                // deselect the currently selected sticker
+                if(selectedHUDSticker != null)
+                    selectedHUDSticker.Deselect();
+                
+                // Select the new sticker (this)
+                Select();
+            }
         }
-        else
+        if(eventData.button == PointerEventData.InputButton.Right)
         {
-            lastClickTime = currentTime;
-            //CameraMove.instance.RotateCameraToTarget(rectTransform);
-            if(selectedHUDSticker != null)
-                selectedHUDSticker.Deselect();
-            GetComponent<UnityEngine.UI.Image>().color = new Color(1.0f, 1.0f, 0.0f, 1.0f);
-            selectedHUDSticker = this;
+            Select();
+            ContextMenu.instance.OpenContextMenu(this);
         }
+    }
+
+    public void Select()
+    {
+        GetComponent<UnityEngine.UI.Image>().color = new Color(1.0f, 1.0f, 0.0f, 1.0f);
+        selectedHUDSticker = this;
     }
 
     public void Deselect()
     {
         GetComponent<UnityEngine.UI.Image>().color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+        selectedHUDSticker = null;
     }
 
     public void OnPointerEnter(PointerEventData eventData)

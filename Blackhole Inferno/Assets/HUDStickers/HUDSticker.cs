@@ -15,6 +15,9 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
 
     // warp to
     protected float signatureRadius = 65.0f;
+    private bool finishedWarping = true;
+    private float warpSpeed = 3.5f
+    Vector3 toPos = Vector3.zero;
 
     // theoretical position
     private Vector3 absoluteWorldPosition;
@@ -99,10 +102,28 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
                 finishedRotating = true;
             }
         }
+        else if (finishedWarping == false)
+        {
+            // Move transform forward in the direction of rot
+            float warpStep = warpSpeed * Time.deltaTime;
+            transform.position = Vector3.Lerp(transform.position, transform.position + transform.forward, warpStep);
+
+            // Check if the warping is complete
+            if (Vector3.Distance(transform.position, toPos) < 0.1f)
+            {
+                transform.position = toPos;
+                finishedWarping = true;
+            }
+        }
     }
 
     public void SetRotateTo(Vector3 r) {
         toRot = r;
         finishedRotating = false;
+    }
+    public void SetWarpTo(Vector3 position)
+    {
+        toPos = position;
+        finishedWarping = false;
     }
 }

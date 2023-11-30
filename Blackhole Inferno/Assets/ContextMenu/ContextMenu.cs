@@ -11,7 +11,7 @@ public class ContextMenu : MonoBehaviour
     public RectTransform child;
     public GameObject option;
     public HUDSticker currentSticker = null;
-    public HUDSticker playerShip;
+    public Ship playerShip;
 
     private void Awake() => instance = this;
 

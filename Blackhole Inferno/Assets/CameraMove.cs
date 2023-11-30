@@ -9,8 +9,6 @@ public class CameraMove : MonoBehaviour
     public Transform target; // The target object to orbit around
     public float rotationSpeed = 5f;
     public float zoomSpeed = 25f;
-    private Vector3 targetPosition = Vector3.zero;
-
 
     public float dragSpeed = 1.0f;
     public float inertiaFactor = 1.0f;
@@ -31,43 +29,27 @@ public class CameraMove : MonoBehaviour
         }
     }
 
-    public void RotateCameraToTarget(Transform _target) => target = _target;
-
-    // orbit the the target
-    public void ResetDistance(Vector3 dir, float signatureRadius) => targetPosition = target.position - dir * signatureRadius;
-
-    private void Update()
-    {
+    private void Update() {
         if (target == null)
             return;
+        Orbit();
+        Zoom();
+    }
 
-        // Calculate target rotation based on the target's position
-        Quaternion targetRotation = Quaternion.LookRotation(target.position - transform.position);
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-
-        // Zooming functionality
-        float scrollWheel = Input.GetAxis("Mouse ScrollWheel");
-        float zoomAmount = scrollWheel * zoomSpeed;
-        float currentZoomDistance = Vector3.Distance(transform.position, target.position);
-        float newZoomDistance = Mathf.Clamp(currentZoomDistance - zoomAmount, 16, 64);
-
-        // Update camera position based on the new zoom distance
-        transform.position = target.position - transform.forward * newZoomDistance;
+    private void Orbit() {
 
         // Orbit around the target when left mouse button is held down
-        if (Input.GetMouseButtonDown(0))
-        {
+        if (Input.GetMouseButtonDown(0)) {
             isDragging = true;
             lastMousePos = Input.mousePosition;
             dragVelocity = Vector3.zero;
         }
-        else if (Input.GetMouseButtonUp(0))
-        {
+        else if (Input.GetMouseButtonUp(0)) {
             isDragging = false;
         }
 
-        if (isDragging)
-        {
+        if (isDragging) {
+
             float mouseX = Input.GetAxis("Mouse X");
             float mouseY = Input.GetAxis("Mouse Y");
 
@@ -83,15 +65,27 @@ public class CameraMove : MonoBehaviour
             dragVelocity = (currentMousePos - lastMousePos) * dragSpeed;
             lastMousePos = currentMousePos;
         }
-        else
-        {
+        else {
+
             // Apply inertia/drag effect
             transform.RotateAround(target.position, transform.right, -dragVelocity.y * Time.deltaTime);
             transform.RotateAround(target.position, Vector3.up, dragVelocity.x * Time.deltaTime);
 
             // Gradually decrease drag velocity over time
             dragVelocity = Vector3.Lerp(dragVelocity, Vector3.zero, Time.deltaTime * inertiaFactor);
-        }
+        } 
+    }
+
+    private void Zoom() {
+
+        // Zooming functionality
+        float scrollWheel = Input.GetAxis("Mouse ScrollWheel");
+        float zoomAmount = scrollWheel * zoomSpeed;
+        float currentZoomDistance = Vector3.Distance(transform.position, target.position);
+        float newZoomDistance = Mathf.Clamp(currentZoomDistance - zoomAmount, 1, 128);
+        
+        // Update camera position based on the new zoom distance
+       transform.position = target.position - transform.forward * newZoomDistance;
     }
 
     private Vector3 GetDirection(Vector3 from, Vector3 to)

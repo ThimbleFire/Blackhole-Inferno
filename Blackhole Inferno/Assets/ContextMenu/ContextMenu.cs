@@ -48,8 +48,10 @@ public class ContextMenu : MonoBehaviour
 
                     ClearCMOS();
 
-                    ContextMenuOption cmo_align = Instantiate(option, child.transform).GetComponent<ContextMenuOption>();
-                    cmo_align.SetText("no context menus available, try mousing over a sticker");
+                    ContextMenuOption cmo = Instantiate(option, child.transform).GetComponent<ContextMenuOption>();
+
+                    cmo.SetText("no context menus available, try mousing over a sticker");
+
                     cmos.Add(cmo_align);
                 }
                 else
@@ -59,7 +61,12 @@ public class ContextMenu : MonoBehaviour
                     for(int i = 0; i < HUDSticker.highlightedHUDSticker.CMOCommands.Count; i++)
                     {
                         ContextMenuOption cmo = Instantiate(option, child.transform).GetComponent<ContextMenuOption>();
+                       
+                        cmo.GetComponent<Button>().onClick.AddListener(() =>
+                        CMOS_OnClick_Align(HUDSticker.highlightedHUDSticker.transform.position));
+
                         cmo.SetText(HUDSticker.highlightedHUDSticker.CMOCommands[i].ToString());
+
                         cmos.Add(cmo);
                     }
                 }
@@ -80,5 +87,9 @@ public class ContextMenu : MonoBehaviour
             cmos.RemoveAt(0);
         }
         cmos.Clear();
+    }
+
+    private void CMOS_OnClick_Align(Vector3 position) {
+
     }
 }

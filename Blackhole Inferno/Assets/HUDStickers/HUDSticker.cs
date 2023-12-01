@@ -84,6 +84,7 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
         
         if (distance >= 1000) {
             // Set the target position 900 units away from absoluteWorldPosition towards LPC.absoluteWorldPosition
+            // This ensures stickers are visible from the ship position and camera maximum offset from ship
             Vector3 targetPosition = Vector3.MoveTowards(absoluteWorldPosition, LPC.absoluteWorldPosition, 900f);
             transform.position = targetPosition;
         }

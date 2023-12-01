@@ -3,6 +3,7 @@ using TMPro;
 
 public class Tooltip : MonoBehaviour
 {
+    public Transform ttTrasnsform;
     public static Tooltip instance;
     public TMP_Text text;
 
@@ -29,6 +30,11 @@ public class Tooltip : MonoBehaviour
 
     // This only updates while mousing over an entity
     private void Update() {
-        transform.position = Input.mousePosition + Vector3.right * text.preferredWidth / 2;
+        ttTrasnsform.position = Input.mousePosition + Vector3.right * text.preferredWidth / 2;
+    }
+    
+    public void OnAnimationComplete()
+    {
+        Debug.Log("context menu animation over");
     }
 }

@@ -9,9 +9,11 @@ public class ContextMenu : MonoBehaviour
     public bool Opened {get; set;} = false;
     private List<ContextMenuOption> cmos = new List<ContextMenuOption>();
     public RectTransform child;
+    public Transform cmTransform;
     public GameObject option;
     public HUDSticker currentSticker = null;
     public Ship playerShip;
+    public UIToggle uIToggle;
 
     private void Awake() => instance = this;
 
@@ -19,8 +21,8 @@ public class ContextMenu : MonoBehaviour
         
         if(Opened == true)
         {
-            float distanceX = Input.mousePosition.x - transform.position.x;
-            float distanceY = Input.mousePosition.y - transform.position.y;
+            float distanceX = Input.mousePosition.x - cmTransform.position.x;
+            float distanceY = Input.mousePosition.y - cmTransform.position.y;
 
             Vector2 transformSizeDelta = child.sizeDelta;
 
@@ -85,14 +87,16 @@ public class ContextMenu : MonoBehaviour
             // Reposition the context menu so the cursor isn't directly over any options
             float optionHeight = option.GetComponent<RectTransform>().sizeDelta.y;
             Vector3 offset = new Vector3(-15, -(optionHeight * cmos.Count / 2));
-            transform.position = Input.mousePosition + offset;
+            cmTransform.position = Input.mousePosition + offset;
 
             LayoutRebuilder.ForceRebuildLayoutImmediate(child);
+            uIToggle.Enable();
         }
     }    
 
     private void ClearCMOS()
     {
+        Opened = false;        
         while (cmos.Count > 0)
         {
             Destroy(cmos[0].gameObject);
@@ -100,6 +104,11 @@ public class ContextMenu : MonoBehaviour
         }
         cmos.Clear();
         currentSticker = null;
-        Opened = false;
+    }
+
+    public void OnAnimationComplete()
+    {
+
+
     }
 }

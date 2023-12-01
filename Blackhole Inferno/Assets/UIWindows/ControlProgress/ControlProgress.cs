@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class ControlProgress : MonoBehaviour
 {
+    public RectTransform cpTransform;
     public Image imgIcon;
     public Text txtProgram;
     public Text txtStatus;
@@ -10,16 +11,30 @@ public class ControlProgress : MonoBehaviour
     public RectTransform imgProgress;
     public Text txtProgress;
 
+    public UIToggle uIToggle;
+
+    private void Awake() {
+        uIToggle.Disable();
+    }
+
     public void RunProgram(string programName, Sprite sprite)
     {
+        cpTransform.gameObject.SetActive(true);
         txtProgram.text = "PROGRAM: " + programName.ToUpper();
         imgIcon.sprite = sprite;
         txtProgress.text = "00.00% COMPLETE";
         txtStatus.text = $"IN PROGRESS";
+        uIToggle.Enable();
     }
 
     public void Complete() {
         txtStatus.text = $"SHUTTING DOWN";
+        uIToggle.Disable();
+    }
+
+    public void OnFadeOutComplete_SetInactive()
+    {
+        cpTransform.gameObject.SetActive(false);
     }
 
     /// <summary>where 1.0f equals 100%</summary>
@@ -42,5 +57,10 @@ public class ControlProgress : MonoBehaviour
     
         if(warpSpeed != 0.0f)
             txtStatus.text = $"IN PROGRESS {warpSpeed} AU";
+    }
+
+    public void OnAnimationComplete()
+    {
+        Debug.Log("animation over");
     }
 }

@@ -81,12 +81,10 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
 
         // Distance from player ship
         float distance = Vector3.Distance(absoluteWorldPosition, LPC.absoluteWorldPosition);
-
         
-        if (distance >= 995) {
+        if (distance >= 1000) {
             // Set the target position 900 units away from absoluteWorldPosition towards LPC.absoluteWorldPosition
             Vector3 targetPosition = Vector3.MoveTowards(absoluteWorldPosition, LPC.absoluteWorldPosition, 900f);
-
             transform.position = targetPosition;
         }
     }

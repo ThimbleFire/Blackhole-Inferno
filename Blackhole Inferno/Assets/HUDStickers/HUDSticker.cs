@@ -77,6 +77,17 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
         var size = (Camera.main.transform.position - transform.position).magnitude; 
         
         float scale = 0.003f;
-        transform.localScale = new Vector3(size,size,size) * scale; 
+        transform.localScale = new Vector3(size,size,size) * scale;
+
+        // Distance from player ship
+        float distance = Vector3.Distance(absoluteWorldPosition, LPC.absoluteWorldPosition);
+
+        // Set the target position 900 units away from absoluteWorldPosition towards LPC.absoluteWorldPosition
+        Vector3 targetPosition = Vector3.MoveTowards(absoluteWorldPosition, LPC.absoluteWorldPosition, 900f);
+
+        if (distance >= 995) {
+            transform.position = targetPosition;
+        }
+
     }
 }

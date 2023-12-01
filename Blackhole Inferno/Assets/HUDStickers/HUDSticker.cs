@@ -16,7 +16,7 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
     // warp to
     public float signatureRadius = 65.0f;
 
-    // theoretical position
+    // the sticker's transform position says where the UI images is. The real world position is this absoluteWorldPosition
     public Vector3 absoluteWorldPosition;
 
     // theoretical rotation
@@ -39,12 +39,9 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
                 //CameraMove.instance.ResetDistance(transform.forward, signatureRadius);        
             }
             // single-click
-            else 
-            {
-                lastClickTime = currentTime;
-            }
+            else lastClickTime = currentTime;
         }
-        if(eventData.button == PointerEventData.InputButton.Right)
+        if( eventData.button == PointerEventData.InputButton.Right )
         {
             ContextMenu.instance.OpenContextMenu(this);
         }
@@ -73,7 +70,8 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
         transform.LookAt(transform.position + Camera.main.transform.rotation * Vector3.forward,
                          Camera.main.transform.rotation * Vector3.up);
 
-        // Resize the UI element so that regardless of zoom, it shows at the correct size. we can entirely remove this segment by using screen space overlay, might be more to it though
+        // Resize the UI element so that regardless of zoom, it shows at the correct size.
+        // We can entirely remove this segment by using screen space overlay, might be more to it though
         var size = (Camera.main.transform.position - transform.position).magnitude; 
         
         float scale = 0.003f;
@@ -84,9 +82,9 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
         float distance = Vector3.Distance(absoluteWorldPosition, LPC.absoluteWorldPosition);
         
         if (distance >= 1000) {
-            // Set the target position 900 units away from absoluteWorldPosition towards LPC.absoluteWorldPosition
+            // Set the target position 995 units away from absoluteWorldPosition towards LPC.absoluteWorldPosition
             // This ensures stickers are visible from the ship position and camera maximum offset from ship
-            Vector3 targetPosition = Vector3.MoveTowards(absoluteWorldPosition, LPC.absoluteWorldPosition, 900f);
+            Vector3 targetPosition = Vector3.MoveTowards( LPC.absoluteWorldPosition, absoluteWorldPosition, 995f);
             transform.position = targetPosition;
         }
     }

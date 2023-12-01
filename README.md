@@ -6,6 +6,8 @@ Todo
 
 * add gameplay events for the context menu to call
    * Dock
+* create a canvas element fade in that can be recycled for all window UI elements
+
 
 each system has global objects - these are objects that can be selected from anywhere in the system. warping to these locations might reveal local objects - these are objects that only show up while you're nearby, things like rocks, wrecks, gasses and ships.
 

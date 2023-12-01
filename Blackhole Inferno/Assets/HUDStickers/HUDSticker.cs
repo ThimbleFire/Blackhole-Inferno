@@ -79,7 +79,8 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
         float scale = 0.003f;
         transform.localScale = new Vector3(size,size,size) * scale;
 
-        // Distance from player ship
+        // Distance from player ship.
+        // Note: I may only need to update this when the ship moves
         float distance = Vector3.Distance(absoluteWorldPosition, LPC.absoluteWorldPosition);
         
         if (distance >= 1000) {

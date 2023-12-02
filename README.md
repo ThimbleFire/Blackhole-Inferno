@@ -4,6 +4,9 @@ Todo
 
 ![image](https://github.com/ThimbleFire/Blackhole-Inferno/assets/14812476/70b9f590-79b7-4ecb-a9ac-a470c05a2fff)
 
+* fix loading bar height animation
+* add symbol to new UI
+* 
 * add gameplay events for the context menu to call
   * Dock
 * experiment with making sky boxes using shader graph nodes. copy and flip the clouds

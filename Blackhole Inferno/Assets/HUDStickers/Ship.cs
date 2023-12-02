@@ -137,8 +137,5 @@ public class Ship : HUDSticker
         window.Build(null, "PROGRAM: WARP", Color.red);
     }
 
-    private void UpdateLoadingBar(float percentageCompletion)
-    {
-        window.loadingBar.SetValue(percentageCompletion);
-    }
+    private void UpdateLoadingBar(float percentageCompletion) => window.loadingBar.SetValue(percentageCompletion);
 }

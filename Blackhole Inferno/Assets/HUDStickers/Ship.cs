@@ -110,6 +110,8 @@ public class Ship : HUDSticker
         interactingWithSticker = sticker;
         finishedRotating = false;
         initialAngleToRotate = Vector3.Angle(rot, sticker.absoluteWorldPosition);
+
+        window.Build(null, "PROGRAM: ALIGN", Color.red);
     }
     
     public void SetWarpTo(HUDSticker sticker) {
@@ -117,6 +119,7 @@ public class Ship : HUDSticker
             Debug.LogError("Unable to warp. Already warping");
             return;
         }
+
         if(rot != sticker.absoluteWorldPosition) {
             SetRotateTo(sticker);
             warpAfterAlign = true;
@@ -132,11 +135,5 @@ public class Ship : HUDSticker
         distanceAtTimeOfWarp = Vector3.Distance(absoluteWorldPosition, interactingWithSticker.absoluteWorldPosition) - interactingWithSticker.signatureRadius;
 
         window.Build(null, "PROGRAM: WARP", Color.red);
-        window.loadingBar.LoadingComplete += LoadingBar_Complete;
-    }
-
-    private void LoadingBar_Complete()
-    {
-        Debug.Log("Warp complete");
     }
 }

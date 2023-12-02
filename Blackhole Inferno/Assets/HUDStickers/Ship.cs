@@ -7,13 +7,15 @@ public class Ship : HUDSticker
     public static Ship LPC;
 
     private Queue<Instruction> instructions = new Queue<Instruction>();
-    private Dictionary<ContextMenuOption.Commands, Action> ActionDictionary = new Dictionary<ContextMenuOption.Commands, Action>();
+    private Dictionary<ContextMenuOptions.Command, Action> ActionDictionary = new Dictionary<ContextMenuOptions.Command, Action>();
     private LoadingBar bar;
     public UIExpandingAddition window;
 
     void Awake()
     {
         LPC = this;
+        ActionDictionary.Add(ContextMenuOptions.Command.WarpTo, WarpToTargetCoroutine);
+            ActionDictionary.Add(ContextMenuOptions.Command.Align, RotateToTargetCoroutine);
     }
 
     void Start()

@@ -6,7 +6,7 @@ Todo
 
 * fix loading bar height animation
 * add symbol to new UI
-* 
+* have ship class use a queue to store actions. peek this queue to get current task, removing need for booleans like finishedWarping, finishedRotating, warpAfterRotate.
 * add gameplay events for the context menu to call
   * Dock
 * experiment with making sky boxes using shader graph nodes. copy and flip the clouds

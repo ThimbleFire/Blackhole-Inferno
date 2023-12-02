@@ -52,15 +52,15 @@ public class Ship : HUDSticker
         // Move transform forward in the direction of rot
         float warpStep = Mathf.Clamp(currentWarpSpeed, 0.0f, 3.5f) * Time.deltaTime;
         // Calculate the remaining distance
-        float remainingDistance = Vector3.Distance(absoluteWorldPosition, interactingWithSticker.absoluteWorldPosition) - interactingWithSticker.signatureRadius;
+        float remainingDistance = Vector3.Distance(absoluteWorldPosition, interactingWithSticker.absoluteWorldPosition);
         // Calculate the percentage of travel completion
-        float percentageCompletion = Mathf.Clamp01(1.0f - (remainingDistance / distanceAtTimeOfWarp));
+        float percentageCompletion = Mathf.Clamp01(1.0f - ((remainingDistance - interactingWithSticker.signatureRadius) / distanceAtTimeOfWarp));
         window.loadingBar.SetValue(percentageCompletion);
         absoluteWorldPosition = Vector3.Lerp(absoluteWorldPosition, interactingWithSticker.absoluteWorldPosition, warpStep);
         transform.position = absoluteWorldPosition;
         //
         // Check if the warping is complete
-        if (Vector3.Distance(absoluteWorldPosition, interactingWithSticker.absoluteWorldPosition) < interactingWithSticker.signatureRadius) {
+        if (remainingDistance < interactingWithSticker.signatureRadius) {
             finishedWarping = true;
         }
         else {

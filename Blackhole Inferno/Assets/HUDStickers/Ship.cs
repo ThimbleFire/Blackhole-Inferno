@@ -54,7 +54,7 @@ public class Ship : HUDSticker
         float remainingDistance = Vector3.Distance(absoluteWorldPosition, interactingWithSticker.absoluteWorldPosition);
         // Calculate the percentage of travel completion
         float percentageCompletion = Mathf.Clamp01(1.0f - ((remainingDistance - interactingWithSticker.signatureRadius) / distanceAtTimeOfWarp));
-        window.loadingBar.SetValue(percentageCompletion);
+        UpdateLoadingBar(percentageCompletion);
 
         float warpStep = Mathf.Clamp(currentWarpSpeed, 0.0f, maximumWarpSpeed) * Time.deltaTime;
         // Calculate the interpolation factor outside of Lerp for readability
@@ -79,16 +79,17 @@ public class Ship : HUDSticker
             return;
        
         float rotationSpeed = 3.5f;
-        float t = Mathf.Clamp01(Time.deltaTime * rotationSpeed);
+        float rotLerp = Mathf.Clamp01(Time.deltaTime * rotationSpeed);
         // Calculate the remaining angle to rotate
         float remainingAngle = Vector3.Angle(rot, interactingWithSticker.absoluteWorldPosition);
         // Perform the rotation
-        rot = Vector3.Slerp(rot, interactingWithSticker.absoluteWorldPosition, t);
+        rot = Vector3.Slerp(rot, interactingWithSticker.absoluteWorldPosition, rotLerp);
         // Calculate the percentage of rotation completion
         float percentageCompletion = Mathf.Clamp01(1.0f - (remainingAngle / initialAngleToRotate));
-        window.loadingBar.SetValue(percentageCompletion);
+        UpdateLoadingBar(percentageCompletion);
         // Check if the rotation is complete
-        if (remainingAngle < 0.1f)
+        float rotationThreshold = 0.1f;
+        if (remainingAngle < rotationThreshold)
         {
             rot = interactingWithSticker.absoluteWorldPosition;
             finishedRotating = true;
@@ -134,5 +135,10 @@ public class Ship : HUDSticker
         distanceAtTimeOfWarp = Vector3.Distance(absoluteWorldPosition, interactingWithSticker.absoluteWorldPosition) - interactingWithSticker.signatureRadius;
 
         window.Build(null, "PROGRAM: WARP", Color.red);
+    }
+
+    private void UpdateLoadingBar(float percentageCompletion)
+    {
+        window.loadingBar.SetValue(percentageCompletion);
     }
 }

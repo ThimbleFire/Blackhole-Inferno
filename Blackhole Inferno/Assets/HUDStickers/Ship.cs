@@ -48,7 +48,7 @@ public class Ship : HUDSticker
 
     private IEnumerator WarpToTargetCoroutine()
     {
-        HUDSticker sticker = instructions.Peek();
+        HUDSticker sticker = instructions.Peek().Sticker;
 
         float currentWarpSpeed = 0.0f;
         float accelerationRate = 0.01f;
@@ -57,7 +57,7 @@ public class Ship : HUDSticker
         float maximumWarpSpeed = 3.5f;
         float distanceAtTimeOfWarp = Vector3.Distance(absoluteWorldPosition, interactingWithSticker.absoluteWorldPosition) - interactingWithSticker.signatureRadius;
 
-        while ( instructions.Peek().Instruction == ContextMenuOption.Commands.WarpTo )
+        while ( instructions.Peek().Command == ContextMenuOption.Commands.WarpTo )
         {
             float remainingDistance = Vector3.Distance(absoluteWorldPosition, sticker.absoluteWorldPosition);
             float percentageCompletion = Mathf.Clamp01(1.0f - ((remainingDistance - sticker.signatureRadius) / distanceAtTimeOfWarp));
@@ -81,13 +81,13 @@ public class Ship : HUDSticker
 
     private IEnumerator RotateToTargetCoroutine()
     {
-        HUDSticker sticker = instructions.Peek();
+        HUDSticker sticker = instructions.Peek().Sticker;
 
         float initialAngleToRotate = Vector3.Angle(rot, sticker.absoluteWorldPosition);
         float rotationSpeed = 3.5f;
         float rotationThreshold = 0.1f;
 
-        while ( instructions.Peek().Instruction == ContextMenuOption.Commands.AlignTo )
+        while ( instructions.Peek().Command == ContextMenuOption.Commands.AlignTo )
         {
             float rotLerp = Mathf.Clamp01(Time.deltaTime * rotationSpeed);
             float remainingAngle = Vector3.Angle(rot, sticker.absoluteWorldPosition);

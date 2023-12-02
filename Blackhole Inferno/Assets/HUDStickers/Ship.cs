@@ -15,7 +15,7 @@ public class Ship : HUDSticker
     {
         LPC = this;
         ActionDictionary.Add(ContextMenuOptions.Command.WarpTo, WarpToTargetCoroutine);
-            ActionDictionary.Add(ContextMenuOptions.Command.Align, RotateToTargetCoroutine);
+        ActionDictionary.Add(ContextMenuOptions.Command.Align,  RotateToTargetCoroutine);
     }
 
     void Start()
@@ -35,6 +35,7 @@ public class Ship : HUDSticker
     public void Instruct(Instruction instruction) {
         instructions.Add(instruction);
         if(instructions.Count == 1) {
+            window.Build(null, "PROGRAM: " + instructions.Peek().Command, Color.red);
             ActionDictionary[instructions.Peek().Command].Invoke(instructions.Peek().Sticker);
             instructions.Dequeue();
         }
@@ -48,8 +49,6 @@ public class Ship : HUDSticker
     private IEnumerator WarpToTargetCoroutine()
     {
         HUDSticker sticker = instructions.Peek();
-
-        window.Build(null, "PROGRAM: WARP", Color.red);
 
         float currentWarpSpeed = 0.0f;
         float accelerationRate = 0.01f;
@@ -84,8 +83,6 @@ public class Ship : HUDSticker
     {
         HUDSticker sticker = instructions.Peek();
 
-        window.Build(null, "PROGRAM: ALIGN", Color.red);
-        
         float initialAngleToRotate = Vector3.Angle(rot, sticker.absoluteWorldPosition);
         float rotationSpeed = 3.5f;
         float rotationThreshold = 0.1f;

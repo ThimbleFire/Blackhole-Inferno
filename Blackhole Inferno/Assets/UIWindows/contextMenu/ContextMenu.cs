@@ -56,30 +56,13 @@ public class ContextMenu : MonoBehaviour
                 cmos.Add(cmo);
             }
             else
-            {
+            {           
                 for(int i = 0; i < sticker.CMOCommands.Count; i++)
                 {
                     ContextMenuOption cmo = Instantiate(option, child.transform).GetComponent<ContextMenuOption>();
-                    
-                    switch(sticker.CMOCommands[i])
-                    {
-                        case ContextMenuOption.Commands.Align:
-                            cmo.SetText("Align");
-                            cmo.GetComponent<Button>().onClick.AddListener(() => playerShip.SetRotateTo(sticker));
-                            cmo.GetComponent<Button>().onClick.AddListener(() => ClearCMOS());                       
-                        break;
-                        case ContextMenuOption.Commands.WarpTo:
-                            cmo.SetText("Warp");
-                            cmo.GetComponent<Button>().onClick.AddListener(() => playerShip.SetWarpTo(sticker));
-                            cmo.GetComponent<Button>().onClick.AddListener(() => ClearCMOS());  
-                        break;
-                        case ContextMenuOption.Commands.Dock:
-                            cmo.SetText("Dock");
-                            //cmo.GetComponent<Button>().onClick.AddListener(() => CMOS_OnClick_Dock(sticker.GetComponent<Station>()));
-                            cmo.GetComponent<Button>().onClick.AddListener(() => ClearCMOS());  
-                        break;
-                    }                        
-
+                    cmo.SetText(sticker.CMOCommands[i].ToString());
+                    cmo.GetComponent<Button>().onClick.AddListener(() => playerShip.Instruct( new Instruction(sticker, sticker.CMOCommands[i]) );
+                    cmo.GetComponent<Button>().onClick.AddListener(() => ClearCMOS());  
                     cmos.Add(cmo);
                 }
             }

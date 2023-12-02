@@ -7,13 +7,12 @@ public class Ship : HUDSticker
     public static Ship LPC;
 
     private Queue<Instruction> instructions = new Queue<Instruction>();
-    private Dictionary<ContextMenuOptions.Command, Action> ActionDictionary = new Dictionary<ContextMenuOptions.Command, Action>();
+    
     private LoadingBar bar;
     public UIExpandingAddition window;
-
+    private Dictionary<ContextMenuOptions.Command, Action> ActionDictionary = new Dictionary<ContextMenuOptions.Command, Action>();
     void Awake()
     {
-        LPC = this;
         ActionDictionary.Add(ContextMenuOptions.Command.WarpTo, WarpToTargetCoroutine);
         ActionDictionary.Add(ContextMenuOptions.Command.Align,  RotateToTargetCoroutine);
     }
@@ -36,7 +35,7 @@ public class Ship : HUDSticker
         instructions.Add(instruction);
         if(instructions.Count == 1) {
             window.Build(null, "PROGRAM: " + instructions.Peek().Command.ToString().To upper(), Color.red);
-            ActionDictionary[instructions.Peek().Command].Invoke(instructions.Peek().Sticker);
+                StartCoroutine(ActionCoroutine(instructions.Peek().Command, instructions.Peek().Sticker));
             instructions.Dequeue();
         }
     }

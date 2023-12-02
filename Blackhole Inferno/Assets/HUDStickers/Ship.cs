@@ -7,9 +7,8 @@ public class Ship : HUDSticker
     public static Ship LPC;
 
     private Queue<Instruction> instructions = new Queue<Instruction>();
-
+    private Dictionary<ContextMenuOption.Commands, Action> ActionDictionary = new Dictionary<ContextMenuOption.Commands, Action>();
     private LoadingBar bar;
-
     public UIExpandingAddition window;
 
     void Awake()
@@ -33,6 +32,10 @@ public class Ship : HUDSticker
 
     public void Instruct(Instruction instruction) {
         instructions.Add(instruction);
+        if(instructions.Count == 1) {
+            ActionDictionary[instructions.Peek().Command].Invoke(instructions.Peek().Sticker);
+            instructions.Dequeue();
+        }
     }
 
     protected override void Update()
@@ -42,32 +45,27 @@ public class Ship : HUDSticker
 
     private IEnumerator WarpToTargetCoroutine()
     {
+        HUDSticker sticker = instructions.Peek();
+
+        window.Build(null, "PROGRAM: WARP", Color.red);
+
         float currentWarpSpeed = 0.0f;
         float accelerationRate = 0.01f;
         float accelerationRate2 = 0.01f;
         float distanceAtTimeOfWarp = 0.0f;
         float maximumWarpSpeed = 3.5f;
-
-        HUDSticker sticker = instructions.Peek();
+        float distanceAtTimeOfWarp = Vector3.Distance(absoluteWorldPosition, interactingWithSticker.absoluteWorldPosition) - interactingWithSticker.signatureRadius;
 
         while ( instructions.Peek().Instruction == ContextMenuOption.Commands.WarpTo )
         {
             float remainingDistance = Vector3.Distance(absoluteWorldPosition, sticker.absoluteWorldPosition);
-
             float percentageCompletion = Mathf.Clamp01(1.0f - ((remainingDistance - sticker.signatureRadius) / distanceAtTimeOfWarp));
-
             UpdateLoadingBar(percentageCompletion);
-
             float warpStep = Mathf.Clamp(currentWarpSpeed, 0.0f, maximumWarpSpeed) * Time.deltaTime;
-
             float lerpFactor = Mathf.Clamp01(warpStep / remainingDistance);
-
             absoluteWorldPosition = Vector3.Lerp(absoluteWorldPosition, sticker.absoluteWorldPosition, lerpFactor);
-
             transform.position = absoluteWorldPosition;
-
-            if (remainingDistance < sticker.signatureRadius)
-            {
+            if (remainingDistance < sticker.signatureRadius) {
                 instructions.Dequeue();
             }
             else
@@ -83,6 +81,8 @@ public class Ship : HUDSticker
     private IEnumerator RotateToTargetCoroutine()
     {
         HUDSticker sticker = instructions.Peek();
+
+        window.Build(null, "PROGRAM: ALIGN", Color.red);
         
         float initialAngleToRotate = Vector3.Angle(rot, sticker.absoluteWorldPosition);
         float rotationSpeed = 3.5f;
@@ -103,30 +103,6 @@ public class Ship : HUDSticker
              }
              yield return null;
         }
-    }
-
-    public void SetWarpTo(HUDSticker sticker)
-    {
-        if (rot != sticker.absoluteWorldPosition) {
-            SetRotateTo(sticker);
-            warpAfterAlign = true;
-            return;
-        }
-
-        finishedWarping = false;
-        currentWarpSpeed = 0.0f;
-        accelerationRate = 0.0f;
-
-        distanceAtTimeOfWarp = Vector3.Distance(absoluteWorldPosition, interactingWithSticker.absoluteWorldPosition) - interactingWithSticker.signatureRadius;
-
-        window.Build(null, "PROGRAM: WARP", Color.red);
-        StartCoroutine(WarpToTargetCoroutine());
-    }
-
-    public void SetRotateTo(HUDSticker sticker)
-    {
-        window.Build(null, "PROGRAM: ALIGN", Color.red);
-        StartCoroutine(RotateToTargetCoroutine());
     }
 
     private void UpdateLoadingBar(float percentageCompletion) => window.loadingBar.SetValue(percentageCompletion);

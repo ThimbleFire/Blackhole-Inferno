@@ -10,11 +10,6 @@ public class Ship : HUDSticker
 
     private HUDSticker interactingWithSticker = null;//
     private LoadingBar bar;
-    public float currentWarpSpeed = 0.0f;
-    private float accelerationRate = 0.01f;
-    private float accelerationRate2 = 0.01f;
-    private float distanceAtTimeOfWarp = 0.0f;
-    private float initialAngleToRotate = 0.0f;
 
     public UIExpandingAddition window;
 
@@ -44,7 +39,12 @@ public class Ship : HUDSticker
 
     private IEnumerator WarpToTargetCoroutine()
     {
+        float currentWarpSpeed = 0.0f;
+        float accelerationRate = 0.01f;
+        float accelerationRate2 = 0.01f;
+        float distanceAtTimeOfWarp = 0.0f;
         float maximumWarpSpeed = 3.5f;
+
         while (instructions.Peek().Instruction == ContextMenuOption.Commands.WarpTo )
         {
             float remainingDistance = Vector3.Distance(absoluteWorldPosition, interactingWithSticker.absoluteWorldPosition);
@@ -104,6 +104,7 @@ public class Ship : HUDSticker
 
     private IEnumerator RotateToTargetCoroutine()
     {
+        float initialAngleToRotate = 0.0f;
         float rotationSpeed = 3.5f;
         float rotationThreshold = 0.1f;
 

@@ -41,12 +41,8 @@ public class Ship : HUDSticker
     {
         base.Update();
 
-        // rotate the theoretical direction to allow for accurate forward propulsion
-        // transform rotation is reserved for facing the camera
         UpdateRotation();
         UpdateWarp();
-
-            
     }
 
     public void UpdateRotation() {
@@ -57,8 +53,6 @@ public class Ship : HUDSticker
         float warpStep = Mathf.Clamp(currentWarpSpeed, 0.0f, 3.5f) * Time.deltaTime;
         // Calculate the remaining distance
         float remainingDistance = Vector3.Distance(absoluteWorldPosition, interactingWithSticker.absoluteWorldPosition) - interactingWithSticker.signatureRadius;
-        // Ensure remainingDistance is non-negative
-        remainingDistance = Mathf.Max(remainingDistance, 0f);
         // Calculate the percentage of travel completion
         float percentageCompletion = Mathf.Clamp01(1.0f - (remainingDistance / distanceAtTimeOfWarp));
         window.loadingBar.SetValue(percentageCompletion);

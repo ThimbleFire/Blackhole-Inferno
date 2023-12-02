@@ -61,7 +61,8 @@ public class ContextMenu : MonoBehaviour
                 {
                     ContextMenuOption cmo = Instantiate(option, child.transform).GetComponent<ContextMenuOption>();
                     cmo.SetText(sticker.CMOCommands[i].ToString());
-                    cmo.GetComponent<Button>().onClick.AddListener(() => playerShip.Instruct( new Instruction(sticker, sticker.CMOCommands[i]) );
+                    int commandIndex = i;
+                    cmo.GetComponent<Button>().onClick.AddListener(() => playerShip.Instruct( new Instruction(sticker, sticker.CMOCommands[commandIndex]) ));
                     cmo.GetComponent<Button>().onClick.AddListener(() => ClearCMOS());  
                     cmos.Add(cmo);
                 }

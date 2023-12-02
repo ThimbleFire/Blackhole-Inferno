@@ -11,6 +11,8 @@ public class LoadingBar : MonoBehaviour
     public Text txtProgress;
     public RectTransform imgProgress;
 
+    public Animation animation;
+
     public void SetValue(float percent)
     {
         // Format the floating-point value as a string with two decimal places
@@ -26,6 +28,12 @@ public class LoadingBar : MonoBehaviour
             txtProgress.text = $"{formattedString}% COMPLETE";
         }
 
-        imgProgress.sizeDelta = new Vector2( 285.2f * percent, 36);
+        imgProgress.sizeDelta = new Vector2( 280f * percent, 36);
     }
+
+    //void OnEnable()
+    //{
+    //    animation.Play("ExpandHorizontalBounds");
+    //}
+    
 }

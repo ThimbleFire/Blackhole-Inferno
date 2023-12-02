@@ -6,15 +6,22 @@ public class Ship : HUDSticker
 {
     public static Ship LPC;
 
-    private Queue<Instruction> instructions = new Queue<Instruction>();
     
-    private LoadingBar bar;
-    public UIExpandingAddition window;
-    private Dictionary<ContextMenuOptions.Command, Action> ActionDictionary = new Dictionary<ContextMenuOptions.Command, Action>();
+    public List<Instruction> instructions = new List<Instruction>();
+    public GameObject prefabExpandingAddition;
+
+    private static Dictionary<ContextMenuOption.Commands, Packet> packets;
+    private delegate IEnumerator Packet();
+    
     void Awake()
     {
-        ActionDictionary.Add(ContextMenuOptions.Command.WarpTo, WarpToTargetCoroutine);
-        ActionDictionary.Add(ContextMenuOptions.Command.Align,  RotateToTargetCoroutine);
+        LPC = this;
+
+        packets = new Dictionary<ContextMenuOption.Commands, Packet>()
+        {
+            {ContextMenuOption.Commands.Align, RotateToTargetCoroutine}, 
+            {ContextMenuOption.Commands.WarpTo, WarpToTargetCoroutine}
+        };
     }
 
     void Start()
@@ -32,11 +39,11 @@ public class Ship : HUDSticker
     }
 
     public void Instruct(Instruction instruction) {
+
         instructions.Add(instruction);
+
         if(instructions.Count == 1) {
-            window.Build(null, "PROGRAM: " + instructions.Peek().Command.ToString().To upper(), Color.red);
-            StartCoroutine(ActionCoroutine(instructions.Peek().Command, instructions.Peek().Sticker));
-            instructions.Dequeue();
+            InstructionStep();
         }
     }
 
@@ -47,28 +54,39 @@ public class Ship : HUDSticker
 
     private IEnumerator WarpToTargetCoroutine()
     {
-        HUDSticker sticker = instructions.Peek().Sticker;
+        HUDSticker sticker = instructions[0].Sticker;
+
+        if(sticker.absoluteWorldPosition != rot)
+        {
+            instructions.Insert(0, new Instruction(sticker, ContextMenuOption.Commands.Align));
+            InstructionStep();
+            yield break;
+        }
 
         float currentWarpSpeed = 0.0f;
-        float accelerationRate = 0.01f;
-        float accelerationRate2 = 0.01f;
-        float distanceAtTimeOfWarp = 0.0f;
-        float maximumWarpSpeed = 3.5f;
-        float distanceAtTimeOfWarp = Vector3.Distance(absoluteWorldPosition, interactingWithSticker.absoluteWorldPosition) - interactingWithSticker.signatureRadius;
+        float accelerationRate = 1.0f;
+        float accelerationRate2 = 1.0f;
+        float maximumWarpSpeed = 350f;
+        float distanceAtTimeOfWarp = Vector3.Distance(absoluteWorldPosition, sticker.absoluteWorldPosition) - sticker.signatureRadius;
+        UIExpandingAddition window = Instantiate(prefabExpandingAddition).GetComponentInChildren<UIExpandingAddition>();
+        window.Build(null, "RUNNING PROGRAM: WARP", Color.red);
 
-        while ( instructions.Peek().Command == ContextMenuOption.Commands.WarpTo )
+        while ( instructions.Count > 0 && instructions[0].Command == ContextMenuOption.Commands.WarpTo )
         {
             float remainingDistance = Vector3.Distance(absoluteWorldPosition, sticker.absoluteWorldPosition);
             float percentageCompletion = Mathf.Clamp01(1.0f - ((remainingDistance - sticker.signatureRadius) / distanceAtTimeOfWarp));
-            UpdateLoadingBar(percentageCompletion);
+            window.loadingBar.SetValue(percentageCompletion);
             float warpStep = Mathf.Clamp(currentWarpSpeed, 0.0f, maximumWarpSpeed) * Time.deltaTime;
             float lerpFactor = Mathf.Clamp01(warpStep / remainingDistance);
             absoluteWorldPosition = Vector3.Lerp(absoluteWorldPosition, sticker.absoluteWorldPosition, lerpFactor);
             transform.position = absoluteWorldPosition;
-            if (remainingDistance < sticker.signatureRadius) {
-                instructions.Dequeue();
+            if (remainingDistance < sticker.signatureRadius)
+            {
+                instructions.RemoveAt(0);
+                GameObject.Destroy(window.transform.parent.gameObject);
+                InstructionStep();
             }
-            else
+            else if (currentWarpSpeed < maximumWarpSpeed )
             {
                 accelerationRate += accelerationRate2 * Time.deltaTime;
                 currentWarpSpeed += accelerationRate * Time.deltaTime;
@@ -78,30 +96,41 @@ public class Ship : HUDSticker
         }
     }
 
+    private void InstructionStep()
+    {
+        if(instructions.Count > 0)
+            if(packets.TryGetValue(instructions[0].Command, out Packet packet)) {
+                StartCoroutine(packet.Invoke());
+            }
+            else Debug.LogError("No Coroutine found for " + instructions[0].Command);
+    }
+
     private IEnumerator RotateToTargetCoroutine()
     {
-        HUDSticker sticker = instructions.Peek().Sticker;
+        HUDSticker sticker = instructions[0].Sticker;
 
         float initialAngleToRotate = Vector3.Angle(rot, sticker.absoluteWorldPosition);
         float rotationSpeed = 3.5f;
         float rotationThreshold = 0.1f;
+        UIExpandingAddition window = Instantiate(prefabExpandingAddition).GetComponentInChildren<UIExpandingAddition>();
+        window.Build(null, "RUNNING PROGRAM: ALIGN", Color.red);
 
-        while ( instructions.Peek().Command == ContextMenuOption.Commands.AlignTo )
+        while ( instructions.Count > 0 && instructions[0].Command == ContextMenuOption.Commands.Align )
         {
             float rotLerp = Mathf.Clamp01(Time.deltaTime * rotationSpeed);
             rot = Vector3.Slerp(rot, sticker.absoluteWorldPosition, rotLerp);
             float remainingAngle = Vector3.Angle(rot, sticker.absoluteWorldPosition);
 
             float percentageCompletion = Mathf.Clamp01(1.0f - (remainingAngle / initialAngleToRotate));
-            UpdateLoadingBar(percentageCompletion);
+            window.loadingBar.SetValue(percentageCompletion);
   
             if (remainingAngle < rotationThreshold) {
                 rot = sticker.absoluteWorldPosition;
-                instructions.Dequeue();
+                instructions.RemoveAt(0);
+                GameObject.Destroy(window.transform.parent.gameObject);
+                InstructionStep();
              }
              yield return null;
         }
     }
-
-    private void UpdateLoadingBar(float percentageCompletion) => window.loadingBar.SetValue(percentageCompletion);
 }

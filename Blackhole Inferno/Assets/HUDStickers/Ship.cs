@@ -35,7 +35,7 @@ public class Ship : HUDSticker
         instructions.Add(instruction);
         if(instructions.Count == 1) {
             window.Build(null, "PROGRAM: " + instructions.Peek().Command.ToString().To upper(), Color.red);
-                StartCoroutine(ActionCoroutine(instructions.Peek().Command, instructions.Peek().Sticker));
+            StartCoroutine(ActionCoroutine(instructions.Peek().Command, instructions.Peek().Sticker));
             instructions.Dequeue();
         }
     }

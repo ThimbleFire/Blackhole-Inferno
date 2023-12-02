@@ -35,7 +35,7 @@ public class Ship : HUDSticker
     public void Instruct(Instruction instruction) {
         instructions.Add(instruction);
         if(instructions.Count == 1) {
-            window.Build(null, "PROGRAM: " + instructions.Peek().Command, Color.red);
+            window.Build(null, "PROGRAM: " + instructions.Peek().Command.ToString().To upper(), Color.red);
             ActionDictionary[instructions.Peek().Command].Invoke(instructions.Peek().Sticker);
             instructions.Dequeue();
         }

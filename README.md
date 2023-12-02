@@ -1,17 +1,9 @@
 # Blackhole-Inferno
 
-Todo
+bugs to fix
 
-![image](https://github.com/ThimbleFire/Blackhole-Inferno/assets/14812476/70b9f590-79b7-4ecb-a9ac-a470c05a2fff)
-
-* fix loading bar height animation
+* ship speed is so fast gameobject shakes during move lerp between points. perhaps reduce distance and speed by a factor of 10. track speed to determine what speed causes camera issues.
 * add symbol to new UI
-* have ship class use a queue to store actions. peek this queue to get current task, removing need for booleans like finishedWarping, finishedRotating, warpAfterRotate.
-* add gameplay events for the context menu to call
-  * Dock
-* experiment with making sky boxes using shader graph nodes. copy and flip the clouds
-
-![sam](https://github.com/ThimbleFire/Blackhole-Inferno/assets/14812476/83f453b4-db06-44ff-a72b-88a624670f06)
 
 https://imgur.com/a/kfjfUKB
 

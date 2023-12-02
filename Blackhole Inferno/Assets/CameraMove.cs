@@ -29,7 +29,7 @@ public class CameraMove : MonoBehaviour
         }
     }
 
-    private void Update() {
+    private void LateUpdate() {
         if (target == null)
             return;
         Orbit();

@@ -2,7 +2,7 @@
 
 bugs to fix
 
-* ship speed is so fast gameobject shakes during move lerp between points. perhaps reduce distance and speed by a factor of 10. track speed to determine what speed causes camera issues.
+* ship speed shake (shoulder be fixed)
 * add symbol to new UI
 
 https://imgur.com/a/kfjfUKB

@@ -54,11 +54,11 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
         transform.localScale = new Vector3(size,size,size) * scale;
         // Distance from player ship.
         // Note: I may only need to update this when the ship moves
-        float distance = Vector3.Distance(absoluteWorldPosition, Ship.LPC.absoluteWorldPosition);        
+        float distance = Vector3.Distance(absoluteWorldPosition, Camera.main.transform.position);        
         if (distance >= 1000) {
             // Set the target position 995 units away from absoluteWorldPosition towards LPC.absoluteWorldPosition
             // This ensures stickers are visible from the ship position and camera maximum offset from ship
-            Vector3 targetPosition = Vector3.MoveTowards( Ship.LPC.absoluteWorldPosition, absoluteWorldPosition, 995f );
+            Vector3 targetPosition = Vector3.MoveTowards( Camera.main.transform.position, absoluteWorldPosition, 990f );
             transform.position = targetPosition;
         }
     }

@@ -20,7 +20,8 @@ public class Ship : HUDSticker
         packets = new Dictionary<ContextMenuOption.Commands, Packet>()
         {
             {ContextMenuOption.Commands.Align, RotateToTargetCoroutine}, 
-            {ContextMenuOption.Commands.WarpTo, WarpToTargetCoroutine}
+            {ContextMenuOption.Commands.WarpTo, WarpToTargetCoroutine}, 
+            {ContextMenuOption.Commands.Dock, DockCoroutine}
         };
     }
 
@@ -52,6 +53,25 @@ public class Ship : HUDSticker
         base.Update();
     }
 
+    private IEnumerator DockCoroutine()
+    {
+        HUDSticker sticker = instructions[0].Sticker;
+
+        if(Vector3.Distance(sticker.absoluteWorldPosition, absoluteWorldPosition) > sticker.signatureRadius)
+        {
+                instructions.Insert(0, new Instruction(sticker, ContextMenuOption.Commands.WarpTo));
+                InstructionStep();
+                yield break;
+        }
+
+        UIExpandingAddition window = Instantiate(prefabExpandingAddition).GetComponentInChildren<UIExpandingAddition>();
+        window.Build(null, "RUNNING PROGRAM: DOCK", Color.red);
+
+        yield return new WaitForSeconds(5f);
+
+        GameObject.Destroy(window.transform.parent.gameObject);
+    }
+
     private IEnumerator WarpToTargetCoroutine()
     {
         HUDSticker sticker = instructions[0].Sticker;
@@ -70,6 +90,7 @@ public class Ship : HUDSticker
         float distanceAtTimeOfWarp = Vector3.Distance(absoluteWorldPosition, sticker.absoluteWorldPosition) - sticker.signatureRadius;
         UIExpandingAddition window = Instantiate(prefabExpandingAddition).GetComponentInChildren<UIExpandingAddition>();
         window.Build(null, "RUNNING PROGRAM: WARP", Color.red);
+        window.enableLoadingBar = true;
 
         while ( instructions.Count > 0 && instructions[0].Command == ContextMenuOption.Commands.WarpTo )
         {
@@ -114,6 +135,7 @@ public class Ship : HUDSticker
         float rotationThreshold = 0.1f;
         UIExpandingAddition window = Instantiate(prefabExpandingAddition).GetComponentInChildren<UIExpandingAddition>();
         window.Build(null, "RUNNING PROGRAM: ALIGN", Color.red);
+        window.enableLoadingBar = true;
 
         while ( instructions.Count > 0 && instructions[0].Command == ContextMenuOption.Commands.Align )
         {

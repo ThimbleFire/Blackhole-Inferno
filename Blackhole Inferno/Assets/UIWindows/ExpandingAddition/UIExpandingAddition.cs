@@ -14,6 +14,8 @@ public class UIExpandingAddition : MonoBehaviour
         LoadingBar
     };
 
+    public bool enableLoadingBar { get; set; } = false;
+
     public Image symbol;
     public Text title;
     public Animation animation;
@@ -24,21 +26,21 @@ public class UIExpandingAddition : MonoBehaviour
     public event ExpansionCompleteHandler OnExpansionComplete;
 
     /// <summary> Initiate the animations that build the window</summary>
-    public LoadingBar Build(Sprite _symbol, string _title, Color color)
+    public void Build(Sprite _symbol, string _title, Color color)
     {
         //symbol.sprite = _symbol;
         title.text = _title;
         title.color = color;
         
         animation.Play("ExpandHorizontalBounds");
-
-        return loadingBar;
     }
     
     public void OnExpandHorizontalBounds_Complete()
     {
-        loadingBar.gameObject.SetActive(true);
+        if(enableLoadingBar)
+                loadingBar.gameObject.SetActive(true);
 
         // expand the loading bar
     }
+
 }

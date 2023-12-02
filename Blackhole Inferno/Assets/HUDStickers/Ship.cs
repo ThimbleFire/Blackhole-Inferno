@@ -90,8 +90,8 @@ public class Ship : HUDSticker
         while ( instructions.Peek().Command == ContextMenuOption.Commands.AlignTo )
         {
             float rotLerp = Mathf.Clamp01(Time.deltaTime * rotationSpeed);
-            float remainingAngle = Vector3.Angle(rot, sticker.absoluteWorldPosition);
             rot = Vector3.Slerp(rot, sticker.absoluteWorldPosition, rotLerp);
+            float remainingAngle = Vector3.Angle(rot, sticker.absoluteWorldPosition);
 
             float percentageCompletion = Mathf.Clamp01(1.0f - (remainingAngle / initialAngleToRotate));
             UpdateLoadingBar(percentageCompletion);

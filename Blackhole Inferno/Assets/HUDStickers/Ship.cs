@@ -10,14 +10,11 @@ public class Ship : HUDSticker
 
     private HUDSticker interactingWithSticker = null;//
     private LoadingBar bar;
-    private bool finishedRotating = true;
-    private bool finishedWarping = true;
     public float currentWarpSpeed = 0.0f;
     private float accelerationRate = 0.01f;
     private float accelerationRate2 = 0.01f;
     private float distanceAtTimeOfWarp = 0.0f;
     private float initialAngleToRotate = 0.0f;
-    private bool warpAfterAlign = false; //
 
     public UIExpandingAddition window;
 
@@ -47,15 +44,17 @@ public class Ship : HUDSticker
 
     private IEnumerator WarpToTargetCoroutine()
     {
-        if (finishedWarping)
-            yield break;
         float maximumWarpSpeed = 3.5f;
-        while (!finishedWarping) {
+        while (instructions.Peek().Instruction == ContextMenuOption.Commands.WarpTo )
+        {
             float remainingDistance = Vector3.Distance(absoluteWorldPosition, interactingWithSticker.absoluteWorldPosition);
+
             float percentageCompletion = Mathf.Clamp01(1.0f - ((remainingDistance - interactingWithSticker.signatureRadius) / distanceAtTimeOfWarp));
+
             UpdateLoadingBar(percentageCompletion);
 
             float warpStep = Mathf.Clamp(currentWarpSpeed, 0.0f, maximumWarpSpeed) * Time.deltaTime;
+
             float lerpFactor = Mathf.Clamp01(warpStep / remainingDistance);
 
             absoluteWorldPosition = Vector3.Lerp(absoluteWorldPosition, interactingWithSticker.absoluteWorldPosition, lerpFactor);
@@ -64,7 +63,7 @@ public class Ship : HUDSticker
 
             if (remainingDistance < interactingWithSticker.signatureRadius)
             {
-                finishedWarping = true;
+                instructions.Dequeue();
             }
             else
             {
@@ -105,13 +104,10 @@ public class Ship : HUDSticker
 
     private IEnumerator RotateToTargetCoroutine()
     {
-        if (finishedRotating)
-            yield break;
-
         float rotationSpeed = 3.5f;
         float rotationThreshold = 0.1f;
 
-        while (!finishedRotating)
+        while (instructions.Peek().Instruction == ContextMenuOption.Commands.AlignTo )
         {
             float rotLerp = Mathf.Clamp01(Time.deltaTime * rotationSpeed);
             float remainingAngle = Vector3.Angle(rot, interactingWithSticker.absoluteWorldPosition);
@@ -123,19 +119,13 @@ public class Ship : HUDSticker
             if (remainingAngle < rotationThreshold)
             {
                 rot = interactingWithSticker.absoluteWorldPosition;
-                finishedRotating = true;
-
-                if (warpAfterAlign)
-                {
-                    SetWarpTo(interactingWithSticker);
-                    warpAfterAlign = false;
-                }
+                instructions.Dequeue();
              }
              yield return null;
         }
     }
 
-    public void SetRotateTo(HUDSticker sticker
+    public void SetRotateTo(HUDSticker sticker)
     {
         if (!finishedRotating)
         {

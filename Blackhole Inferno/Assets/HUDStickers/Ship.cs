@@ -8,7 +8,6 @@ public class Ship : HUDSticker
 
     private Queue<Instruction> instructions = new Queue<Instruction>();
 
-    private HUDSticker interactingWithSticker = null;//
     private LoadingBar bar;
 
     public UIExpandingAddition window;

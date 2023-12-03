@@ -9,7 +9,8 @@
 * [ ] 1.1: Crew can build relationships with NPCs on stations, eventually they can marry and join the ship manifest - though they will not operate as crew members
 * [ ] 1.2: Some kind of multiplayer
 
-**Things To Do**
+**Priorites**
+* create the galaxy
 * system jumping
 * docking
   * trading

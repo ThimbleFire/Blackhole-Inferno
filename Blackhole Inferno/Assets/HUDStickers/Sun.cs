@@ -6,8 +6,6 @@ public class Sun : HUDSticker
 {
     void Start()
     {
-        signatureRadius = 256.0f;
-
         CMOCommands = new List<ContextMenuOption.Commands>
         { 
             ContextMenuOption.Commands.Align,

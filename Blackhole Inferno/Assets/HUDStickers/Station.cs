@@ -1,38 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class Station : HUDSticker
 {
-    public class AttributeDistribution
-    {
-        private int[] attributes = new int[5];
-     
-        public AttributeDistribution()
-        {
-            RandomlyDistributePoints(100);
-        }
-
-        private void RandomlyDistributePoints(int totalPoints)
-        {
-            Random random = new Random();
-
-            for (int i = 0; i < attributes.Length - 1; i++)
-            {
-                int randomPoints = random.Next(0, totalPoints + 1);
-                attributes[i] = randomPoints;
-                totalPoints -= randomPoints;
-            }
-
-            // Assign the remaining points to the last attribute
-           attributes[attributes.Length - 1] = totalPoints;
-        }
-    }
+    public int[] attributes = new int[5];
+    private byte totalPoints = 100;
 
     void Start()
-    {
-        signatureRadius = 65.0f;
-
+    { 
         CMOCommands = new List<ContextMenuOption.Commands>
         { 
             ContextMenuOption.Commands.Align,
@@ -41,5 +18,25 @@ public class Station : HUDSticker
             ContextMenuOption.Commands.LookAt, 
             ContextMenuOption.Commands.Examine
         };
+
+        RandomizeAttributes();
+    }
+
+    private void RandomizeAttributes(){
+        
+        System.Random rand = new System.Random();
+
+        for (int i = 0; i < attributes.Length - 1; i++)
+        {
+            int minPoints = totalPoints / (attributes.Length - i);
+            int maxPoints = Mathf.Min(totalPoints, minPoints + 10); // Adjust the range as needed
+
+            byte randomPoints = (byte)rand.Next(minPoints, maxPoints + 1);
+
+            attributes[i] = randomPoints;
+            totalPoints -= randomPoints;
+        }
+
+        attributes[attributes.Length - 1] = totalPoints;    
     }
 }

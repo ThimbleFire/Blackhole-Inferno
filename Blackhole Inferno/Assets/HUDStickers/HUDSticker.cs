@@ -18,7 +18,8 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
     public Vector3 rot = Vector3.zero;
     public Sprite Sprite {get{return GetComponent<UnityEngine.UI.Image>().sprite; } }
 
-    private void Awake() => absoluteWorldPosition = transform.position;
+    public void Start() => UpdateHUDStickerPositionsOnScreen();
+
     public void OnPointerClick(PointerEventData eventData) {
         if(eventData.button == PointerEventData.InputButton.Left) {
             float currentTime = Time.time;
@@ -35,7 +36,7 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
         }
     }
     public void OnPointerEnter(PointerEventData eventData) {
-        Tooltip.instance.Set($"{gameObject.name} ({Vector3.Distance(absoluteWorldPosition, Ship.LPC.absoluteWorldPosition)}) ");
+        Tooltip.instance.Show(this.name);
         highlightedHUDSticker = this;
     }
     public void OnPointerExit(PointerEventData eventData) {
@@ -44,16 +45,28 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
             highlightedHUDSticker = null;
         }
     } 
-    protected virtual void Update() {
+    
+    private void Update() {        
+        UpdateFaceTheCamera();        
+        UpdateSizeInRelationToCameraDistance();
+        UpdateHUDStickerPositionsOnScreen();        
+    }
+
+    void UpdateFaceTheCamera()
+    {
         // Make the canvas face the camera
         transform.LookAt(transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
+    }
+    void UpdateSizeInRelationToCameraDistance()
+    {
         // Resize the UI element so that regardless of zoom, it shows at the correct size.
-        // We can entirely remove this segment by using screen space overlay, might be more to it though
-        var size = (Camera.main.transform.position - transform.position).magnitude;  
         float scale = 0.003f;
+        var size = (Camera.main.transform.position - transform.position).magnitude;  
         transform.localScale = new Vector3(size,size,size) * scale;
+    }
+    void UpdateHUDStickerPositionsOnScreen()
+    {        
         // Distance from player ship.
-        // Note: I may only need to update this when the ship moves
         float distance = Vector3.Distance(absoluteWorldPosition, Camera.main.transform.position);        
         if (distance >= 1000) {
             // Set the target position 995 units away from absoluteWorldPosition towards LPC.absoluteWorldPosition

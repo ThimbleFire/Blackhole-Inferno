@@ -5,7 +5,10 @@ using UnityEngine;
 public class Ship : HUDSticker
 {
     public static Ship LPC;
-
+    public float currentWarpSpeed;
+    public float accelerationRate;
+    public float accelerationRate2;
+    public float maximumWarpSpeed;
     
     public List<Instruction> instructions = new List<Instruction>();
     public GameObject prefabExpandingAddition;
@@ -48,11 +51,6 @@ public class Ship : HUDSticker
         }
     }
 
-    protected override void Update()
-    {
-        base.Update();
-    }
-
     private IEnumerator DockCoroutine()
     {
         HUDSticker sticker = instructions[0].Sticker;
@@ -69,6 +67,7 @@ public class Ship : HUDSticker
 
         yield return new WaitForSeconds(5f);
 
+        instructions.RemoveAt(0);
         GameObject.Destroy(window.transform.parent.gameObject);
     }
 
@@ -83,13 +82,12 @@ public class Ship : HUDSticker
             yield break;
         }
 
-        float currentWarpSpeed = 0.0f;
-        float accelerationRate = 1.0f;
-        float accelerationRate2 = 1.0f;
-        float maximumWarpSpeed = 350f;
+        // 1.0f = 1km
+        currentWarpSpeed = 0.0f;
+        accelerationRate = 100.0f;
         float distanceAtTimeOfWarp = Vector3.Distance(absoluteWorldPosition, sticker.absoluteWorldPosition) - sticker.signatureRadius;
         UIExpandingAddition window = Instantiate(prefabExpandingAddition).GetComponentInChildren<UIExpandingAddition>();
-        window.Build(null, "RUNNING PROGRAM: WARP", Color.red);
+        window.Build(null, $"RUNNING PROGRAM: WARP", Color.red);
         window.enableLoadingBar = true;
 
         while ( instructions.Count > 0 && instructions[0].Command == ContextMenuOption.Commands.WarpTo )
@@ -155,4 +153,9 @@ public class Ship : HUDSticker
              yield return null;
         }
     }
+
+    // Vehicle speed
+    // string speed = currentWarpSpeed > 150.0f ? 
+    //     (currentWarpSpeed / 150.0f).ToString("F2").PadLeft(5, '0') + "AU" : 
+    //     currentWarpSpeed.ToString("F2").PadLeft(5, '0') + "km";
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
@@ -6,19 +7,13 @@ using UnityEngine.EventSystems;
 public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler {
 
     public static HUDSticker highlightedHUDSticker = null;
-    // context menu options 
-    [HideInInspector] public List<ContextMenuOption.Commands> CMOCommands;
-    // input
     private float lastClickTime = 0f;
-    // warp to
+    
     public float signatureRadius = 65.0f;
-    // the sticker's transform position says where the UI images is. The real world position is this absoluteWorldPosition
     public Vector3 absoluteWorldPosition;
-    // theoretical rotation
-    public Vector3 rot = Vector3.zero;
-    public Sprite Sprite {get{return GetComponent<UnityEngine.UI.Image>().sprite; } }
+    public List<ContextMenuOption.Commands> CMOCommands;
 
-    public void Start() => UpdateHUDStickerPositionsOnScreen();
+    public Sprite Sprite {get{return GetComponent<UnityEngine.UI.Image>().sprite; } }
 
     public void OnPointerClick(PointerEventData eventData) {
         if(eventData.button == PointerEventData.InputButton.Left) {
@@ -41,17 +36,15 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
     }
     public void OnPointerExit(PointerEventData eventData) {
         Tooltip.instance.Hide();
-        if(highlightedHUDSticker == this) {
+       if(highlightedHUDSticker == this) {
             highlightedHUDSticker = null;
         }
     } 
-    
     private void Update() {        
         UpdateFaceTheCamera();        
         UpdateSizeInRelationToCameraDistance();
         UpdateHUDStickerPositionsOnScreen();        
     }
-
     void UpdateFaceTheCamera()
     {
         // Make the canvas face the camera

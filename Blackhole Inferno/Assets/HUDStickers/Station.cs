@@ -1,42 +1,31 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class Station : HUDSticker
 {
-    public int[] attributes = new int[5];
-    private byte totalPoints = 100;
+    public XMLStation station;
 
-    void Start()
-    { 
-        CMOCommands = new List<ContextMenuOption.Commands>
-        { 
-            ContextMenuOption.Commands.Align,
-            ContextMenuOption.Commands.WarpTo, 
-            ContextMenuOption.Commands.Dock, 
-            ContextMenuOption.Commands.LookAt, 
-            ContextMenuOption.Commands.Examine
-        };
-
-        RandomizeAttributes();
+    void Awake()
+    {
+        this.name = station.name;
+        this.signatureRadius = station.signatureRadius;
+        this.absoluteWorldPosition = station.absoluteWorldPosition;
     }
+}
 
-    private void RandomizeAttributes(){
-        
-        System.Random rand = new System.Random();
+[Serializable]
+public class XMLStation
+{
+    public enum Ships { Sparrow, Starhawk, Raptor, Sentinel, Minotaur, Megalodon, Leviathan, Borealis, Austrialis, Operator, Macro, Telsaq, Ankh, Embalmer, Shroud, Lotus, Mimosa, Scarab, Scorpion, Obelisk, Sistrum, Prometheus, Dune, Rorschach, Blaze, Viper, Torque, Cyclone, Hurricane, Nova, Inferno, Phantom, Apex, Halo, Cyrilis, Charon }
 
-        for (int i = 0; i < attributes.Length - 1; i++)
-        {
-            int minPoints = totalPoints / (attributes.Length - i);
-            int maxPoints = Mathf.Min(totalPoints, minPoints + 10); // Adjust the range as needed
-
-            byte randomPoints = (byte)rand.Next(minPoints, maxPoints + 1);
-
-            attributes[i] = randomPoints;
-            totalPoints -= randomPoints;
-        }
-
-        attributes[attributes.Length - 1] = totalPoints;    
-    }
+    public string name;
+    public Vector3 absoluteWorldPosition;
+    public float signatureRadius;
+    public bool repairsAvailable;
+    public float standardDeviation;
+    public float taxRate;
+    public byte moduleSellLevel;
+    public bool trade_modules;
+    public List<Ships> shipsForSale;
 }

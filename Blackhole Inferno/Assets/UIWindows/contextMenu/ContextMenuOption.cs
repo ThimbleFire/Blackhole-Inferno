@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class ContextMenuOption : MonoBehaviour
 {    
     public enum Commands {
-        Align, Orbit, Dock, Approach, WarpTo, LookAt, Examine, Lock,
+        Align, Orbit, Dock, Approach, WarpTo, LookAt, Examine, Lock, Jump
     }
 
     public Text text;

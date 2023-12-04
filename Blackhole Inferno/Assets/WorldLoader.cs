@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WorldGen : MonoBehaviour
+public class WorldLoader : MonoBehaviour
 {
     public GameObject prefab_Planet;
     public GameObject prefab_Station;

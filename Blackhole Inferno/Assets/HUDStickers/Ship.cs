@@ -13,6 +13,8 @@ public class Ship : HUDSticker
     public List<Instruction> instructions = new List<Instruction>();
     public GameObject prefabExpandingAddition;
 
+    public Vector3 rot;
+
     private static Dictionary<ContextMenuOption.Commands, Packet> packets;
     private delegate IEnumerator Packet();
     

@@ -6,6 +6,14 @@ public class Planet : HUDSticker
 {
     public XMLPlanet planet;
 
+    internal void Load(XMLPlanet planet)
+    {
+        this.planet = planet;
+        this.name = planet.name;
+        this.signatureRadius = planet.signatureRadius;
+        this.absoluteWorldPosition = planet.absoluteWorldPosition;
+    }
+
     void Start()
     {
         this.name = planet.name;

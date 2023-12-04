@@ -30,6 +30,12 @@ public class Ship : HUDSticker
         };
     }
 
+    protected override void Update()
+    {
+        UpdateFaceTheCamera();
+        UpdateSizeInRelationToCameraDistance();
+    }
+
     void Start()
     {
         signatureRadius = 65.0f;
@@ -101,6 +107,7 @@ public class Ship : HUDSticker
             float lerpFactor = Mathf.Clamp01(warpStep / remainingDistance);
             absoluteWorldPosition = Vector3.Lerp(absoluteWorldPosition, sticker.absoluteWorldPosition, lerpFactor);
             transform.position = absoluteWorldPosition;
+
             if (remainingDistance < sticker.signatureRadius)
             {
                 instructions.RemoveAt(0);

@@ -6,6 +6,14 @@ public class Station : HUDSticker
 {
     public XMLStation station;
 
+    internal void Load(XMLStation station)
+    {
+        this.station = station;
+        this.name = station.name;
+        this.signatureRadius = station.signatureRadius;
+        this.absoluteWorldPosition = station.absoluteWorldPosition;
+    }
+
     void Awake()
     {
         this.name = station.name;

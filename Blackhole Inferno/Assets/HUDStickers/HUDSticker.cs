@@ -13,6 +13,8 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
     public Vector3 absoluteWorldPosition;
     public List<ContextMenuOption.Commands> CMOCommands;
 
+    public float scale = 0.005f;
+
     public Sprite Sprite {get{return GetComponent<UnityEngine.UI.Image>().sprite; } }
 
     public void OnPointerClick(PointerEventData eventData) {
@@ -40,20 +42,19 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
             highlightedHUDSticker = null;
         }
     } 
-    private void Update() {        
+    protected virtual void Update() {        
         UpdateFaceTheCamera();        
         UpdateSizeInRelationToCameraDistance();
         UpdateHUDStickerPositionsOnScreen();        
     }
-    void UpdateFaceTheCamera()
+    protected void UpdateFaceTheCamera()
     {
         // Make the canvas face the camera
         transform.LookAt(transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
     }
-    void UpdateSizeInRelationToCameraDistance()
+    protected void UpdateSizeInRelationToCameraDistance()
     {
         // Resize the UI element so that regardless of zoom, it shows at the correct size.
-        float scale = 0.003f;
         var size = (Camera.main.transform.position - transform.position).magnitude;  
         transform.localScale = new Vector3(size,size,size) * scale;
     }
@@ -61,10 +62,10 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
     {        
         // Distance from player ship.
         float distance = Vector3.Distance(absoluteWorldPosition, Camera.main.transform.position);        
-        if (distance >= 1000) {
+        if (distance > CameraMove.MaximumViewDistance) {
             // Set the target position 995 units away from absoluteWorldPosition towards LPC.absoluteWorldPosition
             // This ensures stickers are visible from the ship position and camera maximum offset from ship
-            Vector3 targetPosition = Vector3.MoveTowards( Camera.main.transform.position, absoluteWorldPosition, 990f );
+            Vector3 targetPosition = Vector3.MoveTowards( Camera.main.transform.position, absoluteWorldPosition, CameraMove.MaximumViewDistance );
             transform.position = targetPosition;
         }
     }

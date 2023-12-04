@@ -28,6 +28,28 @@ public class SystemEditor : BaseEditor
     protected override void LoadProperties(TextAsset asset)
     {
         systemContent = XMLUtility.Load<SystemContent>(asset);
+
+        if(systemContent == null)
+            return;
+
+        RectTransform canvas = ClearCanvas();
+
+        GameObject prefabPlanet = Resources.Load<GameObject>("Prefabs/Planet");
+        foreach (XMLPlanet _planet in systemContent.planets) {
+            Instantiate(prefabPlanet, canvas).GetComponent<Planet>().Load(_planet);
+        }
+        GameObject prefabStation = Resources.Load<GameObject>("Prefabs/Station");
+        foreach (XMLStation _station in systemContent.stations) {
+            Instantiate(prefabStation, canvas).GetComponent<Station>().Load(_station);
+        }
+        GameObject prefabSun = Resources.Load<GameObject>("Prefabs/Sun");
+        foreach (XMLSun _sun in systemContent.sun) {
+            Instantiate(prefabSun, canvas).GetComponent<Sun>().Load(_sun);
+        }
+        GameObject prefabJumpGate = Resources.Load<GameObject>("Prefabs/JumpGate");
+        foreach (XMLJumpGate _jumpGate in systemContent.jumpGates) {
+            Instantiate(prefabJumpGate, canvas).GetComponent<JumpGate>().Load(_jumpGate);
+        }
     }
 
     protected override void OnClick_SaveButton()
@@ -56,5 +78,17 @@ public class SystemEditor : BaseEditor
         }
 
         XMLUtility.Save<SystemContent>(systemContent, "Resources/Systems/", systemContent.Name);
+    }
+
+    private RectTransform ClearCanvas()
+    {        
+        RectTransform canvasWorld = GameObject.Find("Canvas-World").GetComponent<RectTransform>();
+
+        foreach(RectTransform obj in canvasWorld.GetComponentsInChildren<RectTransform>()) {
+            if(obj != canvasWorld)
+                DestroyImmediate(obj.gameObject);
+        }
+
+        return canvasWorld;
     }
 }

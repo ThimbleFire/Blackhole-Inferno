@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class CameraMove : MonoBehaviour
 {
+    public const int MaximumViewDistance = 1000;
     public static CameraMove instance; // Singleton instance
     public Transform target; // The target object to orbit around
     public float rotationSpeed = 5f;

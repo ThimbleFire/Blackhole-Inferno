@@ -6,6 +6,14 @@ public class Sun : HUDSticker
 {
     public XMLSun sun;
 
+    internal void Load(XMLSun sun)
+    {
+        this.sun = sun;
+        this.name = sun.name;
+        this.signatureRadius = sun.signatureRadius;
+        this.absoluteWorldPosition = sun.absoluteWorldPosition;
+    }
+
     void Start()
     {
         this.name = sun.name;

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Unity.VisualStudio.Editor;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -50,9 +51,14 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
             highlightedHUDSticker = null;
         }
     } 
-    protected virtual void Update() { 
+
+    public void Update()
+    {
+        UpdateSizeInRelationToCameraDistance();        
+    }
+
+    protected virtual void LateUpdate() { 
         UpdateFaceTheCamera();        
-        UpdateSizeInRelationToCameraDistance();
         UpdateHUDStickerPositionsOnScreen();   
         //WorldSpaceToScreenSpace();      
     }
@@ -67,16 +73,10 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
         var size = (Camera.main.transform.position - transform.position).magnitude;  
         transform.localScale = new Vector3(size,size,size) * scale;
     }
-    void UpdateHUDStickerPositionsOnScreen()
-    {        
-        // Distance from player ship.
-        float distance = Vector3.Distance(worldPosition, Camera.main.transform.position);        
-        if (distance > 1000) {
-            // Set the target position 995 units away from absoluteWorldPosition towards LPC.absoluteWorldPosition
-            // This ensures stickers are visible from the ship position and camera maximum offset from ship
-            Vector3 targetPosition = Vector3.MoveTowards( Camera.main.transform.position, worldPosition, 1000 );
-            transform.position = targetPosition;
-        }
+    
+    protected void UpdateHUDStickerPositionsOnScreen()
+    {   
+        
     }
     void WorldSpaceToScreenSpace() {
         

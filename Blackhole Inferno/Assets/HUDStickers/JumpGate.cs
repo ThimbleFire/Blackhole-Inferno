@@ -6,7 +6,7 @@ public class JumpGate : HUDSticker
 {
     public XMLJumpGate jumpGate;
 
-    internal void Load(XMLJumpGate jumpGate)
+    public void Load(XMLJumpGate jumpGate)
     {
         this.jumpGate = jumpGate;
         this.signatureRadius = jumpGate.signatureRadius;
@@ -17,6 +17,10 @@ public class JumpGate : HUDSticker
     {
         this.signatureRadius = jumpGate.signatureRadius;
         this.worldPosition = jumpGate.absoluteWorldPosition;
+    }
+    protected override void LateUpdate()
+    {
+        base.LateUpdate();
     }
 }
 

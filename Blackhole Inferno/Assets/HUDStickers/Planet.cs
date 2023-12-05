@@ -11,14 +11,18 @@ public class Planet : HUDSticker
         this.planet = planet;
         this.name = planet.name;
         this.signatureRadius = planet.signatureRadius;
-        this.worldPosition = planet.worldPosition;
+        this.worldPosition = planet.absoluteWorldPosition;
     }
 
     void Start()
     {
         this.name = planet.name;
         this.signatureRadius = planet.signatureRadius;
-        this.worldPosition = planet.worldPosition;
+        this.worldPosition = planet.absoluteWorldPosition;
+    }
+    protected override void LateUpdate()
+    {
+        base.LateUpdate();
     }
 }
 
@@ -28,7 +32,7 @@ public class XMLPlanet
     public enum Composition { DIRT, METAL, ROCK };
         
     public string name;
-    public Vector3 worldPosition;
+    public Vector3 absoluteWorldPosition;
     public float signatureRadius;
     public byte humidity;
     public byte temperature;

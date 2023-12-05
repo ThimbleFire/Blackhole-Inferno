@@ -34,7 +34,13 @@ public class Ship : HUDSticker
             ContextMenuOption.Commands.Examine,
         };
     }
-    
+
+    protected override void LateUpdate()
+    {
+        base.LateUpdate();
+        //UpdateHUDStickerPositionsOnScreen();
+    }
+
     public void Instruct(Instruction instruction)
     {
         instructions.Add(instruction);
@@ -72,7 +78,7 @@ public class Ship : HUDSticker
         }
         float currentWarpSpeed = 4500.0f;
         float maximumWarpSpeed = 4500.0f;
-        float distanceAtTimeOfWarp = Vector3.Distance(worldPosition, sticker.worldPosition) - sticker.signatureRadius;
+        float distanceAtTimeOfWarp = Vector3.Distance(worldPosition, sticker.worldPosition);
         UIExpandingAddition window = Instantiate(prefabExpandingAddition).GetComponentInChildren<UIExpandingAddition>();
         window.Build(null, "RUNNING PROGRAM: WARP", Color.red);
         window.enableLoadingBar = true;

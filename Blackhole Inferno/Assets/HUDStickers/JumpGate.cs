@@ -10,13 +10,13 @@ public class JumpGate : HUDSticker
     {
         this.jumpGate = jumpGate;
         this.signatureRadius = jumpGate.signatureRadius;
-        this.absoluteWorldPosition = jumpGate.absoluteWorldPosition;
+        this.worldPosition = jumpGate.absoluteWorldPosition;
     }
 
     void Start()
     {
         this.signatureRadius = jumpGate.signatureRadius;
-        this.absoluteWorldPosition = jumpGate.absoluteWorldPosition;
+        this.worldPosition = jumpGate.absoluteWorldPosition;
     }
 }
 

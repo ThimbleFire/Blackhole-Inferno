@@ -36,7 +36,7 @@ public class Tooltip : MonoBehaviour
         
         ttTrasnsform.position = Input.mousePosition + Vector3.right * text.preferredWidth / 2;
             
-        float distance = Vector3.Distance(Ship.LPC.absoluteWorldPosition, HUDSticker.highlightedHUDSticker.absoluteWorldPosition);
+        float distance = Vector3.Distance(Ship.LPC.worldPosition, HUDSticker.highlightedHUDSticker.worldPosition);
 
         string distanceText;
         if (distance > 150.0f) {

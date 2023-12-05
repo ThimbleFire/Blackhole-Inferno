@@ -11,14 +11,14 @@ public class Station : HUDSticker
         this.station = station;
         this.name = station.name;
         this.signatureRadius = station.signatureRadius;
-        this.absoluteWorldPosition = station.absoluteWorldPosition;
+        this.worldPosition = station.absoluteWorldPosition;
     }
 
     void Awake()
     {
         this.name = station.name;
         this.signatureRadius = station.signatureRadius;
-        this.absoluteWorldPosition = station.absoluteWorldPosition;
+        this.worldPosition = station.absoluteWorldPosition;
     }
 }
 

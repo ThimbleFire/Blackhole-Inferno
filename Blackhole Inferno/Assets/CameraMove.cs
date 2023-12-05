@@ -1,13 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class CameraMove : MonoBehaviour
 {
-    public const int MaximumViewDistance = 1000;
     public static CameraMove instance; // Singleton instance
-    public Transform target; // The target object to orbit around
+    public RectTransform target; // The target object to orbit around
     public float rotationSpeed = 5f;
     public float zoomSpeed = 25f;
 
@@ -80,13 +76,13 @@ public class CameraMove : MonoBehaviour
     private void Zoom() {
 
         // Zooming functionality
-        float scrollWheel = Input.GetAxis("Mouse ScrollWheel");
-        float zoomAmount = scrollWheel * zoomSpeed;
-        float currentZoomDistance = Vector3.Distance(transform.position, target.position);
-        float newZoomDistance = Mathf.Clamp(currentZoomDistance - zoomAmount, 1, 128);
+        //float scrollWheel = Input.GetAxis("Mouse ScrollWheel");
+        //float zoomAmount = scrollWheel * zoomSpeed;
+        //float currentZoomDistance = Vector3.Distance(transform.position, target.position);
+        //float newZoomDistance = Mathf.Clamp(currentZoomDistance - zoomAmount, 1, 128);
         
         // Update camera position based on the new zoom distance
-       transform.position = target.position - transform.forward * newZoomDistance;
+       transform.position = target.position - transform.forward * 10;
     }
 
     private Vector3 GetDirection(Vector3 from, Vector3 to)

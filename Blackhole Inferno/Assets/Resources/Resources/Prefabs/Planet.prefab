@@ -36,7 +36,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 9, y: 9}
+  m_SizeDelta: {x: 16, y: 16}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1348710502543607695
 CanvasRenderer:
@@ -88,9 +88,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7d5ed36bfbc2b243b17e46163a40f1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  visible: 1
+  image: {fileID: 0}
   signatureRadius: 1
   absoluteWorldPosition: {x: 4500, y: 0, z: 0}
   CMOCommands: 000000000400000005000000
+  rectTransform: {fileID: 1348710502543607680}
+  scale: 0.005
   planet:
     name: 
     absoluteWorldPosition: {x: 0, y: 0, z: 0}
@@ -103,4 +107,3 @@ MonoBehaviour:
     water: 0
     ice: 0
     composition: 0
-    CMOCommands: 

@@ -5,11 +5,7 @@ using UnityEngine;
 public class Ship : HUDSticker
 {
     public static Ship LPC;
-    public float currentWarpSpeed;
-    public float accelerationRate;
-    public float accelerationRate2;
-    public float maximumWarpSpeed;
-    
+
     public List<Instruction> instructions = new List<Instruction>();
     public GameObject prefabExpandingAddition;
 
@@ -21,60 +17,46 @@ public class Ship : HUDSticker
     void Awake()
     {
         LPC = this;
-
-        packets = new Dictionary<ContextMenuOption.Commands, Packet>()
-        {
+        packets = new Dictionary<ContextMenuOption.Commands, Packet>() {
             {ContextMenuOption.Commands.Align, RotateToTargetCoroutine}, 
             {ContextMenuOption.Commands.WarpTo, WarpToTargetCoroutine}, 
             {ContextMenuOption.Commands.Dock, DockCoroutine}
         };
     }
 
-    protected override void Update()
-    {
-        UpdateFaceTheCamera();
-        UpdateSizeInRelationToCameraDistance();
-    }
-
     void Start()
     {
-        signatureRadius = 65.0f;
-
         CMOCommands = new List<ContextMenuOption.Commands>
-        { 
+        {
             ContextMenuOption.Commands.Align,
-            //ContextMenuOption.Commands.Approach,
             ContextMenuOption.Commands.Lock,
             ContextMenuOption.Commands.LookAt, 
             ContextMenuOption.Commands.Examine,
         };
     }
-
-    public void Instruct(Instruction instruction) {
-
+    
+    public void Instruct(Instruction instruction)
+    {
         instructions.Add(instruction);
-
-        if(instructions.Count == 1) {
-            InstructionStep();
+        if(instructions.Count == 1)
+        {
+            StartCoroutine(InstructionStepCoroutine());
         }
     }
 
     private IEnumerator DockCoroutine()
     {
         HUDSticker sticker = instructions[0].Sticker;
-
-        if(Vector3.Distance(sticker.absoluteWorldPosition, absoluteWorldPosition) > sticker.signatureRadius)
+        if(Vector3.Distance(sticker.worldPosition, worldPosition) > sticker.signatureRadius)
         {
-                instructions.Insert(0, new Instruction(sticker, ContextMenuOption.Commands.WarpTo));
-                InstructionStep();
-                yield break;
+            instructions.Insert(0, new Instruction(sticker, ContextMenuOption.Commands.WarpTo));
+            StartCoroutine(InstructionStepCoroutine());
+            yield break;
         }
-
         UIExpandingAddition window = Instantiate(prefabExpandingAddition).GetComponentInChildren<UIExpandingAddition>();
         window.Build(null, "RUNNING PROGRAM: DOCK", Color.red);
-
+        window.OnDestroyEvent += OnWinDes;
         yield return new WaitForSeconds(5f);
-
         instructions.RemoveAt(0);
         GameObject.Destroy(window.transform.parent.gameObject);
     }
@@ -82,50 +64,46 @@ public class Ship : HUDSticker
     private IEnumerator WarpToTargetCoroutine()
     {
         HUDSticker sticker = instructions[0].Sticker;
-
-        if(sticker.absoluteWorldPosition != rot)
+        if(sticker.worldPosition != rot)
         {
             instructions.Insert(0, new Instruction(sticker, ContextMenuOption.Commands.Align));
-            InstructionStep();
+            StartCoroutine(InstructionStepCoroutine());
             yield break;
         }
-
-        // 1.0f = 1km
-        currentWarpSpeed = 0.0f;
-        accelerationRate = 100.0f;
-        float distanceAtTimeOfWarp = Vector3.Distance(absoluteWorldPosition, sticker.absoluteWorldPosition) - sticker.signatureRadius;
+        float currentWarpSpeed = 4500.0f;
+        float maximumWarpSpeed = 4500.0f;
+        float distanceAtTimeOfWarp = Vector3.Distance(worldPosition, sticker.worldPosition) - sticker.signatureRadius;
         UIExpandingAddition window = Instantiate(prefabExpandingAddition).GetComponentInChildren<UIExpandingAddition>();
-        window.Build(null, $"RUNNING PROGRAM: WARP", Color.red);
+        window.Build(null, "RUNNING PROGRAM: WARP", Color.red);
         window.enableLoadingBar = true;
+        window.OnDestroyEvent += OnWinDes;
 
         while ( instructions.Count > 0 && instructions[0].Command == ContextMenuOption.Commands.WarpTo )
         {
-            float remainingDistance = Vector3.Distance(absoluteWorldPosition, sticker.absoluteWorldPosition);
-            float percentageCompletion = Mathf.Clamp01(1.0f - ((remainingDistance - sticker.signatureRadius) / distanceAtTimeOfWarp));
+            float remainingDistance = Vector3.Distance(worldPosition, sticker.worldPosition);
+            float percentageCompletion = Mathf.Clamp01(1.0f - remainingDistance / distanceAtTimeOfWarp); // remaining distance - signature radius
             window.loadingBar.SetValue(percentageCompletion);
             float warpStep = Mathf.Clamp(currentWarpSpeed, 0.0f, maximumWarpSpeed) * Time.deltaTime;
             float lerpFactor = Mathf.Clamp01(warpStep / remainingDistance);
-            absoluteWorldPosition = Vector3.Lerp(absoluteWorldPosition, sticker.absoluteWorldPosition, lerpFactor);
-            transform.position = absoluteWorldPosition;
+            worldPosition = Vector3.Lerp(worldPosition, sticker.worldPosition, lerpFactor);
+            transform.position = worldPosition;
 
-            if (remainingDistance < sticker.signatureRadius)
+            if (remainingDistance == 0.0f)
             {
                 instructions.RemoveAt(0);
                 GameObject.Destroy(window.transform.parent.gameObject);
-                InstructionStep();
-            }
-            else if (currentWarpSpeed < maximumWarpSpeed )
-            {
-                accelerationRate += accelerationRate2 * Time.deltaTime;
-                currentWarpSpeed += accelerationRate * Time.deltaTime;
+                yield break;
             }
 
             yield return null;
         }
     }
 
-    private void InstructionStep()
+    private void OnWinDes() => StartCoroutine(InstructionStepCoroutine());
+
+    private IEnumerator InstructionStepCoroutine()
     {
+        yield return null;
         if(instructions.Count > 0)
             if(packets.TryGetValue(instructions[0].Command, out Packet packet)) {
                 StartCoroutine(packet.Invoke());
@@ -137,34 +115,30 @@ public class Ship : HUDSticker
     {
         HUDSticker sticker = instructions[0].Sticker;
 
-        float initialAngleToRotate = Vector3.Angle(rot, sticker.absoluteWorldPosition);
+        float initialAngleToRotate = Vector3.Angle(rot, sticker.worldPosition);
         float rotationSpeed = 3.5f;
         float rotationThreshold = 0.1f;
         UIExpandingAddition window = Instantiate(prefabExpandingAddition).GetComponentInChildren<UIExpandingAddition>();
         window.Build(null, "RUNNING PROGRAM: ALIGN", Color.red);
         window.enableLoadingBar = true;
+        window.OnDestroyEvent += OnWinDes;
 
         while ( instructions.Count > 0 && instructions[0].Command == ContextMenuOption.Commands.Align )
         {
             float rotLerp = Mathf.Clamp01(Time.deltaTime * rotationSpeed);
-            rot = Vector3.Slerp(rot, sticker.absoluteWorldPosition, rotLerp);
-            float remainingAngle = Vector3.Angle(rot, sticker.absoluteWorldPosition);
+            rot = Vector3.Slerp(rot, sticker.worldPosition, rotLerp);
+            float remainingAngle = Vector3.Angle(rot, sticker.worldPosition);
 
             float percentageCompletion = Mathf.Clamp01(1.0f - (remainingAngle / initialAngleToRotate));
             window.loadingBar.SetValue(percentageCompletion);
   
             if (remainingAngle < rotationThreshold) {
-                rot = sticker.absoluteWorldPosition;
+                rot = sticker.worldPosition;
                 instructions.RemoveAt(0);
                 GameObject.Destroy(window.transform.parent.gameObject);
-                InstructionStep();
+                yield break;
              }
              yield return null;
         }
     }
-
-    // Vehicle speed
-    // string speed = currentWarpSpeed > 150.0f ? 
-    //     (currentWarpSpeed / 150.0f).ToString("F2").PadLeft(5, '0') + "AU" : 
-    //     currentWarpSpeed.ToString("F2").PadLeft(5, '0') + "km";
 }

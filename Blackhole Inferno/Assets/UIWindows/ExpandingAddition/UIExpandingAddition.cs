@@ -21,9 +21,9 @@ public class UIExpandingAddition : MonoBehaviour
     public Animation animation;
 
     public LoadingBar loadingBar;
-
-    public delegate void ExpansionCompleteHandler();
-    public event ExpansionCompleteHandler OnExpansionComplete;
+    
+    public delegate void OnDestroyAction();
+    public event OnDestroyAction OnDestroyEvent;
 
     /// <summary> Initiate the animations that build the window</summary>
     public void Build(Sprite _symbol, string _title, Color color)
@@ -38,9 +38,13 @@ public class UIExpandingAddition : MonoBehaviour
     public void OnExpandHorizontalBounds_Complete()
     {
         if(enableLoadingBar)
-                loadingBar.gameObject.SetActive(true);
+            loadingBar.gameObject.SetActive(true);
 
         // expand the loading bar
     }
 
+    private void OnDestroy()
+    {
+        OnDestroyEvent?.Invoke();
+    }
 }

@@ -11,14 +11,14 @@ public class Sun : HUDSticker
         this.sun = sun;
         this.name = sun.name;
         this.signatureRadius = sun.signatureRadius;
-        this.absoluteWorldPosition = sun.absoluteWorldPosition;
+        this.worldPosition = sun.absoluteWorldPosition;
     }
 
     void Start()
     {
         this.name = sun.name;
         this.signatureRadius = sun.signatureRadius;
-        this.absoluteWorldPosition = sun.absoluteWorldPosition;
+        this.worldPosition = sun.absoluteWorldPosition;
     }
 }
 

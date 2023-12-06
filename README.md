@@ -3,8 +3,9 @@
 **__MASTER TODO LIST__**
 * [ ] 1.0
   * [x] align
-  * [x] warp 
-  * [ ] orbit
+  * [ ] metrics
+    * [x] warp
+    * [ ] orbit
   * [ ] lock targets
     * [ ] engage
   * [x] dock
@@ -17,6 +18,7 @@
   * [x] jump
     * [ ] load system
   * [ ] interior ship view
+  * [ ] 3D models †
     * [ ] crew management & customisation
       * [ ] crew attributes
     * [ ] module and furniture placement
@@ -32,4 +34,3 @@
 ---
 
 †          Undecided
-(x / 5)    Estimated completion

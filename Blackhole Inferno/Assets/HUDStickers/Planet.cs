@@ -21,8 +21,9 @@ public class Planet : HUDSticker
         this.worldPosition = planet.absoluteWorldPosition;
     }
     protected override void LateUpdate()
-    {
-        base.LateUpdate();
+    {    
+        WorldSpaceToScreenSpace();
+        HideImageWhenBehindCamera();
     }
 }
 

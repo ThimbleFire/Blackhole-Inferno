@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class Ship : HUDSticker
 {
+    public static float ZAtBottom = 0.0f;
+
     public static Ship LPC;
 
     public List<Instruction> instructions = new List<Instruction>();
     public GameObject prefabExpandingAddition;
 
     public Vector3 rot;
+    public SpecialEffect specialEffect;
 
     private static Dictionary<ContextMenuOption.Commands, Packet> packets;
     private delegate IEnumerator Packet();
@@ -20,7 +23,8 @@ public class Ship : HUDSticker
         packets = new Dictionary<ContextMenuOption.Commands, Packet>() {
             {ContextMenuOption.Commands.Align, RotateToTargetCoroutine}, 
             {ContextMenuOption.Commands.WarpTo, WarpToTargetCoroutine}, 
-            {ContextMenuOption.Commands.Dock, DockCoroutine}
+            {ContextMenuOption.Commands.Dock, DockCoroutine},
+            {ContextMenuOption.Commands.Jump, JumpCoroutine}
         };
     }
 
@@ -35,12 +39,6 @@ public class Ship : HUDSticker
         };
     }
 
-    protected override void LateUpdate()
-    {
-        base.LateUpdate();
-        //UpdateHUDStickerPositionsOnScreen();
-    }
-
     public void Instruct(Instruction instruction)
     {
         instructions.Add(instruction);
@@ -48,6 +46,23 @@ public class Ship : HUDSticker
         {
             StartCoroutine(InstructionStepCoroutine());
         }
+    }
+
+    protected override void Update()
+    {
+        UpdateSizeInRelationToCameraDistance();
+        
+        // Experimental code, needs further testing
+        /* Vector3 viewportPos = Camera.main.WorldToViewportPoint(transform.position);
+        viewportPos.y = 0.0f;
+        Vector3 bottomOfScreen = Camera.main.ViewportToWorldPoint(viewportPos);
+        ZAtBottom = bottomOfScreen.z; */
+    }
+
+    protected override void LateUpdate()
+    {
+        UpdateFaceTheCamera();        
+        UpdateHUDStickerPositionsOnScreen();   
     }
 
     private IEnumerator DockCoroutine()
@@ -65,6 +80,21 @@ public class Ship : HUDSticker
         yield return new WaitForSeconds(5f);
         instructions.RemoveAt(0);
         GameObject.Destroy(window.transform.parent.gameObject);
+    }
+
+    private IEnumerator JumpCoroutine()
+    {
+        HUDSticker sticker = instructions[0].Sticker;
+        if(Vector3.Distance(sticker.worldPosition, worldPosition) > sticker.signatureRadius)
+        {
+            instructions.Insert(0, new Instruction(sticker, ContextMenuOption.Commands.WarpTo));
+            StartCoroutine(InstructionStepCoroutine());
+            yield break;
+        }
+        
+        specialEffect.Warp();
+
+        yield return null;
     }
 
     private IEnumerator WarpToTargetCoroutine()

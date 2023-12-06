@@ -20,10 +20,10 @@ public class Sun : HUDSticker
         this.signatureRadius = sun.signatureRadius;
         this.worldPosition = sun.absoluteWorldPosition;
     }
-
     protected override void LateUpdate()
-    {
-        base.LateUpdate();
+    {        
+        WorldSpaceToScreenSpace();
+        HideImageWhenBehindCamera();
     }
 }
 

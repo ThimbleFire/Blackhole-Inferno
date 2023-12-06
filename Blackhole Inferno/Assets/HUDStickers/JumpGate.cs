@@ -20,7 +20,8 @@ public class JumpGate : HUDSticker
     }
     protected override void LateUpdate()
     {
-        base.LateUpdate();
+        WorldSpaceToScreenSpace();
+        HideImageWhenBehindCamera();
     }
 }
 

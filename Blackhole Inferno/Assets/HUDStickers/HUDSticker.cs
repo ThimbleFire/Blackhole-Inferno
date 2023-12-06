@@ -1,14 +1,14 @@
 using System;
 using System.Collections.Generic;
-using Microsoft.Unity.VisualStudio.Editor;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler {
 
     public static HUDSticker highlightedHUDSticker = null;
     private float lastClickTime = 0f;
+    public Image image;
     
     public float signatureRadius = 65.0f;
 
@@ -52,15 +52,12 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
         }
     } 
 
-    public void Update()
-    {
-        UpdateSizeInRelationToCameraDistance();        
+    protected virtual void Update() {
+
     }
 
     protected virtual void LateUpdate() { 
-        UpdateFaceTheCamera();        
-        UpdateHUDStickerPositionsOnScreen();   
-        //WorldSpaceToScreenSpace();      
+        
     }
     protected void UpdateFaceTheCamera()
     {
@@ -78,9 +75,23 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
     {   
         
     }
-    void WorldSpaceToScreenSpace() {
+    protected void WorldSpaceToScreenSpace() {
         
-        Vector3 screenPosition = Camera.main.WorldToScreenPoint(worldPosition);
+        Vector3 wpos = worldPosition;
+
+        if(Vector3.Distance(Camera.main.transform.position, worldPosition) > 1000)
+        {
+            wpos = Vector3.MoveTowards(Camera.main.transform.position, worldPosition, 990.0f);
+        }
+
+        Vector3 screenPosition = Camera.main.WorldToScreenPoint(wpos);
         rectTransform.position = screenPosition;
+        
+        if ( wpos.z < Camera.main.transform.position.z ) 
+             { if ( image.enabled == true  ) { image.enabled = false; } }
+        else { if ( image.enabled == false ) { image.enabled = true;  } }
+    }
+    protected void HideImageWhenBehindCamera() {
+    
     }
 }

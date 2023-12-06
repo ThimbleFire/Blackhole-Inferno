@@ -21,8 +21,9 @@ public class Station : HUDSticker
         this.worldPosition = station.absoluteWorldPosition;
     }
     protected override void LateUpdate()
-    {
-        base.LateUpdate();
+    {  
+        WorldSpaceToScreenSpace();
+        HideImageWhenBehindCamera();
     }
 }
 

@@ -1,5 +1,7 @@
 # Blackhole-Inferno
 
+Blackhole Inferno is a 2D space simulator in which the player can run missions to earn credits and use those credits to buy ships, and modules and furniture to customize ship interior for its crew. Crew eat, drink, go to the bathroom, relax and perform a their dedicated job of enabling the functional behaviour of active, non-passive modules, such as turrets, the targeting system, the warp core.
+
 **__MASTER TODO LIST__**
 * [ ] 1.0
   * [x] align

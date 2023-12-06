@@ -21,8 +21,15 @@
       * [ ] crew attributes
     * [ ] module and furniture placement
   * [ ] fully scripted main story
-* [ ] 1.1: Crew & NPC relationships †
-* [ ] 1.2: Dedicated multiplayer space †
-* [ ] 1.3: Module affixes †
+* [ ] 1.1
+  * [ ] NPC relationships †
+* [ ] 1.2
+  * [ ] Dedicated multiplayer space †
+* [ ] 1.3
+  * [x] Module affixes †
 
-† undecided
+
+---
+
+†          Undecided
+(x / 5)    Estimated completion

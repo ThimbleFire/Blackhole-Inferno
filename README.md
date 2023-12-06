@@ -41,7 +41,6 @@ Blackhole Inferno is a 2D sims-like game set in space. Your crew perform dedicat
 * Keep player character on world canvas
 * Put other objects on overlay canvas
 * Transform overlay canvas element's world position to screen position
-* Draw a line from the player character directly downwards to get a Z-axis for elements considered behind the camera. this may not be necessary, but it could be a strategy to prevent overlay canvas elements appearing at polar opposites of the system
 
 when warping, the player character should move far away enough for the objects behind them to leave the render distance at which point they can be unloaded. the remainder of the warp should take the player's forward velocity, flip it, and use it to pull objects towards the player. this way the player doesn't have to have a transform position with floating-point values in the of hundreds of millions. it also allows for more accurate world position coordinates for objects.
 

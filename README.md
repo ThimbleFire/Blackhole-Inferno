@@ -1,6 +1,8 @@
 # Blackhole-Inferno
 
-Blackhole Inferno is a 2D sims-like game set in space. Your crew perform dedicated jobs onboard that allow you to perform tasks such as shooting turrets and warping. Of course, crew 
+Blackhole Inferno is a 2D sims-like game set in space. Your crew perform dedicated jobs onboard that enable ship functionality. They also must eat, drink, sleep and use the lavatory. Eating and drinking uses onboard perishables which must be purchased on a planet or station.
+
+Crew will behave autonomously, but can be instructed to perform tasks in advance so they don't fall asleep or die of hunger in the middle of a space fight.
 
 **__MASTER TODO LIST__**
 * [ ] 1.0

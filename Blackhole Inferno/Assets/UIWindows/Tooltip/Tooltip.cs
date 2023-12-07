@@ -41,8 +41,11 @@ public class Tooltip : MonoBehaviour
         string distanceText;
         if (distance > 150.0f) {
             distanceText = (distance / 1500.0f).ToString("F2") + " AU";
-        } else {
+        } else if (distance > 0.001f) {
             distanceText = (distance * 1000.0f).ToString("F2") + " km"; // Convert to km for distances less than 1500 units
+        }else
+        {
+            distanceText = distance + " m"; // Convert to m for distances less than 1500 units
         }
 
         text.text = $"{hoveringName} ({distanceText})";

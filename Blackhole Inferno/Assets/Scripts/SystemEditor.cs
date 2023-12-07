@@ -50,6 +50,10 @@ public class SystemEditor : BaseEditor
         foreach (XMLJumpGate _jumpGate in systemContent.jumpGates) {
             Instantiate(prefabJumpGate, canvas).GetComponent<JumpGate>().Load(_jumpGate);
         }
+        GameObject prefabBelt = Resources.Load<GameObject>("Prefabs/Belt");
+        foreach (XMLBelt _belt in systemContent.belts) {
+            Instantiate(prefabBelt, canvas).GetComponent<Belt>().Load(_belt);
+        }
     }
 
     protected override void OnClick_SaveButton()
@@ -63,18 +67,22 @@ public class SystemEditor : BaseEditor
         systemContent.planets.Clear();
         systemContent.sun.Clear();
         systemContent.stations.Clear();
+        systemContent.belts.Clear();
 
         foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Gate")) {
-            systemContent.jumpGates.Add(obj.GetComponent<JumpGate>().jumpGate);
+            systemContent.jumpGates.Add(obj.GetComponent<JumpGate>().Save());
         }
         foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Planet")) {
-            systemContent.planets.Add(obj.GetComponent<Planet>().planet);
+            systemContent.planets.Add(obj.GetComponent<Planet>().Save());
         }
         foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Sun")) {
-            systemContent.sun.Add(obj.GetComponent<Sun>().sun);
+            systemContent.sun.Add(obj.GetComponent<Sun>().Save());
         }
         foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Station")) {
-            systemContent.stations.Add(obj.GetComponent<Station>().station);
+            systemContent.stations.Add(obj.GetComponent<Station>().Save());
+        }
+        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Belt")) {
+            systemContent.belts.Add(obj.GetComponent<Belt>().Save());
         }
 
         XMLUtility.Save<SystemContent>(systemContent, "Resources/Systems/", systemContent.Name);
@@ -82,7 +90,7 @@ public class SystemEditor : BaseEditor
 
     private RectTransform ClearCanvas()
     {        
-        RectTransform canvasWorld = GameObject.Find("Canvas-World").GetComponent<RectTransform>();
+        RectTransform canvasWorld = GameObject.Find("Canvas-Screen").GetComponent<RectTransform>();
 
         foreach(RectTransform obj in canvasWorld.GetComponentsInChildren<RectTransform>()) {
             if(obj != canvasWorld)

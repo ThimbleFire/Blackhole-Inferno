@@ -4,20 +4,17 @@ using UnityEngine;
 
 public class Ship : HUDSticker
 {
-    public static float ZAtBottom = 0.0f;
-
     public static Ship LPC;
 
     public List<Instruction> instructions = new List<Instruction>();
     public GameObject prefabExpandingAddition;
 
     public Vector3 rot;
-    public SpecialEffect specialEffect;
 
     private static Dictionary<ContextMenuOption.Commands, Packet> packets;
     private delegate IEnumerator Packet();
     
-    void Awake()
+    protected override void Awake()
     {
         LPC = this;
         packets = new Dictionary<ContextMenuOption.Commands, Packet>() {
@@ -26,6 +23,8 @@ public class Ship : HUDSticker
             {ContextMenuOption.Commands.Dock, DockCoroutine},
             {ContextMenuOption.Commands.Jump, JumpCoroutine}
         };
+        
+        base.Awake();
     }
 
     void Start()
@@ -89,8 +88,6 @@ public class Ship : HUDSticker
             StartCoroutine(InstructionStepCoroutine());
             yield break;
         }
-        
-        specialEffect.Warp();
 
         yield return null;
     }
@@ -126,6 +123,7 @@ public class Ship : HUDSticker
             {
                 instructions.RemoveAt(0);
                 GameObject.Destroy(window.transform.parent.gameObject);
+                sticker.Arrived();
                 yield break;
             }
 

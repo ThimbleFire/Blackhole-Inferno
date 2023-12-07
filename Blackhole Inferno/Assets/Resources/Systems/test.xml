@@ -9,64 +9,73 @@
         <z>22500</z>
       </absoluteWorldPosition>
       <signatureRadius>1</signatureRadius>
+      <destination />
     </XMLJumpGate>
   </JumpGates>
   <Planets>
     <XMLPlanet>
-      <name>Ert</name>
+      <name>Planet</name>
       <absoluteWorldPosition>
         <x>-45000</x>
         <y>0</y>
         <z>0</z>
       </absoluteWorldPosition>
       <signatureRadius>1</signatureRadius>
-      <humidity>21</humidity>
-      <temperature>61</temperature>
-      <gravity>12</gravity>
-      <magnetosphere>true</magnetosphere>
-      <vegetation>true</vegetation>
-      <water>true</water>
-      <ice>true</ice>
+      <humidity>0</humidity>
+      <temperature>0</temperature>
+      <gravity>0</gravity>
+      <magnetosphere>false</magnetosphere>
+      <vegetation>false</vegetation>
+      <water>false</water>
+      <ice>false</ice>
       <composition>DIRT</composition>
     </XMLPlanet>
   </Planets>
   <Stations>
     <XMLStation>
-      <name>Jita</name>
+      <name>Station</name>
       <absoluteWorldPosition>
         <x>45000</x>
-        <y>150</y>
-        <z>-4500</z>
+        <y>27500</y>
+        <z>0</z>
       </absoluteWorldPosition>
       <signatureRadius>1</signatureRadius>
-      <repairsAvailable>true</repairsAvailable>
-      <standardDeviation>0.05</standardDeviation>
-      <taxRate>0.2</taxRate>
-      <moduleSellLevel>1</moduleSellLevel>
-      <trade_modules>true</trade_modules>
-      <shipsForSale>
-        <Ships>Sparrow</Ships>
-        <Ships>Ankh</Ships>
-        <Ships>Blaze</Ships>
-      </shipsForSale>
+      <repairsAvailable>false</repairsAvailable>
+      <standardDeviation>0</standardDeviation>
+      <taxRate>0</taxRate>
+      <moduleSellLevel>0</moduleSellLevel>
+      <trade_modules>false</trade_modules>
+      <shipsForSale />
     </XMLStation>
   </Stations>
   <Suns>
     <XMLSun>
-      <name>Markus Prime</name>
+      <name>Sun</name>
       <absoluteWorldPosition>
         <x>0</x>
         <y>0</y>
         <z>0</z>
       </absoluteWorldPosition>
       <signatureRadius>1</signatureRadius>
-      <luminocity>35</luminocity>
+      <luminocity>0</luminocity>
       <color>
-        <r>0.8113208</r>
-        <g>0.510644734</g>
-        <b>0.172214344</b>
+        <r>0</r>
+        <g>0</g>
+        <b>0</b>
         <a>0</a>
       </color>
     </XMLSun>
   </Suns>
+  <Belts>
+    <XMLBelt>
+      <name>Astroid Belt</name>
+      <absoluteWorldPosition>
+        <x>0</x>
+        <y>0</y>
+        <z>45000</z>
+      </absoluteWorldPosition>
+      <signatureRadius>65</signatureRadius>
+      <beltPrefabName />
+    </XMLBelt>
+  </Belts>
 </System>

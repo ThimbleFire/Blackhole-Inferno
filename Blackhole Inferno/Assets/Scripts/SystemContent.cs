@@ -12,6 +12,7 @@ public class SystemContent
         planets = new List<XMLPlanet>();
         stations = new List<XMLStation>();
         sun = new List<XMLSun>();
+        belts = new List<XMLBelt>();
     }
 
     public string Name;
@@ -24,4 +25,6 @@ public class SystemContent
     public List<XMLStation> stations;
     [XmlArray("Suns")]
     public List<XMLSun> sun;
+    [XmlArray("Belts")]
+    public List<XMLBelt> belts;
 }

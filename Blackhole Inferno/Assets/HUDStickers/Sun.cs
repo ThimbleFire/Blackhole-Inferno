@@ -4,22 +4,32 @@ using UnityEngine;
 
 public class Sun : HUDSticker
 {
-    public XMLSun sun;
+    public float luminocity;
+    public Color color;
 
     internal void Load(XMLSun sun)
     {
-        this.sun = sun;
         this.name = sun.name;
         this.signatureRadius = sun.signatureRadius;
         this.worldPosition = sun.absoluteWorldPosition;
+        this.luminocity = sun.luminocity;
+        this.color = sun.color;
     }
 
-    void Start()
+    public XMLSun Save()
     {
-        this.name = sun.name;
-        this.signatureRadius = sun.signatureRadius;
-        this.worldPosition = sun.absoluteWorldPosition;
+        XMLSun copy = new XMLSun
+        {
+            name = this.name,
+            signatureRadius = this.signatureRadius,
+            absoluteWorldPosition = this.worldPosition,
+            luminocity = this.luminocity,
+            color = this.color
+        };
+
+        return copy;
     }
+
     void LateUpdate()
     {        
         WorldSpaceToScreenSpace();

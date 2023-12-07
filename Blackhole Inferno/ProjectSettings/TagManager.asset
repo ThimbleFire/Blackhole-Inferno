@@ -8,6 +8,7 @@ TagManager:
   - Planet
   - Gate
   - Sun
+  - Belt
   layers:
   - Default
   - TransparentFX

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1394169495862664341
+--- !u!1 &702465727553783777
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,24 +8,24 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1394169495862664338}
-  - component: {fileID: 1394169495862664337}
-  - component: {fileID: 1394169495862664336}
-  - component: {fileID: 1394169495862664339}
+  - component: {fileID: 702465727553783710}
+  - component: {fileID: 702465727553783708}
+  - component: {fileID: 702465727553783711}
+  - component: {fileID: 702465727553783709}
   m_Layer: 5
-  m_Name: Station
-  m_TagString: Station
+  m_Name: Belt
+  m_TagString: Belt
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &1394169495862664338
+--- !u!224 &702465727553783710
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1394169495862664341}
+  m_GameObject: {fileID: 702465727553783777}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -36,23 +36,23 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 8, y: 8}
+  m_SizeDelta: {x: 16, y: 16}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &1394169495862664337
+--- !u!222 &702465727553783708
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1394169495862664341}
+  m_GameObject: {fileID: 702465727553783777}
   m_CullTransparentMesh: 1
---- !u!114 &1394169495862664336
+--- !u!114 &702465727553783711
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1394169495862664341}
+  m_GameObject: {fileID: 702465727553783777}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -6142374563283994760, guid: 83677b87115820d4a85a9e81b4ea7109, type: 3}
+  m_Sprite: {fileID: 7783888818935553448, guid: 83677b87115820d4a85a9e81b4ea7109, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -76,30 +76,22 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &1394169495862664339
+--- !u!114 &702465727553783709
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1394169495862664341}
+  m_GameObject: {fileID: 702465727553783777}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae2fb9bad2b21ca40b0e7ea93b74861d, type: 3}
+  m_Script: {fileID: 11500000, guid: c64971308100cfc4d8f147040686a7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  signatureRadius: 1
-  worldPosition: {x: 0, y: 0, z: 0}
-  CMOCommands: 000000000400000002000000
-  rectTransform: {fileID: 1394169495862664338}
-  scale: 0.005
-  station:
-    name: 
-    absoluteWorldPosition: {x: 0, y: 0, z: 0}
-    signatureRadius: 0
-    repairsAvailable: 0
-    standardDeviation: 0
-    taxRate: 0
-    moduleSellLevel: 0
-    trade_modules: 0
-    shipsForSale: 
+  worldPosition: {x: 0, y: 0, z: 45000}
+  signatureRadius: 65
+  globalVisibility: 1
+  CMOCommands: 
+  beltPrefabName: 
+  loaded: 0
+  astroidPrefab: {fileID: 0}

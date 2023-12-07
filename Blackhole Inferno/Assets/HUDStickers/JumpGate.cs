@@ -4,20 +4,27 @@ using UnityEngine;
 
 public class JumpGate : HUDSticker
 {
-    public XMLJumpGate jumpGate;
+    public string destination;
 
     public void Load(XMLJumpGate jumpGate)
     {
-        this.jumpGate = jumpGate;
         this.signatureRadius = jumpGate.signatureRadius;
         this.worldPosition = jumpGate.absoluteWorldPosition;
+        this.destination = jumpGate.destination;
     }
 
-    void Start()
+    public XMLJumpGate Save()
     {
-        this.signatureRadius = jumpGate.signatureRadius;
-        this.worldPosition = jumpGate.absoluteWorldPosition;
+        XMLJumpGate copy = new XMLJumpGate
+        {
+            signatureRadius = this.signatureRadius,
+            absoluteWorldPosition = this.worldPosition,
+            destination = this.destination
+        };
+
+        return copy;
     }
+    
     void LateUpdate()
     {
         WorldSpaceToScreenSpace();

@@ -4,22 +4,48 @@ using UnityEngine;
 
 public class Planet : HUDSticker
 {
-    public XMLPlanet planet;
+    public byte humidity;
+    public byte temperature;
+    public byte gravity;
+    public bool magnetosphere;
+    public bool vegetation;
+    public bool water;
+    public bool ice;
+    public XMLPlanet.Composition composition;
 
     internal void Load(XMLPlanet planet)
     {
-        this.planet = planet;
         this.name = planet.name;
         this.signatureRadius = planet.signatureRadius;
         this.worldPosition = planet.absoluteWorldPosition;
+        this.humidity = planet.humidity;
+        this.temperature = planet.temperature;
+        this.gravity = planet.gravity;
+        this.magnetosphere = planet.magnetosphere;
+        this.vegetation = planet.vegetation;
+        this.water = planet.water;
+        this.ice  = planet.ice;
     }
-
-    void Start()
+    
+    public XMLPlanet Save()
     {
-        this.name = planet.name;
-        this.signatureRadius = planet.signatureRadius;
-        this.worldPosition = planet.absoluteWorldPosition;
+        XMLPlanet copy = new XMLPlanet
+        {
+            name = this.name,
+            signatureRadius = this.signatureRadius,
+            absoluteWorldPosition = this.worldPosition,
+            humidity = this.humidity,
+            temperature = this.temperature,
+            gravity = this.gravity,
+            magnetosphere = this.magnetosphere,
+            vegetation = this.vegetation,
+            water = this.water,
+            ice = this.ice
+        };
+
+        return copy;
     }
+    
     void LateUpdate()
     {    
         WorldSpaceToScreenSpace();

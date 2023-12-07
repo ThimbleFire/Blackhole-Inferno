@@ -89,11 +89,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a6974f4e722c3149802b3dd20895cea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  signatureRadius: 1
   worldPosition: {x: 0, y: 0, z: 0}
+  signatureRadius: 1
+  globalVisibility: 1
   CMOCommands: 
-  rectTransform: {fileID: 3458311806980204041}
-  scale: 0.005
   instructions: []
   prefabExpandingAddition: {fileID: 2075398867567461517, guid: 3e0bcc1141225ed44b2064014004aff8, type: 3}
   rot: {x: 1, y: 2, z: 3}

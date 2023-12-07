@@ -8,19 +8,20 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
 
     public static HUDSticker highlightedHUDSticker = null;
     private float lastClickTime = 0f;
-    public Image image;
-    
-    public float signatureRadius = 65.0f;
+    private Image image;
+    private RectTransform rectTransform;
 
-    /// <summary>
-    ///  X = left & right
-    ///  Y = up & down
-    ///  Z = forward & backward
-    /// </summary>
     public Vector3 worldPosition;
+    public float signatureRadius;
+    public bool globalVisibility = false;
+
     public List<ContextMenuOption.Commands> CMOCommands;
 
-    public RectTransform rectTransform;
+
+    protected virtual void Awake() {
+        rectTransform = GetComponent<RectTransform>();
+        image = GetComponent<Image>();
+    }
 
     public Sprite Sprite {get{return GetComponent<UnityEngine.UI.Image>().sprite; } }
 
@@ -48,7 +49,11 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
        if(highlightedHUDSticker == this) {
             highlightedHUDSticker = null;
         }
-    } 
+    }
+    public virtual void Arrived()
+    {
+
+    }
     
     protected void WorldSpaceToScreenSpace() {
         float offset = 10.0f;
@@ -57,11 +62,22 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
         if (image.enabled)
         {
             float distance = Vector3.Distance(Camera.main.transform.position, worldPosition);
-            if(distance > Camera.main.farClipPlane) {
+            
+            // If we're far away and the object has global visibility, bring it closer
+            if(distance > Camera.main.farClipPlane && globalVisibility) {
                 Vector3 wpos = Vector3.MoveTowards(Camera.main.transform.position, worldPosition, Camera.main.farClipPlane - offset);
                 rectTransform.position = Camera.main.WorldToScreenPoint(wpos);
             }
-            else rectTransform.position = Camera.main.WorldToScreenPoint(worldPosition);
+            // If the object is nearby, just draw it to screen like normal
+            else if (distance <= Camera.main.farClipPlane)
+            {
+                rectTransform.position = Camera.main.WorldToScreenPoint(worldPosition);
+            }
+            // If it's far away and doesn't have global visibility, hide it
+            else if(globalVisibility == false)
+            {
+                image.enabled = false;
+            }
         }
     }
 }

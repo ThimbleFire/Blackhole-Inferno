@@ -4,6 +4,10 @@ Blackhole Inferno is a 2D sims-like game set in space. Your crew perform dedicat
 
 Crew will behave autonomously, but can be instructed to perform tasks in advance so they don't fall asleep or die of hunger in the middle of a space fight.
 
+Like a sims-like, the interior of the crew's home, the ship, can be customised by adding walls, flooring, furniture and ship modules in mounting points.
+
+Different ships have different shapes and sizes of mounting points. Modules such as turrets, can have prefixes, suffixes and implicit enhancements.
+
 **__MASTER TODO LIST__**
 * [ ] 1.0
   * [x] align

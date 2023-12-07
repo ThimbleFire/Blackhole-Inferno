@@ -18,10 +18,9 @@ public class JumpGate : HUDSticker
         this.signatureRadius = jumpGate.signatureRadius;
         this.worldPosition = jumpGate.absoluteWorldPosition;
     }
-    protected override void LateUpdate()
+    void LateUpdate()
     {
         WorldSpaceToScreenSpace();
-        HideImageWhenBehindCamera();
     }
 }
 

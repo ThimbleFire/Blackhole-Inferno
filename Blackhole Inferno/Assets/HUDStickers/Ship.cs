@@ -48,21 +48,19 @@ public class Ship : HUDSticker
         }
     }
 
-    protected override void Update()
+    void Update()
     {
-        UpdateSizeInRelationToCameraDistance();
-        
-        // Experimental code, needs further testing
-        /* Vector3 viewportPos = Camera.main.WorldToViewportPoint(transform.position);
-        viewportPos.y = 0.0f;
-        Vector3 bottomOfScreen = Camera.main.ViewportToWorldPoint(viewportPos);
-        ZAtBottom = bottomOfScreen.z; */
+        // Scale the ship depending on distance from the camera
+        var size = (Camera.main.transform.position - transform.position).magnitude;
+        float scale = 0.005f;
+        transform.localScale = new Vector3(size,size,size) * scale;
     }
 
-    protected override void LateUpdate()
+    void LateUpdate()
     {
-        UpdateFaceTheCamera();        
-        UpdateHUDStickerPositionsOnScreen();   
+        // Rotate the ship so its full image is visible to the camera
+        // We can replace this with a call from the camera when the player performs a mouse drag / orbit
+        transform.LookAt(transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
     }
 
     private IEnumerator DockCoroutine()

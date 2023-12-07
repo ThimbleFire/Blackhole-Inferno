@@ -20,10 +20,9 @@ public class Planet : HUDSticker
         this.signatureRadius = planet.signatureRadius;
         this.worldPosition = planet.absoluteWorldPosition;
     }
-    protected override void LateUpdate()
+    void LateUpdate()
     {    
         WorldSpaceToScreenSpace();
-        HideImageWhenBehindCamera();
     }
 }
 

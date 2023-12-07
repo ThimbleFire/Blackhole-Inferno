@@ -20,10 +20,9 @@ public class Station : HUDSticker
         this.signatureRadius = station.signatureRadius;
         this.worldPosition = station.absoluteWorldPosition;
     }
-    protected override void LateUpdate()
+    void LateUpdate()
     {  
         WorldSpaceToScreenSpace();
-        HideImageWhenBehindCamera();
     }
 }
 

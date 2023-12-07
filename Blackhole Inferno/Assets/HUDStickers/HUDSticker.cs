@@ -22,8 +22,6 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
 
     public RectTransform rectTransform;
 
-    public float scale = 0.005f;
-
     public Sprite Sprite {get{return GetComponent<UnityEngine.UI.Image>().sprite; } }
 
     public void OnPointerClick(PointerEventData eventData) {
@@ -51,47 +49,19 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
             highlightedHUDSticker = null;
         }
     } 
-
-    protected virtual void Update() {
-
-    }
-
-    protected virtual void LateUpdate() { 
-        
-    }
-    protected void UpdateFaceTheCamera()
-    {
-        // Make the canvas face the camera
-        transform.LookAt(transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
-    }
-    protected void UpdateSizeInRelationToCameraDistance()
-    {
-        // Resize the UI element so that regardless of zoom, it shows at the correct size.
-        var size = (Camera.main.transform.position - transform.position).magnitude;  
-        transform.localScale = new Vector3(size,size,size) * scale;
-    }
     
-    protected void UpdateHUDStickerPositionsOnScreen()
-    {   
-        
-    }
     protected void WorldSpaceToScreenSpace() {
-        
-        Vector3 wpos = worldPosition;
-
-        if(Vector3.Distance(Camera.main.transform.position, worldPosition) > 1000)
+        float offset = 10.0f;
+        Vector3 viewportPoint = Camera.main.WorldToViewportPoint(worldPosition);
+        image.enabled = viewportPoint.x >= 0 && viewportPoint.x <= 1 && viewportPoint.y >= 0 && viewportPoint.y <= 1 && viewportPoint.z > 0;
+        if (image.enabled)
         {
-            wpos = Vector3.MoveTowards(Camera.main.transform.position, worldPosition, 990.0f);
+            float distance = Vector3.Distance(Camera.main.transform.position, worldPosition);
+            if(distance > Camera.main.farClipPlane) {
+                Vector3 wpos = Vector3.MoveTowards(Camera.main.transform.position, worldPosition, Camera.main.farClipPlane - offset);
+                rectTransform.position = Camera.main.WorldToScreenPoint(wpos);
+            }
+            else rectTransform.position = Camera.main.WorldToScreenPoint(worldPosition);
         }
-
-        Vector3 screenPosition = Camera.main.WorldToScreenPoint(wpos);
-        rectTransform.position = screenPosition;
-        
-        if ( wpos.z < Camera.main.transform.position.z ) 
-             { if ( image.enabled == true  ) { image.enabled = false; } }
-        else { if ( image.enabled == false ) { image.enabled = true;  } }
-    }
-    protected void HideImageWhenBehindCamera() {
-    
     }
 }

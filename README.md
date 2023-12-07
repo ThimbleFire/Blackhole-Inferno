@@ -6,7 +6,11 @@ Crew will behave autonomously, but can be instructed to perform tasks in advance
 
 Like a sims-like, the interior of the crew's home, the ship, can be customised by adding walls, flooring, furniture and ship modules in mounting points.
 
-Different ships have different shapes and sizes of mounting points. Modules such as turrets, can have prefixes, suffixes and implicit enhancements.
+Different ships have different shape interiors and sizes of mounting points. Modules such as turrets can have prefixes, suffixes and implicit enhancements.
+
+Crew can be assigned jobs and each job has an array of associated modules they may need to interact with given player commands.
+
+Given all of these gameplay elements, it's anticipated that Blackhole Inferno will be a very challenging game.
 
 **__MASTER TODO LIST__**
 * [ ] 1.0

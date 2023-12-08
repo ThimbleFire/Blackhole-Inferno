@@ -49,8 +49,10 @@ Given all of these gameplay elements, it's anticipated that Blackhole Inferno wi
 **Short Term Goals**
 
 * Fix a bug where asteroids are named after the belt they belong to
-* Fix tooltip distance text
-* Fix warp speeds 
+
+* Create a script for the screen space canvas which has a list of all HUD Stickers. The script has a coroutine that pulls all objects in the opposite direction to where the player ship is warping to. ?
+
+
 * Add system name and faction dominion at the top-left of the screen
 * Add code for locking targets
 * Add code for unloading systems during runtime

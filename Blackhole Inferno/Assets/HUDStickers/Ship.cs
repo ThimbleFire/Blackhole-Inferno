@@ -95,15 +95,20 @@ public class Ship : HUDSticker
     private IEnumerator WarpToTargetCoroutine()
     {
         HUDSticker sticker = instructions[0].Sticker;
-        if(sticker.worldPosition != rot)
-        {
+
+        // Ensure the player ship is aligned to the destination, if not, insert an align instruction
+        if(sticker.worldPosition != rot) {
             instructions.Insert(0, new Instruction(sticker, ContextMenuOption.Commands.Align));
             StartCoroutine(InstructionStepCoroutine());
             yield break;
         }
+
+        // 
         float currentWarpSpeed = 4500.0f;
         float maximumWarpSpeed = 4500.0f;
         float distanceAtTimeOfWarp = Vector3.Distance(worldPosition, sticker.worldPosition);
+
+        // Create the warp progress window
         UIExpandingAddition window = Instantiate(prefabExpandingAddition).GetComponentInChildren<UIExpandingAddition>();
         window.Build(null, "RUNNING PROGRAM: WARP", Color.red);
         window.enableLoadingBar = true;

@@ -96,7 +96,6 @@ public class Ship : HUDSticker
 
     private IEnumerator WarpToTargetCoroutine()
     {
-        currentLocation.Leaving();
         HUDSticker sticker = instructions[0].Sticker;
 
         // Ensure the player ship is aligned to the destination, if not, insert an align instruction
@@ -105,10 +104,11 @@ public class Ship : HUDSticker
             StartCoroutine(InstructionStepCoroutine());
             yield break;
         }
+        currentLocation.Leaving();
 
         // 
-        float currentWarpSpeed = 4.5e+03f;
-        float maximumWarpSpeed = 4.5e+03f;
+        float currentWarpSpeed = 2250f;
+        float maximumWarpSpeed = 2250f;
         float distanceAtTimeOfWarp = Vector3.Distance(worldPosition, sticker.worldPosition);
 
         // Create the warp progress window
@@ -127,11 +127,13 @@ public class Ship : HUDSticker
             worldPosition = Vector3.Lerp(worldPosition, sticker.worldPosition, lerpFactor);
             transform.position = worldPosition;
 
+            if(remainingDistance <= 1000.0f)
+                sticker.Arrived();        
+
             if (remainingDistance == 0.0f)
             {
                 instructions.RemoveAt(0);
                 GameObject.Destroy(window.transform.parent.gameObject);
-                sticker.Arrived();
                 currentLocation = sticker;
                 yield break;
             }

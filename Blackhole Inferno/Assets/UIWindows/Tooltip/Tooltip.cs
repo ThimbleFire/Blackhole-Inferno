@@ -38,14 +38,25 @@ public class Tooltip : MonoBehaviour
             
         float distance = Vector3.Distance(Ship.LPC.worldPosition, HUDSticker.highlightedHUDSticker.worldPosition);
 
-        string distanceText;
-        if (distance > 150.0f) {
-            distanceText = (distance / 1500.0f).ToString("F2") + " AU";
-        } else if (distance > 0.001f) {
-            distanceText = (distance * 1000.0f).ToString("F2") + " km"; // Convert to km for distances less than 1500 units
-        }else
+        string distanceText = string.Empty;
+
+        if(HUDSticker.highlightedHUDSticker.globalVisibility)
         {
-            distanceText = distance + " m"; // Convert to m for distances less than 1500 units
+            if (distance > 1500.0f) {
+                distanceText = $"{(distance / 1500.0f).ToString("F2")} AU";
+            }
+            else if (distance > 1000f) {
+                distanceText = $"{(distance / 1.5f).ToString("F2")} km";
+            }
+        }
+        else
+        {
+            if (distance > 1.0f) {
+                distanceText = $"{(distance / 1.0f).ToString("F2")} km";
+            }
+            else {
+                distanceText = $"({distance}  m)";
+            }
         }
 
         /* //1km = 1.0f
@@ -56,7 +67,7 @@ public class Tooltip : MonoBehaviour
         else distanceText = Mathf.FloorToInt(distance) + " m";
         */
 
-        text.text = $"{hoveringName} ({distanceText})";
+        text.text = $"{hoveringName} {distanceText}";
     }
     
     public void OnAnimationComplete()

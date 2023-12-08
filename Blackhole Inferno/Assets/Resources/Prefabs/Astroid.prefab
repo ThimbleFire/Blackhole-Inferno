@@ -90,4 +90,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   worldPosition: {x: 0, y: 0, z: 0}
   signatureRadius: 0
-  CMOCommands: 0000000007000000
+  globalVisibility: 0
+  CMOCommands: 030000000000000007000000

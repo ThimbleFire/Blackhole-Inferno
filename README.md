@@ -57,3 +57,4 @@ Given all of these gameplay elements, it's anticipated that Blackhole Inferno wi
   
 * Think of a UI design for the inventory
 * When the player swaps to internal view, the ships hull scales up in size to max, then fades away revealing the interior
+* tooltip should check to see whether the ui element being moused over belongs to the pocket of space the character is in, and use that to determine distance

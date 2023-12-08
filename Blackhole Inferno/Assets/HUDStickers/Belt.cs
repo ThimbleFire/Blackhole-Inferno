@@ -7,9 +7,7 @@ public class Belt : HUDSticker
 {
     public bool loaded = false;
     public GameObject astroidPrefab;
-
-    private const float DespawnInterval = 900.0f;
-    private float despawnTimer = DespawnInterval;
+    public List<GameObject> asteroids;
 
     internal void Load(XMLBelt belt)
     {
@@ -30,18 +28,6 @@ public class Belt : HUDSticker
         return copy;
     }
 
-    void Update() {
-        if(loaded && despawnTimer > 0.0f) {
-            despawnTimer -= Time.deltaTime;
-            if(despawnTimer <= 0.0f) {
-                foreach(Transform child in transform) {
-                    Destroy(child.gameObject);
-                }
-                loaded = false;
-            }
-        }
-    }
-
     void LateUpdate()
     {  
         WorldSpaceToScreenSpace();
@@ -49,15 +35,15 @@ public class Belt : HUDSticker
 
     public override void Arrived()
     {
-        despawnTimer = DespawnInterval;
-        
         if(loaded)
             return;
 
         loaded = true;
     
+        asteroids = new List<GameObject>();
         // iterate the number of astroids in the belt
-        for(int i = 0; i < 30; i++)
+        int count = UnityEngine.Random.Range(30, 100);
+        for(int i = 0; i < count; i++)
         {
             // calculate the angle they should appear at
             float angle = UnityEngine.Random.Range(0, Mathf.PI /* * 2.0f */);
@@ -70,13 +56,34 @@ public class Belt : HUDSticker
             float y = distance * Mathf.Sin( angle );
 
             // Create a new position relative to the center point
-            Vector3 randomPosition = worldPosition + new Vector3(x, UnityEngine.Random.Range(-5.0f, 5.0f), y);
+            Vector3 randomPosition = worldPosition + new Vector3(x, UnityEngine.Random.Range(-1.0f, 1.0f), y);
 
-            Astroid astroid = Instantiate(astroidPrefab, transform).GetComponent<Astroid>();
+            Astroid asteroid = Instantiate(astroidPrefab, transform.parent).GetComponent<Astroid>();
         
-            astroid.worldPosition = randomPosition;
+            asteroid.worldPosition = randomPosition;
+
+            asteroids.Add(asteroid.gameObject);
         }
+
+        Debug.Log("Arrived at " + gameObject.name);
     }
+
+    public override void Leaving()
+    {
+        base.Leaving();
+        
+        Debug.Log("Leaving " + gameObject.name);
+    }
+
+    protected override void Timeout() {
+        foreach(GameObject child in asteroids) {
+            Destroy(child);
+        }
+        loaded = false;
+        asteroids.Clear();
+        
+        Debug.Log("Disposed children belonging to " + gameObject.name);
+    }    
 }
 
 [Serializable]

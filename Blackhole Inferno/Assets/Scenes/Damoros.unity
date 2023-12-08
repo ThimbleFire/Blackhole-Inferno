@@ -389,7 +389,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 963194227}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -882,6 +882,10 @@ PrefabInstance:
       propertyPath: specialEffect
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 3458311806980204042, guid: 9120bee47f6fd0349895001da3aa652c, type: 3}
+      propertyPath: currentLocation
+      value: 
+      objectReference: {fileID: 833429192}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9120bee47f6fd0349895001da3aa652c, type: 3}
 --- !u!1 &1887826989
@@ -991,6 +995,10 @@ PrefabInstance:
     - target: {fileID: 702465727553783709, guid: f99137dad64a04b459d04789ce36f3d4, type: 3}
       propertyPath: beltPrefabName
       value: AstroidBelt_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 702465727553783709, guid: f99137dad64a04b459d04789ce36f3d4, type: 3}
+      propertyPath: worldPosition.z
+      value: 45000
       objectReference: {fileID: 0}
     - target: {fileID: 702465727553783709, guid: f99137dad64a04b459d04789ce36f3d4, type: 3}
       propertyPath: globalVisibility

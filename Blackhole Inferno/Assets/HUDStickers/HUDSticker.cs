@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -51,6 +52,20 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
         }
     }
     public virtual void Arrived()
+    {
+        StopCoroutine(DisposeCoroutine());
+    }
+    public virtual void Leaving()
+    {
+        StartCoroutine(DisposeCoroutine());
+    }
+    private IEnumerator DisposeCoroutine()
+    {
+        yield return new WaitForSeconds(30.0f);
+
+        Timeout();
+    }
+    protected virtual void Timeout()
     {
 
     }

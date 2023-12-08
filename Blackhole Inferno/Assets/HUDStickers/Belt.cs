@@ -36,8 +36,8 @@ public class Belt : HUDSticker
             if(despawnTimer <= 0.0f) {
                 foreach(Transform child in transform) {
                     Destroy(child.gameObject);
-                    loaded = false;
                 }
+                loaded = false;
             }
         }
     }

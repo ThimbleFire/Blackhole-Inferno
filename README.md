@@ -15,9 +15,9 @@ Given all of these gameplay elements, it's anticipated that Blackhole Inferno wi
 **__MASTER TODO LIST__**
 * [ ] 1.0
   * [x] align
-  * [ ] metrics 
-    * [ ] warp
-    * [ ] orbit
+  * [x] metrics 
+    * [x] warp
+    * [x] orbit
   * [ ] lock targets
     * [ ] engage
   * [x] dock
@@ -48,14 +48,12 @@ Given all of these gameplay elements, it's anticipated that Blackhole Inferno wi
 
 **Short Term Goals**
 
-* Fix a bug where asteroids are named after the belt they belong to
-
-* Create a script for the screen space canvas which has a list of all HUD Stickers. The script has a coroutine that pulls all objects in the opposite direction to where the player ship is warping to. ?
-
-
+* Figure out why warp coroutine is being executed twice
+  
 * Add system name and faction dominion at the top-left of the screen
 * Add code for locking targets
 * Add code for unloading systems during runtime
 * Add code for   loading systems during runtime
+  
 * Think of a UI design for the inventory
 * When the player swaps to internal view, the ships hull scales up in size to max, then fades away revealing the interior

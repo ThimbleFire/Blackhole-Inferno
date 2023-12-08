@@ -48,8 +48,12 @@ Given all of these gameplay elements, it's anticipated that Blackhole Inferno wi
 
 **Short Term Goals**
 
-* stop objects rendering infront when their world position is behind the camera
-
-when warping, the player character should move far away enough for the objects behind them to leave the render distance at which point they can be unloaded. the remainder of the warp should take the player's forward velocity, flip it, and use it to pull objects towards the player. this way the player doesn't have to have a transform position with floating-point values in the of hundreds of millions. it also allows for more accurate world position coordinates for objects.
-
-* At the top left of the screen it should say what faction controls the system you're in.
+* Fix a bug where asteroids are named after the belt they belong to
+* Fix tooltip distance text
+* Fix warp speeds 
+* Add system name and faction dominion at the top-left of the screen
+* Add code for locking targets
+* Add code for unloading systems during runtime
+* Add code for   loading systems during runtime
+* Think of a UI design for the inventory
+* When the player swaps to internal view, the ships hull scales up in size to max, then fades away revealing the interior

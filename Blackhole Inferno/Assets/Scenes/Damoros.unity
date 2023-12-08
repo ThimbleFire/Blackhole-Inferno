@@ -332,6 +332,7 @@ GameObject:
   - component: {fileID: 455755098}
   - component: {fileID: 455755097}
   - component: {fileID: 455755096}
+  - component: {fileID: 455755100}
   m_Layer: 5
   m_Name: Canvas-Screen
   m_TagString: Untagged
@@ -424,6 +425,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &455755100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 455755095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66f3a021de85c8345a9b54c4ddef4065, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lockedTargets: []
 --- !u!1 &833429190
 GameObject:
   m_ObjectHideFlags: 0

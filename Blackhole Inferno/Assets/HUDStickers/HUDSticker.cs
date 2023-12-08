@@ -18,7 +18,6 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
 
     public List<ContextMenuOption.Commands> CMOCommands;
 
-
     protected virtual void Awake() {
         rectTransform = GetComponent<RectTransform>();
         image = GetComponent<Image>();

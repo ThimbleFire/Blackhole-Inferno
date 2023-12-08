@@ -23,7 +23,8 @@ public class Ship : HUDSticker
             {ContextMenuOption.Commands.Align, RotateToTargetCoroutine}, 
             {ContextMenuOption.Commands.WarpTo, WarpToTargetCoroutine}, 
             {ContextMenuOption.Commands.Dock, DockCoroutine},
-            {ContextMenuOption.Commands.Jump, JumpCoroutine}
+            {ContextMenuOption.Commands.Jump, JumpCoroutine},
+            {ContextMenuOption.Commands.Lock, LockTargetCoroutine }
         };
         
         base.Awake();
@@ -183,5 +184,27 @@ public class Ship : HUDSticker
              }
              yield return null;
         }
+    }
+
+    private IEnumerator LockTargetCoroutine()
+    {
+        HUDSticker sticker = instructions[0].Sticker;
+
+        bool lockAcheived = false;
+        float timer = 0.0f;
+
+        while(lockAcheived == false)
+        {
+            timer += Time.deltaTime;
+
+            if(timer >= sticker.signatureRadius) {
+                lockAcheived = true;
+            }
+            
+            yield return null;   
+        }
+
+        //sticker.LockTarget
+        Debug.Log("Target Locked: " + sticker.name);
     }
 }

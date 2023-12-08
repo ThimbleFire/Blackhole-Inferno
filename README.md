@@ -48,13 +48,14 @@ Given all of these gameplay elements, it's anticipated that Blackhole Inferno wi
 
 **Short Term Goals**
 
-* Figure out why warp coroutine is being executed twice
-  
-* Add system name and faction dominion at the top-left of the screen
-* Add code for locking targets
-* Add code for unloading systems during runtime
-* Add code for   loading systems during runtime
-  
-* Think of a UI design for the inventory
-* When the player swaps to internal view, the ships hull scales up in size to max, then fades away revealing the interior
-* tooltip should check to see whether the ui element being moused over belongs to the pocket of space the character is in, and use that to determine distance
+* **FIX** nothing is broken
+
+* **ADD** When the player attempts to lock a target, instantiate the lock visual UI element. The instantiated GameObject will have a script that counts down. Once the countdown is complete, the visual element will swap and the target can be engaged. If the visual elements distance from the camera exceeds 1,000 or the target is recognised as NULL (destroyed) in its Late/Update method, the lock GameObject destroy itself and fire an event telling the ship to remove it from its list of locks. 
+* **ADD** system name and faction dominion at the top-left of the screen
+* **ADD** code for unloading systems during runtime
+* **ADD** code for   loading systems during runtime
+
+* **DESIGN** Visual appearance for what locked ships will look like in-game
+* **DESIGN** Think of a UI design for the inventory
+* **DESIGN** When the player swaps to internal view, the ships hull scales up in size to max, then fades away revealing the interior
+* **DESIGN** tooltip should check to see whether the ui element being moused over belongs to the pocket of space the character is in, and use that to determine distance

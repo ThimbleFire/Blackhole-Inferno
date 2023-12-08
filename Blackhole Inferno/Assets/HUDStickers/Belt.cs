@@ -5,17 +5,17 @@ using UnityEngine;
 
 public class Belt : HUDSticker
 {
-    public string beltPrefabName;
     public bool loaded = false;
-
     public GameObject astroidPrefab;
+
+    private const float DespawnInterval = 900.0f;
+    private float despawnTimer = DespawnInterval;
 
     internal void Load(XMLBelt belt)
     {
         this.name = belt.name;
         this.signatureRadius = belt.signatureRadius;
         this.worldPosition = belt.absoluteWorldPosition;
-        this.beltPrefabName = belt.beltPrefabName;
     }
     
     public XMLBelt Save()
@@ -25,10 +25,21 @@ public class Belt : HUDSticker
             name = this.name,
             signatureRadius = this.signatureRadius,
             absoluteWorldPosition = this.worldPosition,
-            beltPrefabName = this.beltPrefabName
         };
 
         return copy;
+    }
+
+    void Update() {
+        if(loaded && despawnTimer > 0.0f) {
+            despawnTimer -= Time.deltaTime;
+            if(despawnTimer <= 0.0f) {
+                foreach(Transform child in transform) {
+                    Destroy(child.gameObject);
+                    loaded = false;
+                }
+            }
+        }
     }
 
     void LateUpdate()
@@ -38,6 +49,8 @@ public class Belt : HUDSticker
 
     public override void Arrived()
     {
+        despawnTimer = DespawnInterval;
+        
         if(loaded)
             return;
 
@@ -57,7 +70,7 @@ public class Belt : HUDSticker
             float y = distance * Mathf.Sin( angle );
 
             // Create a new position relative to the center point
-            Vector3 randomPosition = worldPosition + new Vector3(x, y, UnityEngine.Random.Range(-5.0f, 5.0f));
+            Vector3 randomPosition = worldPosition + new Vector3(x, UnityEngine.Random.Range(-5.0f, 5.0f), y);
 
             Astroid astroid = Instantiate(astroidPrefab, transform).GetComponent<Astroid>();
         

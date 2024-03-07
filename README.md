@@ -1,9 +1,13 @@
 2D roguelike set in space.
 
 * recruit crew
-* accept missions
+* do missions (story, repeat, side)
+* build system rep
+* merchant
+  * befriend NPC's for insider information
 * mine resources
-* dock with ships whether wreck or aggressor
-* shoot turrets and guns
+* dock and explore ships, stations, planets and wrecks
+* shoot ship turrets and shoot guns everywhere else
 * build and buy ship modules and furniture
-* negotiate instead of murder or trade
+* negotiate and bribe people
+* build a planetside home

@@ -3,16 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\Retri\\Documents\\Github\\Blackhole-Inferno\\Blackhole Inferno\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D8AE3089-1AAF-A43F-1708-B9E1077F23B3}|Assembly-CSharp.csproj|c:\\users\\retri\\documents\\github\\blackhole-inferno\\blackhole inferno\\assets\\uiwindows\\contextmenu\\contextmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{D8AE3089-1AAF-A43F-1708-B9E1077F23B3}|Assembly-CSharp.csproj|c:\\users\\retri\\documents\\github\\blackhole-inferno\\blackhole inferno\\assets\\scripts\\systemeditor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D8AE3089-1AAF-A43F-1708-B9E1077F23B3}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\systemeditor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D8AE3089-1AAF-A43F-1708-B9E1077F23B3}|Assembly-CSharp.csproj|c:\\users\\retri\\documents\\github\\blackhole-inferno\\blackhole inferno\\assets\\scripts\\xmlutility.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D8AE3089-1AAF-A43F-1708-B9E1077F23B3}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\xmlutility.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D8AE3089-1AAF-A43F-1708-B9E1077F23B3}|Assembly-CSharp.csproj|C:\\Users\\Retri\\Documents\\Github\\Blackhole-Inferno\\Blackhole Inferno\\assets\\uiwindows\\tooltip\\tooltip.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D8AE3089-1AAF-A43F-1708-B9E1077F23B3}|Assembly-CSharp.csproj|solutionrelative:assets\\uiwindows\\tooltip\\tooltip.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D8AE3089-1AAF-A43F-1708-B9E1077F23B3}|Assembly-CSharp.csproj|C:\\Users\\Retri\\Documents\\Github\\Blackhole-Inferno\\Blackhole Inferno\\assets\\uiwindows\\contextmenu\\contextmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D8AE3089-1AAF-A43F-1708-B9E1077F23B3}|Assembly-CSharp.csproj|solutionrelative:assets\\uiwindows\\contextmenu\\contextmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D8AE3089-1AAF-A43F-1708-B9E1077F23B3}|Assembly-CSharp.csproj|c:\\users\\retri\\documents\\github\\blackhole-inferno\\blackhole inferno\\assets\\uiwindows\\uitoggle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{D8AE3089-1AAF-A43F-1708-B9E1077F23B3}|Assembly-CSharp.csproj|C:\\Users\\Retri\\Documents\\Github\\Blackhole-Inferno\\Blackhole Inferno\\assets\\uiwindows\\uitoggle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D8AE3089-1AAF-A43F-1708-B9E1077F23B3}|Assembly-CSharp.csproj|solutionrelative:assets\\uiwindows\\uitoggle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D8AE3089-1AAF-A43F-1708-B9E1077F23B3}|Assembly-CSharp.csproj|c:\\users\\retri\\documents\\github\\blackhole-inferno\\blackhole inferno\\assets\\uiwindows\\tooltip\\tooltip.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D8AE3089-1AAF-A43F-1708-B9E1077F23B3}|Assembly-CSharp.csproj|solutionrelative:assets\\uiwindows\\tooltip\\tooltip.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,8 +30,34 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "SystemEditor.cs",
+              "DocumentMoniker": "C:\\Users\\Retri\\Documents\\Github\\Blackhole-Inferno\\Blackhole Inferno\\Assets\\Scripts\\SystemEditor.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\SystemEditor.cs",
+              "ToolTip": "C:\\Users\\Retri\\Documents\\Github\\Blackhole-Inferno\\Blackhole Inferno\\Assets\\Scripts\\SystemEditor.cs",
+              "RelativeToolTip": "Assets\\Scripts\\SystemEditor.cs",
+              "ViewState": "AQIAAEMAAAAAAAAAAADgv1wAAAA7AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-27T19:38:38.85Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "XMLUtility.cs",
+              "DocumentMoniker": "C:\\Users\\Retri\\Documents\\Github\\Blackhole-Inferno\\Blackhole Inferno\\Assets\\Scripts\\XMLUtility.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\XMLUtility.cs",
+              "ToolTip": "C:\\Users\\Retri\\Documents\\Github\\Blackhole-Inferno\\Blackhole Inferno\\Assets\\Scripts\\XMLUtility.cs",
+              "RelativeToolTip": "Assets\\Scripts\\XMLUtility.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-27T19:36:20.142Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 2,
@@ -39,7 +73,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "ContextMenu.cs",
               "DocumentMoniker": "C:\\Users\\Retri\\Documents\\Github\\Blackhole-Inferno\\Blackhole Inferno\\Assets\\UIWindows\\contextMenu\\ContextMenu.cs",
               "RelativeDocumentMoniker": "Assets\\UIWindows\\contextMenu\\ContextMenu.cs",
@@ -52,7 +86,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "UIToggle.cs",
               "DocumentMoniker": "C:\\Users\\Retri\\Documents\\Github\\Blackhole-Inferno\\Blackhole Inferno\\Assets\\UIWindows\\UIToggle.cs",
               "RelativeDocumentMoniker": "Assets\\UIWindows\\UIToggle.cs",

@@ -9,10 +9,10 @@ public class XMLUtility
     {
         XmlSerializer serialWrite = new XmlSerializer(typeof(T));
 
-        if (Directory.Exists(Application.dataPath + "/Resources/" + directory) == false)
-            Directory.CreateDirectory(Application.dataPath + "/Resources/" + directory);
+        if (Directory.Exists(Application.dataPath + directory) == false)
+            Directory.CreateDirectory(Application.dataPath + directory);
 
-        Stream stream = new FileStream(Application.dataPath + "/Resources/" + directory + name + ".xml", FileMode.Create, FileAccess.Write);
+        Stream stream = new FileStream(Application.dataPath + directory + name + ".xml", FileMode.Create, FileAccess.Write);
         serialWrite.Serialize(stream, item);
         stream.Close();
         stream.Dispose();

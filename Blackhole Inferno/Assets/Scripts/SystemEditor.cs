@@ -85,7 +85,7 @@ public class SystemEditor : BaseEditor
             systemContent.belts.Add(obj.GetComponent<Belt>().Save());
         }
 
-        XMLUtility.Save<SystemContent>(systemContent, "Resources/Systems/", systemContent.Name);
+        XMLUtility.Save<SystemContent>(systemContent, "/Resources/Systems/", systemContent.Name);
     }
 
     private RectTransform ClearCanvas()

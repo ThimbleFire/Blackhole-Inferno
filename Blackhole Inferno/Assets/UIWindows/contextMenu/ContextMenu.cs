@@ -9,6 +9,7 @@ public class ContextMenu : MonoBehaviour
     public bool Opened {get; set;} = false;
     private List<ContextMenuOption> cmos = new List<ContextMenuOption>();
     public RectTransform child;
+    public Image panel;
     public Transform cmTransform;
     public GameObject option;
     public HUDSticker currentSticker = null;
@@ -43,6 +44,7 @@ public class ContextMenu : MonoBehaviour
         if(Opened == false)
         {
             Opened = true;
+            panel.enabled = true;
             currentSticker = sticker;
 
             // Build the context menu options then calculate its position to the right of the cursor
@@ -80,7 +82,8 @@ public class ContextMenu : MonoBehaviour
 
     private void ClearCMOS()
     {
-        Opened = false;        
+        Opened = false;
+        panel.enabled = false;
         while (cmos.Count > 0)
         {
             Destroy(cmos[0].gameObject);

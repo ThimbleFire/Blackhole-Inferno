@@ -1,11 +1,13 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class Tooltip : MonoBehaviour
 {
     public Transform ttTrasnsform;
     public static Tooltip instance;
     public TMP_Text text;
+    public GameObject panel;
     private string hoveringName = string.Empty;
 
     void Awake() {
@@ -20,18 +22,18 @@ public class Tooltip : MonoBehaviour
 
     public void Hide()
     {
-        text.enabled = false;
+        panel.SetActive(false);
     }
 
     public void Show(string nameOfItemBeingHoveredOver)
     {
         hoveringName = nameOfItemBeingHoveredOver;
-        text.enabled = true;
+        panel.SetActive(true);
     }
 
     // This only updates while mousing over an entity
     private void Update() {
-        if(text.enabled == false)
+        if(panel.activeInHierarchy == false)
            return;
         
         ttTrasnsform.position = Input.mousePosition + Vector3.right * text.preferredWidth / 2;

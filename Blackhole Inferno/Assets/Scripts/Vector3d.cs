@@ -1,33 +1,35 @@
-public class Vector3d {
+public class Vector3d { 
     public decimal x, y, z;
+    // M specifies type of decimal
+    // eX specifies the 
+	// Vector3d v = new Vector3d(2.24e13M, 1.24e11M, 1.16e10M);
+	public Vector3d(decimal x, decimal y, decimal z) {
+		this.x = x;
+		this.y = y;
+		this.z = z;
+	}
     public decimal DistanceTo(Vector3d other) {
-    decimal dx = x - other.x;
-    decimal dy = y - other.y;
-    decimal dz = z - other.z;
-    return (decimal)Sqrt(dx * dx + dy * dy + dz * dz);
+        decimal dx = x - other.x;
+        decimal dy = y - other.y;
+        decimal dz = z - other.z;
+        return Sqrt(dx * dx + dy * dy + dz * dz);
     }
-
-    private decimal Sqrt(decimal number, decimal precision = 0.000001M) {
-        if (number < 0)
-            throw new ArgumentException("Number must be non-negative");
-
-        decimal sqrt = number / 2M;
-
-        while (Abs(sqrt - number / sqrt) > precision)
-        {
-            sqrt = (sqrt + number / sqrt) / 2M;
+    public decimal DistanceToAU(Vector3d other) {
+        decimal dx = x - other.x;
+        decimal dy = y - other.y;
+        decimal dz = z - other.z;
+		decimal distance = Sqrt(dx * dx + dy * dy + dz * dz);
+		decimal AU = distance / 149597870700;
+        return AU;
+    }
+    private decimal Sqrt(decimal num, decimal precision = 0.00001M) {
+        decimal sqrt = num / 2M;
+        while (Abs(sqrt - num / sqrt) > precision) {
+            sqrt = (sqrt + num / sqrt) / 2M;
         }
-
         return sqrt;
     }
-    public static decimal Abs(decimal value) {
-        if (value < 0)
-        {
-            return -value;
-        }
-        else
-        {
-            return value;
-        }
+    private decimal Abs(decimal value) {
+        return value < 0 ? -value : value;
     }
 }

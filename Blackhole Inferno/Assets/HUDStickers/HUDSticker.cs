@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using static UnityEngine.GraphicsBuffer;
 
 public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler {
 
@@ -68,30 +69,22 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
     {
 
     }
+
     
     protected void WorldSpaceToScreenSpace() {
-        float offset = 10.0f;
-        Vector3 viewportPoint = Camera.main.WorldToViewportPoint(worldPosition);
-        image.enabled = viewportPoint.x >= 0 && viewportPoint.x <= 1 && viewportPoint.y >= 0 && viewportPoint.y <= 1 && viewportPoint.z > 0;
-        if (image.enabled)
+
+        Vector3 direction = (worldPosition - Ship.LPC.worldPosition).normalized;
+        Vector3 target3Position = direction * (Camera.main.farClipPlane - 10.0f);
+        float distance = Vector3.Distance(worldPosition, Ship.LPC.worldPosition);
+
+        if (distance < Camera.main.farClipPlane || globalVisibility)
         {
-            float distance = Vector3.Distance(Camera.main.transform.position, worldPosition);
-            
-            // If we're far away and the object has global visibility, bring it closer
-            if(distance > Camera.main.farClipPlane && globalVisibility) {
-                Vector3 wpos = Vector3.MoveTowards(Camera.main.transform.position, worldPosition, Camera.main.farClipPlane - offset);
-                rectTransform.position = Camera.main.WorldToScreenPoint(wpos);
-            }
-            // If the object is nearby, just draw it to screen like normal
-            else if (distance <= Camera.main.farClipPlane)
-            {
-                rectTransform.position = Camera.main.WorldToScreenPoint(worldPosition);
-            }
-            // If it's far away and doesn't have global visibility, hide it
-            else if(globalVisibility == false)
-            {
-                image.enabled = false;
-            }
+            rectTransform.position = Camera.main.WorldToScreenPoint(target3Position);
+
+            //hide the image if it's not on camera
+            Vector3 viewportPoint = Camera.main.WorldToViewportPoint(target3Position);
+            image.enabled = viewportPoint.x >= 0 && viewportPoint.x <= 1 && viewportPoint.y >= 0 && viewportPoint.y <= 1 && viewportPoint.z > 0;
         }
+        else image.enabled = false;
     }
 }

@@ -126,7 +126,7 @@ public class Ship : HUDSticker
             float warpStep = Mathf.Clamp(currentWarpSpeed, 0.0f, maximumWarpSpeed) * Time.deltaTime;
             float lerpFactor = Mathf.Clamp01(warpStep / remainingDistance);
             worldPosition = Vector3.Lerp(worldPosition, sticker.worldPosition, lerpFactor);
-            transform.position = worldPosition;
+            //transform.position = worldPosition;
 
             if(remainingDistance <= 1000.0f)
                 sticker.Arrived();        

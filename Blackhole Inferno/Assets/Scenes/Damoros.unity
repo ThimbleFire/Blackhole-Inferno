@@ -382,7 +382,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldPosition: {x: -45000, y: 0, z: 0}
-  signatureRadius: 1
+  signatureRadius: 300
   globalVisibility: 1
   CMOCommands: 000000000400000005000000
   humidity: 0
@@ -811,7 +811,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldPosition: {x: 0, y: 0, z: 0}
-  signatureRadius: 1
+  signatureRadius: 300
   globalVisibility: 1
   CMOCommands: 000000000400000005000000
   luminocity: 0
@@ -960,10 +960,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 89531855}
-  rotationSpeed: 5
-  zoomSpeed: 500
-  dragSpeed: 1
-  inertiaFactor: 1
+  distance: 10
+  xSpeed: 0.25
+  ySpeed: 0.25
+  yMinLimit: -90
+  yMaxLimit: 90
+  distanceMin: 10
+  distanceMax: 10
+  smoothTime: 2
 --- !u!1 &983058292
 GameObject:
   m_ObjectHideFlags: 0
@@ -1015,7 +1019,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldPosition: {x: 45000, y: 27500, z: 0}
-  signatureRadius: 1
+  signatureRadius: 300
   globalVisibility: 1
   CMOCommands: 000000000400000002000000
   repairsAvailable: 0
@@ -1445,7 +1449,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldPosition: {x: 22500, y: 0, z: 22500}
-  signatureRadius: 1
+  signatureRadius: 300
   globalVisibility: 1
   CMOCommands: 000000000400000008000000
   destination: 

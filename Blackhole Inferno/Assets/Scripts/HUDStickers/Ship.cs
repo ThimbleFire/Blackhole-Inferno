@@ -107,20 +107,20 @@ public class Ship : HUDSticker
         }
         currentLocation.Leaving();
 
-        // 
-        float currentWarpSpeed = 2250f;
-        float maximumWarpSpeed = 2250f;
-        float distanceAtTimeOfWarp = Vector3.Distance(worldPosition, sticker.worldPosition);
-
         // Create the warp progress window
         UIExpandingAddition window = Instantiate(prefabExpandingAddition).GetComponentInChildren<UIExpandingAddition>();
         window.Build(null, "RUNNING PROGRAM: WARP", Color.red);
         window.enableLoadingBar = true;
         window.OnDestroyEvent += OnWinDes;
 
+        // 
+        float currentWarpSpeed = 2250f;
+        float maximumWarpSpeed = 2250f;
+        float distanceAtTimeOfWarp = Vector3.Distance(worldPosition, sticker.worldPosition);
+
         while ( instructions.Count > 0 && instructions[0].Command == ContextMenuOption.Commands.WarpTo )
         {
-            float remainingDistance = Vector3.Distance(worldPosition, sticker.worldPosition);
+            float remainingDistance = Vector3.Distance(worldPosition, Vector3.MoveTowards(sticker.worldPosition, worldPosition, signatureRadius));
             float percentageCompletion = Mathf.Clamp01(1.0f - remainingDistance / distanceAtTimeOfWarp); // remaining distance - signature radius
             window.loadingBar.SetValue(percentageCompletion);
             float warpStep = Mathf.Clamp(currentWarpSpeed, 0.0f, maximumWarpSpeed) * Time.deltaTime;

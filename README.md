@@ -1,6 +1,8 @@
 2D/3D roguelike set in space.
 
 Todo
+* add a meter to indicate speed of the ship
+* add particles to indicate velocity
 * load and unload zones
 * add warping between universes
 * recruit crew

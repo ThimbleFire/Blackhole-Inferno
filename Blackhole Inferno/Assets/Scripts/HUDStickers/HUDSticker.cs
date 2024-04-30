@@ -19,6 +19,9 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
 
     public List<ContextMenuOption.Commands> CMOCommands;
 
+    public GameObject model_prefab;
+    protected GameObject model_instance;
+
     protected virtual void Awake() {
         rectTransform = GetComponent<RectTransform>();
         image = GetComponent<Image>();
@@ -54,10 +57,12 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
     public virtual void Arrived()
     {
         StopCoroutine(DisposeCoroutine());
+        Debug.Log("Arrived at " + gameObject.name);
     }
     public virtual void Leaving()
     {
         StartCoroutine(DisposeCoroutine());
+        Debug.Log("Leaving " + gameObject.name);
     }
     private IEnumerator DisposeCoroutine()
     {
@@ -84,6 +89,11 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
             //hide the image if it's not on camera
             Vector3 viewportPoint = Camera.main.WorldToViewportPoint(target3Position);
             image.enabled = viewportPoint.x >= 0 && viewportPoint.x <= 1 && viewportPoint.y >= 0 && viewportPoint.y <= 1 && viewportPoint.z > 0;
+
+            if(model_instance != null)
+            {
+                model_instance.transform.position = direction * distance;
+            }
         }
         else image.enabled = false;
     }

@@ -64,15 +64,11 @@ public class Belt : HUDSticker
 
             asteroids.Add(asteroid.gameObject);
         }
-
-        Debug.Log("Arrived at " + gameObject.name);
     }
 
     public override void Leaving()
     {
         base.Leaving();
-        
-        Debug.Log("Leaving " + gameObject.name);
     }
 
     protected override void Timeout() {

@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -113,30 +114,58 @@ public class Ship : HUDSticker
         window.enableLoadingBar = true;
         window.OnDestroyEvent += OnWinDes;
 
-        // 
-        float currentWarpSpeed = 2250f;
-        float maximumWarpSpeed = 2250f;
-        float distanceAtTimeOfWarp = Vector3.Distance(worldPosition, sticker.worldPosition);
+        //
+        Vector3 startPoint = worldPosition;
+        Vector3 endPoint = Vector3.MoveTowards(sticker.worldPosition, startPoint, 1000);
+        Vector3 endPoint2 = Vector3.MoveTowards(sticker.worldPosition, startPoint, sticker.signatureRadius);
+        float accelaration = 250.0f;
+        float maxSpeed = 2250.0f;
+
+        float currentSpeed = 0.0f;
+        float distance = Vector3.Distance(startPoint, endPoint);
+        float currentDistance = 0.0f;
+
+        bool arrived = false;
 
         while ( instructions.Count > 0 && instructions[0].Command == ContextMenuOption.Commands.WarpTo )
         {
-            float remainingDistance = Vector3.Distance(worldPosition, Vector3.MoveTowards(sticker.worldPosition, worldPosition, signatureRadius));
-            float percentageCompletion = Mathf.Clamp01(1.0f - remainingDistance / distanceAtTimeOfWarp); // remaining distance - signature radius
-            window.loadingBar.SetValue(percentageCompletion);
-            float warpStep = Mathf.Clamp(currentWarpSpeed, 0.0f, maximumWarpSpeed) * Time.deltaTime;
-            float lerpFactor = Mathf.Clamp01(warpStep / remainingDistance);
-            worldPosition = Vector3.Lerp(worldPosition, sticker.worldPosition, lerpFactor);
-            //transform.position = worldPosition;
-
-            if(remainingDistance <= 1000.0f)
-                sticker.Arrived();        
-
-            if (remainingDistance == 0.0f)
+            if (arrived == false)
             {
-                instructions.RemoveAt(0);
-                GameObject.Destroy(window.transform.parent.gameObject);
-                currentLocation = sticker;
-                yield break;
+                currentSpeed += accelaration * Time.deltaTime;
+                currentDistance += currentSpeed * Time.deltaTime;
+                currentSpeed = Mathf.Min(currentSpeed, maxSpeed);
+                float t = Mathf.Clamp01(currentDistance / distance);
+                window.loadingBar.SetValue(t);
+                worldPosition = Vector3.Lerp(startPoint, endPoint, t);
+                if (t >= 1.0f)
+                {
+                    sticker.Arrived();
+                    arrived = true;
+                    GameObject.Destroy(window.transform.parent.gameObject);
+                    // setup deceleration phase
+                    startPoint = worldPosition;
+                    distance = Vector3.Distance(startPoint, endPoint2);
+                    currentDistance = 0.0f;
+                    currentSpeed = 100.0f;
+                }
+            }
+            else
+            {
+                currentDistance += currentSpeed * Time.deltaTime;
+                currentSpeed = Mathf.Max(currentSpeed, 0.0f);
+                float t = Mathf.Clamp01(currentDistance / distance);
+                worldPosition = Vector3.Lerp(startPoint, endPoint2, t);
+                if (t >= 1.0f)
+                {
+                    sticker.Arrived();
+                    arrived = true;
+                    currentDistance = 0f;
+                    currentSpeed = 0f;
+                    //
+                    instructions.RemoveAt(0);
+                    currentLocation = sticker;
+                    yield break;
+                }
             }
 
             yield return null;

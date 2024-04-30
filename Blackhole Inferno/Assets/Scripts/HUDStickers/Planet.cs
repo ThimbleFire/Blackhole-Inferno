@@ -50,6 +50,24 @@ public class Planet : HUDSticker
     {    
         WorldSpaceToScreenSpace();
     }
+
+    public override void Arrived()
+    {
+        if (model_prefab && model_instance == null)
+        {
+            model_instance = Instantiate(model_prefab);
+            ScaleOnDistance script = model_instance.GetComponent<ScaleOnDistance>();
+            script.worldPosition = this.worldPosition;
+        }
+    }
+
+    public override void Leaving()
+    {
+        if ((model_instance != null))
+            Destroy(model_instance);
+
+        base.Leaving();
+    }
 }
 
 [Serializable]

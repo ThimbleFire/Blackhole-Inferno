@@ -4,7 +4,7 @@ Todo
 * add a meter to indicate speed of the ship
 * add particles to indicate velocity
 * add a planet texture to the planet
-* when planets and stars are within 2AU they should become visible
+* when planets and stars are within 2AU they should become visible. The code that handles HUDSticker viewport position should be handled by a script controlled by the model, and that script should have control over the the sticker and the model. 
 * add ship stuff
   * add a spaceship
   * make sure it rotates when the ship aligns, at least in the X-axis

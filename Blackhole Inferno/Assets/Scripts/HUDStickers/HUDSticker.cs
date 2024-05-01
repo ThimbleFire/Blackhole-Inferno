@@ -10,7 +10,7 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
 
     public static HUDSticker highlightedHUDSticker = null;
     public static HUDSticker selectedHUDSticker = null;
-    private float lastClickTime = 0f;
+    
     private Image image;
     private RectTransform rectTransform;
 
@@ -29,8 +29,6 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
         image = GetComponent<Image>();
     }
 
-    public Sprite Sprite {get{return GetComponent<UnityEngine.UI.Image>().sprite; } }
-
     public void OnPointerClick(PointerEventData eventData) {
         switch(eventData.button) {
             case PointerEventData.InputButton.Left:
@@ -47,38 +45,31 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
     }
     public void OnPointerExit(PointerEventData eventData) {
         Tooltip.instance.Hide();
-        // could we remove making it null?s
-       if(highlightedHUDSticker == this) {
-            highlightedHUDSticker = null;
-        }
+        // could we remove making it null?
+        // let's try and find out.
+        //if(highlightedHUDSticker == this) {
+        //     highlightedHUDSticker = null;
+        // }
     }
-    public virtual void Arrived()
-    {
+    public virtual void Arrived() {
         StopCoroutine(DisposeCoroutine());
         Debug.Log("Arrived at " + gameObject.name);
     }
-    public virtual void Leaving()
-    {
+    public virtual void Leaving() {
         StartCoroutine(DisposeCoroutine());
         Debug.Log("Leaving " + gameObject.name);
     }
-    private IEnumerator DisposeCoroutine()
-    {
+    private IEnumerator DisposeCoroutine() {
         yield return new WaitForSeconds(30.0f);
-
         Timeout();
     }
-    protected virtual void Timeout()
-    {
-
+    protected virtual void Timeout() {
     }
 
     protected void WorldSpaceToScreenSpace() {
-        if (distance > Camera.main.farClipPlane || globalVisibility) {
-            Vector3 viewportPoint = Camera.main.WorldToViewportPoint(target3Position);
-            image.enabled = viewportPoint.x >= 0 && viewportPoint.x <= 1 && viewportPoint.y >= 0 && viewportPoint.y <= 1 && viewportPoint.z > 0;
-            if (image.enabled)
-                rectTransform.position = Camera.main.WorldToScreenPoint(target3Position);
-        }
+        Vector3 viewportPoint = Camera.main.WorldToViewportPoint(target3Position);
+        image.enabled = viewportPoint.x >= 0 && viewportPoint.x <= 1 && viewportPoint.y >= 0 && viewportPoint.y <= 1 && viewportPoint.z > 0;
+        if (image.enabled)
+            rectTransform.position = Camera.main.WorldToScreenPoint(target3Position);
     }
 }

@@ -40,36 +40,10 @@ public class Tooltip : MonoBehaviour
             
         float distance = Vector3.Distance(Ship.LPC.worldPosition, HUDSticker.highlightedHUDSticker.worldPosition);
 
-        string distanceText = string.Empty;
+        //if (distance >= 1495978.707f) distanceText += "AU"; // if distance > 0.01 AU, write AU
+        //else distanceText += " km"; // else write km, like 1495978.7 km
 
-        if(HUDSticker.highlightedHUDSticker.globalVisibility)
-        {
-            if (distance > 1500.0f) {
-                distanceText = $"{(distance / 1500.0f).ToString("F2")} AU";
-            }
-            else if (distance > 1000f) {
-                distanceText = $"{(distance / 1.5f).ToString("F2")} km";
-            }
-        }
-        else
-        {
-            if (distance > 1.0f) {
-                distanceText = $"{(distance / 1.0f).ToString("F2")} km";
-            }
-            else {
-                distanceText = $"({distance}  m)";
-            }
-        }
-
-        /* //1km = 1.0f
-        if (distance > 150000000)
-            distanceText = (distance / 150000000.0f).ToString("F2") + " AU";
-        else if (distance > 1500000)
-            distanceText = (distance / 1500000.0f).ToString("F2") + " km";
-        else distanceText = Mathf.FloorToInt(distance) + " m";
-        */
-
-        text.text = $"{hoveringName} {distanceText}";
+        text.text = $"{hoveringName} {(distance / 149597870.7f).ToString("F2")} {distance >= 1495978.707f ? AU : km}";
     }
     
     public void OnAnimationComplete()

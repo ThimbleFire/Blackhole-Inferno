@@ -9,6 +9,7 @@ using static UnityEngine.GraphicsBuffer;
 public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler {
 
     public static HUDSticker highlightedHUDSticker = null;
+    public static HUDSticker selectedHUDSticker = null;
     private float lastClickTime = 0f;
     private Image image;
     private RectTransform rectTransform;
@@ -31,18 +32,13 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
     public Sprite Sprite {get{return GetComponent<UnityEngine.UI.Image>().sprite; } }
 
     public void OnPointerClick(PointerEventData eventData) {
-        if(eventData.button == PointerEventData.InputButton.Left) {
-            float currentTime = Time.time;
-            float doubleClickTimeThreshold = 0.3f;
-            // double-click
-            if (currentTime - lastClickTime < doubleClickTimeThreshold) {
-                //CameraMove.instance.ResetDistance(transform.forward, signatureRadius);        
-            }
-            // single-click
-            else lastClickTime = currentTime;
-        }
-        if( eventData.button == PointerEventData.InputButton.Right ) {
+        switch(eventData.button) {
+            case PointerEventData.InputButton.Left:
+                selectedHUDSticker = this;
+                break;
+            case PointerEventData.InputButton.Right:
             ContextMenu.instance.OpenContextMenu(this);
+                break;
         }
     }
     public void OnPointerEnter(PointerEventData eventData) {
@@ -51,6 +47,7 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
     }
     public void OnPointerExit(PointerEventData eventData) {
         Tooltip.instance.Hide();
+        // could we remove making it null?s
        if(highlightedHUDSticker == this) {
             highlightedHUDSticker = null;
         }

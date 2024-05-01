@@ -118,8 +118,8 @@ public class Ship : HUDSticker
         Vector3 startPoint = worldPosition;
         Vector3 endPoint = Vector3.MoveTowards(sticker.worldPosition, startPoint, 1000);
         Vector3 endPoint2 = Vector3.MoveTowards(sticker.worldPosition, startPoint, sticker.signatureRadius);
-        float accelaration = 250.0f;
-        float maxSpeed = 2250.0f;
+        float accelaration = 3739946.7675f;
+        float maxSpeed = 373994676.75f;
 
         float currentSpeed = 0.0f;
         float distance = Vector3.Distance(startPoint, endPoint);

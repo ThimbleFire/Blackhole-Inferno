@@ -42,8 +42,8 @@ public class Tooltip : MonoBehaviour
 
         //if (distance >= 1495978.707f) distanceText += "AU"; // if distance > 0.01 AU, write AU
         //else distanceText += " km"; // else write km, like 1495978.7 km
-
-        text.text = $"{hoveringName} {(distance / 149597870.7f).ToString("F2")} {distance >= 1495978.707f ? AU : km}";
+        float d = distance >= 1.0 ? distance / 149597870.7f : distance * 100.0f;
+        text.text = $"{hoveringName} {d:F2} {(distance >= 1495978.707f ? "AU" : "km")}";
     }
     
     public void OnAnimationComplete()

@@ -3,24 +3,28 @@
   "WorkspaceRootPath": "C:\\Users\\Retri\\Documents\\Github\\Blackhole-Inferno\\Blackhole Inferno\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D8AE3089-1AAF-A43F-1708-B9E1077F23B3}|Assembly-CSharp.csproj|c:\\users\\retri\\documents\\github\\blackhole-inferno\\blackhole inferno\\assets\\scripts\\hudstickers\\ship.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D8AE3089-1AAF-A43F-1708-B9E1077F23B3}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\hudstickers\\ship.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D8AE3089-1AAF-A43F-1708-B9E1077F23B3}|Assembly-CSharp.csproj|c:\\users\\retri\\documents\\github\\blackhole-inferno\\blackhole inferno\\assets\\uiwindows\\tooltip\\tooltip.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D8AE3089-1AAF-A43F-1708-B9E1077F23B3}|Assembly-CSharp.csproj|solutionrelative:assets\\uiwindows\\tooltip\\tooltip.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D8AE3089-1AAF-A43F-1708-B9E1077F23B3}|Assembly-CSharp.csproj|c:\\users\\retri\\documents\\github\\blackhole-inferno\\blackhole inferno\\assets\\scripts\\hudstickers\\belt.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D8AE3089-1AAF-A43F-1708-B9E1077F23B3}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\hudstickers\\belt.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D8AE3089-1AAF-A43F-1708-B9E1077F23B3}|Assembly-CSharp.csproj|c:\\users\\retri\\documents\\github\\blackhole-inferno\\blackhole inferno\\assets\\scripts\\hudstickers\\hudsticker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{D8AE3089-1AAF-A43F-1708-B9E1077F23B3}|Assembly-CSharp.csproj|C:\\Users\\Retri\\Documents\\Github\\Blackhole-Inferno\\Blackhole Inferno\\assets\\scripts\\hudstickers\\hudsticker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D8AE3089-1AAF-A43F-1708-B9E1077F23B3}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\hudstickers\\hudsticker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D8AE3089-1AAF-A43F-1708-B9E1077F23B3}|Assembly-CSharp.csproj|c:\\users\\retri\\documents\\github\\blackhole-inferno\\blackhole inferno\\assets\\scaleondistance.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D8AE3089-1AAF-A43F-1708-B9E1077F23B3}|Assembly-CSharp.csproj|solutionrelative:assets\\scaleondistance.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D8AE3089-1AAF-A43F-1708-B9E1077F23B3}|Assembly-CSharp.csproj|C:\\Users\\Retri\\Documents\\Github\\Blackhole-Inferno\\Blackhole Inferno\\assets\\scripts\\hudstickers\\ship.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D8AE3089-1AAF-A43F-1708-B9E1077F23B3}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\hudstickers\\ship.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D8AE3089-1AAF-A43F-1708-B9E1077F23B3}|Assembly-CSharp.csproj|c:\\users\\retri\\documents\\github\\blackhole-inferno\\blackhole inferno\\assets\\scripts\\hudstickers\\planet.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D8AE3089-1AAF-A43F-1708-B9E1077F23B3}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\hudstickers\\planet.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D8AE3089-1AAF-A43F-1708-B9E1077F23B3}|Assembly-CSharp.csproj|C:\\Users\\Retri\\Documents\\Github\\Blackhole-Inferno\\Blackhole Inferno\\assets\\scaleondistance.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D8AE3089-1AAF-A43F-1708-B9E1077F23B3}|Assembly-CSharp.csproj|solutionrelative:assets\\scaleondistance.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D8AE3089-1AAF-A43F-1708-B9E1077F23B3}|Assembly-CSharp.csproj|C:\\Users\\Retri\\Documents\\Github\\Blackhole-Inferno\\Blackhole Inferno\\assets\\scripts\\hudstickers\\belt.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D8AE3089-1AAF-A43F-1708-B9E1077F23B3}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\hudstickers\\belt.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,69 +34,82 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
+              "Title": "Tooltip.cs",
+              "DocumentMoniker": "C:\\Users\\Retri\\Documents\\Github\\Blackhole-Inferno\\Blackhole Inferno\\Assets\\UIWindows\\Tooltip\\Tooltip.cs",
+              "RelativeDocumentMoniker": "Assets\\UIWindows\\Tooltip\\Tooltip.cs",
+              "ToolTip": "C:\\Users\\Retri\\Documents\\Github\\Blackhole-Inferno\\Blackhole Inferno\\Assets\\UIWindows\\Tooltip\\Tooltip.cs",
+              "RelativeToolTip": "Assets\\UIWindows\\Tooltip\\Tooltip.cs",
+              "ViewState": "AQIAABEAAAAAAAAAAAAUwC0AAAAnAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-01T05:18:42.969Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "ScaleOnDistance.cs",
               "DocumentMoniker": "C:\\Users\\Retri\\Documents\\Github\\Blackhole-Inferno\\Blackhole Inferno\\Assets\\ScaleOnDistance.cs",
               "RelativeDocumentMoniker": "Assets\\ScaleOnDistance.cs",
               "ToolTip": "C:\\Users\\Retri\\Documents\\Github\\Blackhole-Inferno\\Blackhole Inferno\\Assets\\ScaleOnDistance.cs",
               "RelativeToolTip": "Assets\\ScaleOnDistance.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABQAAAA1AAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAgAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-30T18:22:34.958Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "HUDSticker.cs",
               "DocumentMoniker": "C:\\Users\\Retri\\Documents\\Github\\Blackhole-Inferno\\Blackhole Inferno\\Assets\\Scripts\\HUDStickers\\HUDSticker.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\HUDStickers\\HUDSticker.cs",
               "ToolTip": "C:\\Users\\Retri\\Documents\\Github\\Blackhole-Inferno\\Blackhole Inferno\\Assets\\Scripts\\HUDStickers\\HUDSticker.cs",
               "RelativeToolTip": "Assets\\Scripts\\HUDStickers\\HUDSticker.cs",
-              "ViewState": "AQIAAEQAAAAAAAAAAADwv1AAAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABcAAAA4AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-30T16:14:15.416Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 5,
               "Title": "Belt.cs",
               "DocumentMoniker": "C:\\Users\\Retri\\Documents\\Github\\Blackhole-Inferno\\Blackhole Inferno\\Assets\\Scripts\\HUDStickers\\Belt.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\HUDStickers\\Belt.cs",
               "ToolTip": "C:\\Users\\Retri\\Documents\\Github\\Blackhole-Inferno\\Blackhole Inferno\\Assets\\Scripts\\HUDStickers\\Belt.cs",
               "RelativeToolTip": "Assets\\Scripts\\HUDStickers\\Belt.cs",
-              "ViewState": "AQIAAAMAAAAAAAAAAAAAAEYAAAAXAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACAAAAAiAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-30T16:45:27.765Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "Ship.cs",
               "DocumentMoniker": "C:\\Users\\Retri\\Documents\\Github\\Blackhole-Inferno\\Blackhole Inferno\\Assets\\Scripts\\HUDStickers\\Ship.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\HUDStickers\\Ship.cs",
               "ToolTip": "C:\\Users\\Retri\\Documents\\Github\\Blackhole-Inferno\\Blackhole Inferno\\Assets\\Scripts\\HUDStickers\\Ship.cs",
               "RelativeToolTip": "Assets\\Scripts\\HUDStickers\\Ship.cs",
-              "ViewState": "AQIAAHIAAAAAAAAAAAAAAJIAAAAcAAAA",
+              "ViewState": "AQIAAGgAAAAAAAAAAAAAAHgAAAApAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-30T16:17:36.385Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
               "Title": "Planet.cs",
               "DocumentMoniker": "C:\\Users\\Retri\\Documents\\Github\\Blackhole-Inferno\\Blackhole Inferno\\Assets\\Scripts\\HUDStickers\\Planet.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\HUDStickers\\Planet.cs",
               "ToolTip": "C:\\Users\\Retri\\Documents\\Github\\Blackhole-Inferno\\Blackhole Inferno\\Assets\\Scripts\\HUDStickers\\Planet.cs",
               "RelativeToolTip": "Assets\\Scripts\\HUDStickers\\Planet.cs",
-              "ViewState": "AQIAABMAAAAAAAAAAAAgwAQAAAAbAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAADQAAAAzAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-30T16:11:57.809Z",
               "EditorCaption": ""

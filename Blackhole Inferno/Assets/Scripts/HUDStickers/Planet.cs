@@ -12,6 +12,7 @@ public class Planet : HUDSticker
     public bool water;
     public bool ice;
     public XMLPlanet.Composition composition;
+    public ScaleOnDistance model;
 
     internal void Load(XMLPlanet planet)
     {
@@ -49,23 +50,16 @@ public class Planet : HUDSticker
     void LateUpdate()
     {    
         WorldSpaceToScreenSpace();
+        model.transform.position = target3Position;
     }
 
     public override void Arrived()
     {
-        if (model_prefab && model_instance == null)
-        {
-            model_instance = Instantiate(model_prefab);
-            ScaleOnDistance script = model_instance.GetComponent<ScaleOnDistance>();
-            script.worldPosition = this.worldPosition;
-        }
+
     }
 
     public override void Leaving()
     {
-        if ((model_instance != null))
-            Destroy(model_instance);
-
         base.Leaving();
     }
 }

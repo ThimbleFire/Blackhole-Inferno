@@ -5,13 +5,12 @@ using UnityEngine;
 public class ScaleOnDistance : MonoBehaviour
 {
     public Vector3 worldPosition;
-    public float aMin = 300.0f;
-    public float scale = 0.0f;
+    private float aMin = 1500.0f;
 
     void FixedUpdate()
     {
         float d = Vector3.Distance(worldPosition, Ship.LPC.worldPosition);
-        float aMax = 1000.0f;
+        float aMax = 149597870.7f; // planets become visible at 1-quater of an AU
         float bMin = 0.0f;
         float bMax = 1.0f;
 
@@ -19,11 +18,5 @@ public class ScaleOnDistance : MonoBehaviour
         float b = Mathf.InverseLerp(bMax, bMin, t);
 
         transform.localScale = Vector3.one * b * aMin;
-
-
-        Vector3 direction = (worldPosition - Ship.LPC.worldPosition).normalized;
-        Vector3 target3Position = direction * d;
-
-        transform.position = target3Position;
     }
 }

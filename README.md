@@ -3,6 +3,10 @@
 Todo
 * add a meter to indicate speed of the ship
 * add particles to indicate velocity
+* figure out how to implement a 2D tilemap in 3D space
+
+By default the camera is in perspective mode. While the camera is zoomed out the tilemap is transparent and disabled. On mouse-wheel zoom-in, the tilemap is instructed to face the camera and the camera becomes orthogonal. The user can then not orbit the camera until they zoom back out, hiding the tilemap and, once fully transparent, restoring the camera to perspective.
+
 * load and unload zones
 * add warping between universes
 * recruit crew

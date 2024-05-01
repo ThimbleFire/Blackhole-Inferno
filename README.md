@@ -1,12 +1,15 @@
-2D/3D roguelike set in space.
+3D roguelike set in space.
 
 Todo
 * add a meter to indicate speed of the ship
 * add particles to indicate velocity
-* figure out how to implement a 2D tilemap in 3D space
-
-By default the camera is in perspective mode. While the camera is zoomed out the tilemap is transparent and disabled. On mouse-wheel zoom-in, the tilemap is instructed to face the camera and the camera becomes orthogonal. The user can then not orbit the camera until they zoom back out, hiding the tilemap and, once fully transparent, restoring the camera to perspective.
-
+* add a planet texture to the planet
+* add ship stuff
+  * add a spaceship 
+  * make it so when you zoom in close enough the roof of the ship fades out
+  * add a 3D tilemap grid for the inside of the ship
+  * add models for the various facilities
+  * add crew and crew behaviour
 * load and unload zones
 * add warping between universes
 * recruit crew

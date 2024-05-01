@@ -4,13 +4,14 @@ Todo
 * add a meter to indicate speed of the ship
 * add particles to indicate velocity
 * add a planet texture to the planet
+* when planets and stars are within 2AU they should become visible
 * add ship stuff
- * add a spaceship
- * make sure it rotates when the ship aligns, at least in the X-axis
- * make it so when you zoom in close enough the roof of the ship fades out
- * add a 3D tilemap grid for the inside of the ship
- * add models for the various facilities
- * add crew and crew behaviour
+  * add a spaceship
+  * make sure it rotates when the ship aligns, at least in the X-axis
+  * make it so when you zoom in close enough the roof of the ship fades out
+  * add a 3D tilemap grid for the inside of the ship
+  * add models for the various facilities
+  * add crew and crew behaviour
 * load and unload zones
 * add warping between universes
 * recruit crew

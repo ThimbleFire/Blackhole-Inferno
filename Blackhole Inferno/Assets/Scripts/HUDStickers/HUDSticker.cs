@@ -19,7 +19,7 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
 
     protected Vector3 direction { get { return (worldPosition - Ship.LPC.worldPosition).normalized; } }
     protected float distance { get { return Vector3.Distance(worldPosition, Ship.LPC.worldPosition); } }
-    protected Vector3 target3Position { get { return direction * (Camera.main.farClipPlane - 10.0f); } }
+    public Vector3 target3Position { get { return distance < Camera.main.farClipPlane ? worldPosition : direction * (Camera.main.farClipPlane - 10.0f); } }
 
     public List<ContextMenuOption.Commands> CMOCommands;
 
@@ -77,13 +77,11 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
     }
 
     protected void WorldSpaceToScreenSpace() {
-
-        if (distance < Camera.main.farClipPlane || globalVisibility)
-        {
-            rectTransform.position = Camera.main.WorldToScreenPoint(target3Position);
+        if (distance > Camera.main.farClipPlane || globalVisibility) {
             Vector3 viewportPoint = Camera.main.WorldToViewportPoint(target3Position);
             image.enabled = viewportPoint.x >= 0 && viewportPoint.x <= 1 && viewportPoint.y >= 0 && viewportPoint.y <= 1 && viewportPoint.z > 0;
+            if (image.enabled)
+                rectTransform.position = Camera.main.WorldToScreenPoint(target3Position);
         }
-        else image.enabled = false;
     }
 }

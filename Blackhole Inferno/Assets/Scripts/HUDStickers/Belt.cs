@@ -45,18 +45,18 @@ public class Belt : HUDSticker
         int count = UnityEngine.Random.Range(30, 100);
         for(int i = 0; i < count; i++)
         {
-            // calculate the angle they should appear at
-            float angle = UnityEngine.Random.Range(0, Mathf.PI /* * 2.0f */);
+            // calculate the distance they should be from the center of the belt 1.0 = 1 meter
+            float distance = UnityEngine.Random.Range(8000.0f, 13000.0f);
 
-            // calculate the distance they should be from the center of the belt
-            float distance = UnityEngine.Random.Range(10.0f, 13.0f);
+            // calculate the angle they should appear at
+            float angle = UnityEngine.Random.Range(0, Mathf.PI /* * 2.0f */ );
 
             // Convert spherical coordinates to Cartesian coordinates
             float x = distance * Mathf.Cos( angle );
             float y = distance * Mathf.Sin( angle );
 
             // Create a new position relative to the center point
-            Vector3 randomPosition = worldPosition + new Vector3(x, UnityEngine.Random.Range(-1.0f, 1.0f), y);
+            Vector3 randomPosition = worldPosition + new Vector3( y, UnityEngine.Random.Range(-1.0f, 1.0f), x);
 
             Astroid asteroid = Instantiate(astroidPrefab, transform.parent).GetComponent<Astroid>();
         

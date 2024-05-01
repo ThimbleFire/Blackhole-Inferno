@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.Text;
 
 public class Tooltip : MonoBehaviour
 {
@@ -9,6 +10,9 @@ public class Tooltip : MonoBehaviour
     public TMP_Text text;
     public GameObject panel;
     private string hoveringName = string.Empty;
+
+    public const float AU_IN_METERS =     149597870700f;
+    public const float AU_IN_KILOMETERS = 149597870.7f;
 
     void Awake() {
         if (instance == null) {
@@ -40,12 +44,32 @@ public class Tooltip : MonoBehaviour
             
         float distance = Vector3.Distance(Ship.LPC.worldPosition, HUDSticker.highlightedHUDSticker.worldPosition);
 
-        //if (distance >= 1495978.707f) distanceText += "AU"; // if distance > 0.01 AU, write AU
-        //else distanceText += " km"; // else write km, like 1495978.7 km
-        float d = distance >= 1.0 ? distance / 149597870.7f : distance * 100.0f;
-        text.text = $"{hoveringName} {d:F2} {(distance >= 1495978.707f ? "AU" : "km")}";
+        StringBuilder stringBuilder = new StringBuilder();
+
+        // if distance is greater than 1/100th of a AU then it's AU
+        float one_oneHundrethOfAnAU = AU_IN_METERS / 100.0f;
+        float one_kilometer = 1000.0f;
+
+        if (distance >= one_oneHundrethOfAnAU)
+        {
+            stringBuilder.Append((distance / AU_IN_METERS).ToString("F2"));
+            stringBuilder.Append(" AU");
+        }
+        else if (distance >= one_kilometer)
+        {
+            stringBuilder.Append((distance / 1000).ToString("F2"));
+            stringBuilder.Append(" km");
+        }
+        else
+        {
+            stringBuilder.Append(distance.ToString());
+            stringBuilder.Append(" m");
+        }
+
+        text.text = $"{hoveringName} ({stringBuilder})";
     }
-    
+
+
     public void OnAnimationComplete()
     {
         Debug.Log("context menu animation over");

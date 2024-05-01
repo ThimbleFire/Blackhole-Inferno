@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.PackageManager.UI;
 using UnityEngine;
 
 public class Ship : HUDSticker
@@ -13,6 +14,7 @@ public class Ship : HUDSticker
     public GameObject prefabExpandingAddition;
 
     public Vector3 rot;
+    public float currentSpeedPerSecond = 0.0f;
 
     private static Dictionary<ContextMenuOption.Commands, Packet> packets;
     private delegate IEnumerator Packet();
@@ -25,7 +27,8 @@ public class Ship : HUDSticker
             {ContextMenuOption.Commands.WarpTo, WarpToTargetCoroutine}, 
             {ContextMenuOption.Commands.Dock, DockCoroutine},
             {ContextMenuOption.Commands.Jump, JumpCoroutine},
-            {ContextMenuOption.Commands.Lock, LockTargetCoroutine }
+            {ContextMenuOption.Commands.Lock, LockTargetCoroutine },
+            {ContextMenuOption.Commands.Approach, ApproachCoroutine }
         };
         
         base.Awake();
@@ -49,14 +52,6 @@ public class Ship : HUDSticker
         {
             StartCoroutine(InstructionStepCoroutine());
         }
-    }
-
-    void Update()
-    {
-        // Scale the ship depending on distance from the camera
-        var size = (Camera.main.transform.position - transform.position).magnitude;
-        float scale = 0.005f;
-        transform.localScale = new Vector3(size,size,size) * scale;
     }
 
     void LateUpdate()
@@ -95,7 +90,42 @@ public class Ship : HUDSticker
 
         yield return null;
     }
+    private IEnumerator ApproachCoroutine()
+    {
+        HUDSticker sticker = instructions[0].Sticker;
 
+        // Ensure the player ship is aligned to the destination, if not, insert an align instruction
+        if (sticker.worldPosition != rot)
+        {
+            instructions.Insert(0, new Instruction(sticker, ContextMenuOption.Commands.Align));
+            StartCoroutine(InstructionStepCoroutine());
+            yield break;
+        }
+
+        Vector3 startPoint = worldPosition;
+        Vector3 endPoint = sticker.worldPosition;
+        float startingDistance = Vector3.Distance(startPoint, endPoint);
+        currentSpeedPerSecond = 0;
+        float currentDistance = 0.0f;
+        float accelaration = 300.0f;
+        float maxSpeed = 1000.0f;
+
+        while (instructions.Count > 0 && instructions[0].Command == ContextMenuOption.Commands.Approach)
+        {
+            currentSpeedPerSecond += accelaration * Time.deltaTime;
+            currentDistance += currentSpeedPerSecond * Time.deltaTime;
+            currentSpeedPerSecond = Mathf.Min(currentSpeedPerSecond, maxSpeed);
+            float t = Mathf.Clamp01(currentDistance / startingDistance);
+            worldPosition = Vector3.Lerp(startPoint, endPoint, t);
+
+            if (t >= 1.0f)
+            {
+                instructions.RemoveAt(0);
+                yield break;
+            }
+            yield return null;
+        }
+    }
     private IEnumerator WarpToTargetCoroutine()
     {
         HUDSticker sticker = instructions[0].Sticker;
@@ -116,58 +146,31 @@ public class Ship : HUDSticker
 
         //
         Vector3 startPoint = worldPosition;
-        Vector3 endPoint = Vector3.MoveTowards(sticker.worldPosition, startPoint, 1000);
-        Vector3 endPoint2 = Vector3.MoveTowards(sticker.worldPosition, startPoint, sticker.signatureRadius);
-        float accelaration = 3739946.7675f;
-        float maxSpeed = 373994676.75f;
-
-        float currentSpeed = 0.0f;
+        Vector3 endPoint = Vector3.MoveTowards(sticker.worldPosition, startPoint, sticker.signatureRadius);
+        float accelaration = Tooltip.AU_IN_METERS / 100.0f;
+        float maxSpeed = Tooltip.AU_IN_METERS / 10;
+        currentSpeedPerSecond = 0.0f;
         float distance = Vector3.Distance(startPoint, endPoint);
         float currentDistance = 0.0f;
 
-        bool arrived = false;
-
         while ( instructions.Count > 0 && instructions[0].Command == ContextMenuOption.Commands.WarpTo )
         {
-            if (arrived == false)
+            currentSpeedPerSecond += accelaration * Time.deltaTime;
+            currentDistance += currentSpeedPerSecond * Time.deltaTime;
+            currentSpeedPerSecond = Mathf.Min(currentSpeedPerSecond, maxSpeed);
+            float t = Mathf.Clamp01(currentDistance / distance);
+            window.loadingBar.SetValue(t);
+            worldPosition = Vector3.Lerp(startPoint, endPoint, t);
+            if (t >= 1.0f)
             {
-                currentSpeed += accelaration * Time.deltaTime;
-                currentDistance += currentSpeed * Time.deltaTime;
-                currentSpeed = Mathf.Min(currentSpeed, maxSpeed);
-                float t = Mathf.Clamp01(currentDistance / distance);
-                window.loadingBar.SetValue(t);
-                worldPosition = Vector3.Lerp(startPoint, endPoint, t);
-                if (t >= 1.0f)
-                {
-                    sticker.Arrived();
-                    arrived = true;
-                    GameObject.Destroy(window.transform.parent.gameObject);
-                    // setup deceleration phase
-                    startPoint = worldPosition;
-                    distance = Vector3.Distance(startPoint, endPoint2);
-                    currentDistance = 0.0f;
-                    currentSpeed = 100.0f;
-                }
+                sticker.Arrived();
+                GameObject.Destroy(window.transform.parent.gameObject);
+                currentDistance = 0.0f;
+                currentSpeedPerSecond = 0.0f;
+                instructions.RemoveAt(0);
+                currentLocation = sticker;
+                yield break;
             }
-            else
-            {
-                currentDistance += currentSpeed * Time.deltaTime;
-                currentSpeed = Mathf.Max(currentSpeed, 0.0f);
-                float t = Mathf.Clamp01(currentDistance / distance);
-                worldPosition = Vector3.Lerp(startPoint, endPoint2, t);
-                if (t >= 1.0f)
-                {
-                    sticker.Arrived();
-                    arrived = true;
-                    currentDistance = 0f;
-                    currentSpeed = 0f;
-                    //
-                    instructions.RemoveAt(0);
-                    currentLocation = sticker;
-                    yield break;
-                }
-            }
-
             yield return null;
         }
     }
@@ -188,9 +191,9 @@ public class Ship : HUDSticker
     {
         HUDSticker sticker = instructions[0].Sticker;
 
-        float initialAngleToRotate = Vector3.Angle(rot, sticker.worldPosition);
+        float initialAngleToRotate = Vector3.Angle(rot, sticker.target3Position);
         float rotationSpeed = 3.5f;
-        float rotationThreshold = 0.1f;
+        float rotationThreshold = 0.25f;
         UIExpandingAddition window = Instantiate(prefabExpandingAddition).GetComponentInChildren<UIExpandingAddition>();
         window.Build(null, "RUNNING PROGRAM: ALIGN", Color.red);
         window.enableLoadingBar = true;
@@ -199,8 +202,8 @@ public class Ship : HUDSticker
         while ( instructions.Count > 0 && instructions[0].Command == ContextMenuOption.Commands.Align )
         {
             float rotLerp = Mathf.Clamp01(Time.deltaTime * rotationSpeed);
-            rot = Vector3.Slerp(rot, sticker.worldPosition, rotLerp);
-            float remainingAngle = Vector3.Angle(rot, sticker.worldPosition);
+            rot = Vector3.Slerp(rot, sticker.target3Position, rotLerp);
+            float remainingAngle = Vector3.Angle(rot, sticker.target3Position);
 
             float percentageCompletion = Mathf.Clamp01(1.0f - (remainingAngle / initialAngleToRotate));
             window.loadingBar.SetValue(percentageCompletion);
@@ -236,4 +239,5 @@ public class Ship : HUDSticker
         //sticker.LockTarget
         Debug.Log("Target Locked: " + sticker.name);
     }
+
 }

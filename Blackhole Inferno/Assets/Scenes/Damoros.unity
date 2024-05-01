@@ -272,8 +272,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7d5ed36bfbc2b243b17e46163a40f1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  worldPosition: {x: -448793600, y: 0, z: 0}
-  signatureRadius: 300
+  worldPosition: {x: -2.991957e+11, y: 0, z: 0}
+  signatureRadius: 100000000
   globalVisibility: 1
   CMOCommands: 000000000400000005000000
   humidity: 0
@@ -485,8 +485,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccf93b6b6e808204d8a3dcd1a665a4be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  worldPosition: {x: 300, y: 0, z: 0}
-  signatureRadius: 300
+  worldPosition: {x: 100000, y: 0, z: 0}
+  signatureRadius: 500000000
   globalVisibility: 1
   CMOCommands: 000000000400000005000000
   luminocity: 0
@@ -692,7 +692,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae2fb9bad2b21ca40b0e7ea93b74861d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  worldPosition: {x: 448793600, y: 224396800, z: 0}
+  worldPosition: {x: 2.9919573e+11, y: 2.991957e+11, z: 0}
   signatureRadius: 300
   globalVisibility: 1
   CMOCommands: 000000000400000002000000
@@ -894,7 +894,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6211338108908524224, guid: 100ad94159ce11e4fa5f7eb2b8ef3ac5, type: 3}
       propertyPath: worldPosition.x
-      value: -224396800
+      value: -2.991957e+11
       objectReference: {fileID: 0}
     - target: {fileID: 6211338108908524224, guid: 100ad94159ce11e4fa5f7eb2b8ef3ac5, type: 3}
       propertyPath: worldPosition.y
@@ -902,7 +902,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6211338108908524224, guid: 100ad94159ce11e4fa5f7eb2b8ef3ac5, type: 3}
       propertyPath: worldPosition.z
-      value: 9000000
+      value: -1.495979e+11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1035,11 +1035,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3458311806980204041, guid: 9120bee47f6fd0349895001da3aa652c, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 4
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 3458311806980204041, guid: 9120bee47f6fd0349895001da3aa652c, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 4
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 3458311806980204041, guid: 9120bee47f6fd0349895001da3aa652c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1196,7 +1196,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6211338108908524224, guid: 100ad94159ce11e4fa5f7eb2b8ef3ac5, type: 3}
       propertyPath: worldPosition.x
-      value: -448793600
+      value: -2.991957e+11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1253,8 +1253,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7d5ed36bfbc2b243b17e46163a40f1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  worldPosition: {x: -224396800, y: 0, z: 9000000}
-  signatureRadius: 300
+  worldPosition: {x: -2.991957e+11, y: 0, z: -1.495979e+11}
+  signatureRadius: 100000000
   globalVisibility: 1
   CMOCommands: 000000000400000005000000
   humidity: 0
@@ -1354,7 +1354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68e66f88c9acf0340bcc216372e32189, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  worldPosition: {x: 224396800, y: 0, z: 224396800}
+  worldPosition: {x: 2.9919573e+11, y: 0, z: 2.991957e+11}
   signatureRadius: 300
   globalVisibility: 1
   CMOCommands: 000000000400000008000000
@@ -1419,7 +1419,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 702465727553783709, guid: f99137dad64a04b459d04789ce36f3d4, type: 3}
       propertyPath: worldPosition.z
-      value: 448793600
+      value: 4.487936e+9
       objectReference: {fileID: 0}
     - target: {fileID: 702465727553783709, guid: f99137dad64a04b459d04789ce36f3d4, type: 3}
       propertyPath: globalVisibility

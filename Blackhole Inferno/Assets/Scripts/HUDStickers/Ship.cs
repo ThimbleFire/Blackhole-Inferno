@@ -221,23 +221,18 @@ public class Ship : HUDSticker
     private IEnumerator LockTargetCoroutine()
     {
         HUDSticker sticker = instructions[0].Sticker;
-
         bool lockAcheived = false;
         float timer = 0.0f;
 
         while(lockAcheived == false)
         {
             timer += Time.deltaTime;
-
             if(timer >= sticker.signatureRadius) {
                 lockAcheived = true;
-            }
-            
+                Debug.Log("Target Locked: " + sticker.name);
+                yield break;
+            }            
             yield return null;   
         }
-
-        //sticker.LockTarget
-        Debug.Log("Target Locked: " + sticker.name);
     }
-
 }

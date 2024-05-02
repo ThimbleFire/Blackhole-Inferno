@@ -4,7 +4,7 @@ using UnityEngine;
 // Camera code courtesy of Veli V
 public class CameraMove : MonoBehaviour
 {
-    public static float distance = 10.0f;
+    public static float distance = 30.0f;
     public float xSpeed = 0.25f;
     public float ySpeed = 0.25f;
     public float yMinLimit = -90f;

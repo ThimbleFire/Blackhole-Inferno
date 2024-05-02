@@ -47,14 +47,8 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
         Tooltip.instance.Show(this.name);
         highlightedHUDSticker = this;
     }
-    public void OnPointerExit(PointerEventData eventData) {
-        Tooltip.instance.Hide();
-        // could we remove making it null?
-        // let's try and find out.
-        //if(highlightedHUDSticker == this) {
-        //     highlightedHUDSticker = null;
-        // }
-    }
+    public void OnPointerExit(PointerEventData eventData) => Tooltip.instance.Hide();
+    
     public virtual void Arrived() {
         StopCoroutine(DisposeCoroutine());
         Debug.Log("Arrived at " + gameObject.name);
@@ -71,26 +65,24 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
     }
 
     protected void WorldSpaceToScreenSpace() {
-        
-        //calculate the camera position. I'm pretty sure this won't work.
+        // get the direction from the camera to the ship
+        Vector3 cameraFromShipToCamera = -Camera.main.transform.position.normalized;
 
-        //calculate its direction from the ship (this may need to be inverted)
-        Vector3 cameraFromShipToCamera = Camera.main.transform.position.normalized;
-
-        //multiply its direction with its zoom?
+        // multiply its direction with its zoom
         Vector3 cameraPosition = Ship.LPC.worldPosition + cameraFromShipToCamera * CameraMove.distance;
         
-        //get the direction from the camera and the object
+        // get the direction and distance from the camera and the object
         Vector3 directionFromCameraToWorldPosition = (worldPosition - cameraPosition).normalized;
-
-        //get the distance too
         float distanceBetweenCameraAndWorldPosition = Vector3.Distance(worldPosition, cameraPosition);
 
+        // calculate stickers new position offset by the camera
         Vector3 newWorldPointBasedOnCamera = distanceBetweenCameraAndWorldPosition < Camera.main.farClipPlane ? worldPosition : directionFromCameraToWorldPosition * (Camera.main.farClipPlane - 10.0f);
         
-        Vector3 viewportPoint = Camera.main.WorldToViewportPoint(/*target3Position*/newWorldPointBasedOnCamera);
+        Vector3 viewportPoint = Camera.main.WorldToViewportPoint(newWorldPointBasedOnCamera);
+        
         image.enabled = viewportPoint.x >= 0 && viewportPoint.x <= 1 && viewportPoint.y >= 0 && viewportPoint.y <= 1 && viewportPoint.z > 0;
+        
         if (image.enabled)
-            rectTransform.position = Camera.main.WorldToScreenPoint(/*target3Position*/newWorldPointBasedOnCamera);
+            rectTransform.position = Camera.main.WorldToScreenPoint(newWorldPointBasedOnCamera);
     }
 }

@@ -40,6 +40,7 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
         highlightedHUDSticker = this;
     }
     public void OnPointerExit(PointerEventData eventData) => Tooltip.instance.Hide();
+    private Vector3 Direction(Vector3 from, Vector3 to) => return new Vector3(to - from).normalized;
     
     public virtual void Arrived() {
         StopCoroutine(DisposeCoroutine());
@@ -58,16 +59,16 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
 
     protected void WorldSpaceToScreenSpace() {
 
-        Vector3 directionFromCameraWorldPositionToWorldPosition = (worldPosition - CameraMove.worldPosition).normalized;
+        Vector3 directionFromCameraWorldPositionToWorldPosition = Direction(CameraMove.worldPosition, worldPosition);
         float distanceBetweenCameraWorldPositionAndStickerWorldPosition = Vector3.Distance(CameraMove.worldPosition, worldPosition);
         
-        // calculate stickers new position. Use it's real position unless it's outside the view distance of the camera
+        // calculate stickers new position. Use its real position unless it's outside the cameras view depth
         Vector3 newWorldPointBasedOnCamera = distanceBetweenCameraWorldPositionAndStickerWorldPosition < Camera.main.farClipPlane ? worldPosition : directionFromCameraWorldPositionToWorldPosition * (Camera.main.farClipPlane - 10.0f);
 
-        // transform it into screen coordinates
+        // transform the new sticker position into screen coordinates
         Vector3 viewportPoint = Camera.main.WorldToViewportPoint(newWorldPointBasedOnCamera);
 
-        // toggle its visibility depending on whether it's visible on screen
+        // toggle the stickers visibility depending on whether it's visible on screen
         image.enabled = viewportPoint.x >= 0 && viewportPoint.x <= 1 && viewportPoint.y >= 0 && viewportPoint.y <= 1 && viewportPoint.z > 0;
         
         if (image.enabled)

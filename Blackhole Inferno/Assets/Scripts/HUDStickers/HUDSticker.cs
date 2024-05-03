@@ -18,14 +18,6 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
     public float signatureRadius;
     public bool globalVisibility = false;
 
-    // there's a bit of an oversight with these properties
-    // We're checking to see whether distance is within the cameras farClipPlane but the distance is based on the sticker and the ship, not the sticker and the camera.
-    // This is a problem because when we zoom out object should get further away, pulling them toward the center of the screen.
-    // We need to figure out when to check the distance between the worldPosition sticker and the ship and when to check the distance between the sticker and the camera.
-    protected Vector3 direction { get { return (worldPosition - Ship.LPC.worldPosition).normalized; } }
-    protected float distance { get { return Vector3.Distance(worldPosition, Ship.LPC.worldPosition); } }
-    public Vector3 target3Position { get { return distance < Camera.main.farClipPlane ? worldPosition : direction * (Camera.main.farClipPlane - 10.0f); } }
-
     public List<ContextMenuOption.Commands> CMOCommands;
 
     protected virtual void Awake() {
@@ -65,24 +57,21 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
     }
 
     protected void WorldSpaceToScreenSpace() {
-        // get the direction from the camera to the ship
-        Vector3 cameraFromShipToCamera = -Camera.main.transform.position.normalized;
 
-        // multiply its direction with its zoom
-        Vector3 cameraPosition = Ship.LPC.worldPosition + cameraFromShipToCamera * CameraMove.distance;
+        Vector3 directionFromCameraWorldPositionToWorldPosition = (worldPosition - CameraMove.worldPosition).normalized;
+        float distanceBetweenCameraWorldPositionAndStickerWorldPosition = Vector3.Distance(CameraMove.worldPosition, worldPosition);
         
-        // get the direction and distance from the camera and the object
-        Vector3 directionFromCameraToWorldPosition = (worldPosition - cameraPosition).normalized;
-        float distanceBetweenCameraAndWorldPosition = Vector3.Distance(worldPosition, cameraPosition);
+        // calculate stickers new position. Use it's real position unless it's outside the view distance of the camera
+        Vector3 newWorldPointBasedOnCamera = distanceBetweenCameraWorldPositionAndStickerWorldPosition < Camera.main.farClipPlane ? worldPosition : directionFromCameraWorldPositionToWorldPosition * (Camera.main.farClipPlane - 10.0f);
 
-        // calculate stickers new position offset by the camera
-        Vector3 newWorldPointBasedOnCamera = distanceBetweenCameraAndWorldPosition < Camera.main.farClipPlane ? worldPosition : directionFromCameraToWorldPosition * (Camera.main.farClipPlane - 10.0f);
-        
+        // transform it into screen coordinates
         Vector3 viewportPoint = Camera.main.WorldToViewportPoint(newWorldPointBasedOnCamera);
-        
+
+        // toggle its visibility depending on whether it's visible on screen
         image.enabled = viewportPoint.x >= 0 && viewportPoint.x <= 1 && viewportPoint.y >= 0 && viewportPoint.y <= 1 && viewportPoint.z > 0;
         
         if (image.enabled)
+            // if it is, set it's transform
             rectTransform.position = Camera.main.WorldToScreenPoint(newWorldPointBasedOnCamera);
     }
 }

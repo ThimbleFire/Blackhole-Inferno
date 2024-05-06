@@ -1,5 +1,8 @@
 3D roguelike set in space.
 
+This game has been through a lot of design changes
+![anim](https://github.com/ThimbleFire/Blackhole-Inferno/assets/14812476/754d5bc0-9794-4e4c-ae9f-4514fe9106e9)
+
 Todo
 * add a meter to indicate speed of the ship
 * add particles to indicate velocity

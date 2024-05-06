@@ -191,7 +191,9 @@ public class Ship : HUDSticker
     {
         HUDSticker sticker = instructions[0].Sticker;
 
-        float initialAngleToRotate = Vector3.Angle(rot, sticker.target3Position);
+        Vector3 rotateToward = Vector3.MoveTowards(worldPosition, sticker.worldPosition, 1.0f);
+
+        float initialAngleToRotate = Vector3.Angle(rot, rotateToward);
         float rotationSpeed = 3.5f;
         float rotationThreshold = 0.25f;
         UIExpandingAddition window = Instantiate(prefabExpandingAddition).GetComponentInChildren<UIExpandingAddition>();
@@ -202,8 +204,8 @@ public class Ship : HUDSticker
         while ( instructions.Count > 0 && instructions[0].Command == ContextMenuOption.Commands.Align )
         {
             float rotLerp = Mathf.Clamp01(Time.deltaTime * rotationSpeed);
-            rot = Vector3.Slerp(rot, sticker.target3Position, rotLerp);
-            float remainingAngle = Vector3.Angle(rot, sticker.target3Position);
+            rot = Vector3.Slerp(rot, rotateToward, rotLerp);
+            float remainingAngle = Vector3.Angle(rot, rotateToward);
 
             float percentageCompletion = Mathf.Clamp01(1.0f - (remainingAngle / initialAngleToRotate));
             window.loadingBar.SetValue(percentageCompletion);

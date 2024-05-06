@@ -12,10 +12,23 @@ public class Astroid : HUDSticker
 {
     private byte remainingResource = 30;
     private XMLBelt.Minerals mineral = XMLBelt.Minerals.Terylium;
+    Vector3 oldPosition;
+
+    private void Start()
+    {
+        oldPosition = transform.position;
+    }
 
     void LateUpdate()
     {
         WorldSpaceToScreenSpace();
+
+        if(oldPosition != transform.position)
+        {
+            oldPosition = transform.position;
+            Debug.Log(transform.position);
+        }
+
     }
 
     protected override void Awake()

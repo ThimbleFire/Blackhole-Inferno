@@ -30,6 +30,7 @@ public class Belt : HUDSticker
 
     void LateUpdate()
     {  
+        
         WorldSpaceToScreenSpace();
     }
 
@@ -42,7 +43,7 @@ public class Belt : HUDSticker
     
         asteroids = new List<GameObject>();
         // iterate the number of astroids in the belt
-        int count = UnityEngine.Random.Range(30, 100);
+        int count = UnityEngine.Random.Range(1, 1);
         for(int i = 0; i < count; i++)
         {
             // calculate the distance they should be from the center of the belt 1.0 = 1 meter
@@ -56,7 +57,7 @@ public class Belt : HUDSticker
             float y = distance * Mathf.Sin( angle );
 
             // Create a new position relative to the center point
-            Vector3 randomPosition = worldPosition + new Vector3( y, UnityEngine.Random.Range(-1.0f, 1.0f), x);
+            Vector3 randomPosition = worldPosition + new Vector3( y, UnityEngine.Random.Range(-45.0f, 45.0f), x);
 
             Astroid asteroid = Instantiate(astroidPrefab, transform.parent).GetComponent<Astroid>();
         

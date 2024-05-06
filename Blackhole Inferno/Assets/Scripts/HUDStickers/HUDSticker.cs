@@ -10,15 +10,19 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
 
     public static HUDSticker highlightedHUDSticker = null;
     public static HUDSticker selectedHUDSticker = null;
-    
+
     private Image image;
     private RectTransform rectTransform;
 
     public Vector3 worldPosition;
     public float signatureRadius;
     public bool globalVisibility = false;
+    public float distanceToCamera;
+    public float distanceToShip;
 
     public List<ContextMenuOption.Commands> CMOCommands;
+
+    private ScaleOnDistance model;
 
     protected virtual void Awake() {
         rectTransform = GetComponent<RectTransform>();
@@ -26,12 +30,12 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
     }
 
     public void OnPointerClick(PointerEventData eventData) {
-        switch(eventData.button) {
+        switch (eventData.button) {
             case PointerEventData.InputButton.Left:
                 selectedHUDSticker = this;
                 break;
             case PointerEventData.InputButton.Right:
-            ContextMenu.instance.OpenContextMenu(this);
+                ContextMenu.instance.OpenContextMenu(this);
                 break;
         }
     }
@@ -40,7 +44,7 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
         highlightedHUDSticker = this;
     }
     public void OnPointerExit(PointerEventData eventData) => Tooltip.instance.Hide();
-    private Vector3 Direction(Vector3 from, Vector3 to) => return new Vector3(to - from).normalized;
+    private Vector3 Direction(Vector3 from, Vector3 to) { return (to - from).normalized; }
     
     public virtual void Arrived() {
         StopCoroutine(DisposeCoroutine());
@@ -57,22 +61,48 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
     protected virtual void Timeout() {
     }
 
-    protected void WorldSpaceToScreenSpace() {
+    protected void WorldSpaceToScreenSpace()
+    {
+        Vector3 cameraPositionOffsetByShip = Ship.LPC.worldPosition + Camera.main.transform.position;
+        Vector3 directionFromCameraToSticker = Direction(worldPosition, cameraPositionOffsetByShip);
 
-        Vector3 directionFromCameraWorldPositionToWorldPosition = Direction(CameraMove.worldPosition, worldPosition);
-        float distanceBetweenCameraWorldPositionAndStickerWorldPosition = Vector3.Distance(CameraMove.worldPosition, worldPosition);
+        distanceToCamera = Vector3.Distance(cameraPositionOffsetByShip, worldPosition);
+        distanceToShip = Vector3.Distance(worldPosition, Ship.LPC.worldPosition);
+
+        // new plan. If the HUDSticker is within 70K distance from the camera, stop using worldPosition. Instead, start using transform.position
+
+
+        Vector3 newWorldPointBasedOnCamera;
+        if (distanceToCamera < Camera.main.farClipPlane)
+        {
+            // ONCE WE'RE HERE WE HAVE TO USE AN ENTIRELY DIFFERENT COORDINATE SYSTEM. WE CANNOT RELY ON WORLDPOSITION BECAUSE IT CAUSES ROUNDING ERRORS
+            // THIS CODE DOESN'T FUCKING WORK, FIX IT, LOSER!
+
+            // first project the object away from the ship to its worldPosition, but wouldn't that just be its normal world position?
+            Vector3 directionFromShipToWorldPosition = Direction(worldPosition, Ship.LPC.worldPosition);
+            Vector3 worldPosiitonBasedOnShipAndWorldPosition = directionFromShipToWorldPosition * distanceToShip;
+
+            // then project that world position 
+            Vector3 diretionBetweenZeroAndWorldPosition = Direction(worldPosiitonBasedOnShipAndWorldPosition, Vector3.zero);
+            float wp2 = Vector3.Distance(cameraPositionOffsetByShip, worldPosiitonBasedOnShipAndWorldPosition);
+            newWorldPointBasedOnCamera = diretionBetweenZeroAndWorldPosition * wp2;
         
-        // calculate stickers new position. Use its real position unless it's outside the cameras view depth
-        Vector3 newWorldPointBasedOnCamera = distanceBetweenCameraWorldPositionAndStickerWorldPosition < Camera.main.farClipPlane ? worldPosition : directionFromCameraWorldPositionToWorldPosition * (Camera.main.farClipPlane - 10.0f);
+            // then project that position from the camera
+        }
+        else newWorldPointBasedOnCamera = directionFromCameraToSticker * (Camera.main.farClipPlane - 10.0f);
+        
 
         // transform the new sticker position into screen coordinates
         Vector3 viewportPoint = Camera.main.WorldToViewportPoint(newWorldPointBasedOnCamera);
 
         // toggle the stickers visibility depending on whether it's visible on screen
-        image.enabled = viewportPoint.x >= 0 && viewportPoint.x <= 1 && viewportPoint.y >= 0 && viewportPoint.y <= 1 && viewportPoint.z > 0;
-        
+        image.enabled = viewportPoint.x >= 0 && viewportPoint.x <= 1 && viewportPoint.y >= 0 && viewportPoint.y <= 1 && viewportPoint.z >= 0;
+
         if (image.enabled)
             // if it is, set it's transform
             rectTransform.position = Camera.main.WorldToScreenPoint(newWorldPointBasedOnCamera);
+
+        if (model != null)
+            model.transform.position = newWorldPointBasedOnCamera;
     }
 }

@@ -272,9 +272,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7d5ed36bfbc2b243b17e46163a40f1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  worldPosition: {x: -2.991957e+11, y: 0, z: 0}
+  worldPosition: {x: -2.991957e+11, y: 3.365952e+9, z: 0}
   signatureRadius: 100000000
   globalVisibility: 1
+  distanceToCamera: 0
+  distanceToShip: 0
   CMOCommands: 000000000400000005000000
   humidity: 0
   temperature: 0
@@ -284,7 +286,6 @@ MonoBehaviour:
   water: 0
   ice: 0
   composition: 0
-  model: {fileID: 1425350632}
 --- !u!114 &126856658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -488,6 +489,8 @@ MonoBehaviour:
   worldPosition: {x: 100000, y: 0, z: 0}
   signatureRadius: 500000000
   globalVisibility: 1
+  distanceToCamera: 0
+  distanceToShip: 0
   CMOCommands: 000000000400000005000000
   luminocity: 0
   color: {r: 0, g: 0, b: 0, a: 0}
@@ -634,7 +637,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cce597de214127b44a19310691e3d23c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: 10
   xSpeed: 0.25
   ySpeed: 0.25
   yMinLimit: -90
@@ -693,8 +695,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldPosition: {x: 2.9919573e+11, y: 2.991957e+11, z: 0}
-  signatureRadius: 300
+  signatureRadius: 10000
   globalVisibility: 1
+  distanceToCamera: 0
+  distanceToShip: 0
   CMOCommands: 000000000400000002000000
   repairsAvailable: 0
   standardDeviation: 0
@@ -782,17 +786,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1425350632 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6211338108908524224, guid: 100ad94159ce11e4fa5f7eb2b8ef3ac5, type: 3}
-  m_PrefabInstance: {fileID: 1781472965}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c4451e70a806f840aca5eb5561502da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!224 &1425350636 stripped
@@ -898,7 +891,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6211338108908524224, guid: 100ad94159ce11e4fa5f7eb2b8ef3ac5, type: 3}
       propertyPath: worldPosition.y
-      value: 0
+      value: 2.243968e+9
       objectReference: {fileID: 0}
     - target: {fileID: 6211338108908524224, guid: 100ad94159ce11e4fa5f7eb2b8ef3ac5, type: 3}
       propertyPath: worldPosition.z
@@ -909,17 +902,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 100ad94159ce11e4fa5f7eb2b8ef3ac5, type: 3}
---- !u!114 &1575147675 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6211338108908524224, guid: 100ad94159ce11e4fa5f7eb2b8ef3ac5, type: 3}
-  m_PrefabInstance: {fileID: 1575147674}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c4451e70a806f840aca5eb5561502da, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &1575147676 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 651604198046229592, guid: 100ad94159ce11e4fa5f7eb2b8ef3ac5, type: 3}
@@ -1198,6 +1180,10 @@ PrefabInstance:
       propertyPath: worldPosition.x
       value: -2.991957e+11
       objectReference: {fileID: 0}
+    - target: {fileID: 6211338108908524224, guid: 100ad94159ce11e4fa5f7eb2b8ef3ac5, type: 3}
+      propertyPath: worldPosition.y
+      value: 3.365952e+9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1253,9 +1239,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7d5ed36bfbc2b243b17e46163a40f1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  worldPosition: {x: -2.991957e+11, y: 0, z: -1.495979e+11}
+  worldPosition: {x: -2.991957e+11, y: 2.243968e+9, z: -1.495979e+11}
   signatureRadius: 100000000
   globalVisibility: 1
+  distanceToCamera: 0
+  distanceToShip: 0
   CMOCommands: 000000000400000005000000
   humidity: 0
   temperature: 0
@@ -1265,7 +1253,6 @@ MonoBehaviour:
   water: 0
   ice: 0
   composition: 0
-  model: {fileID: 1575147675}
 --- !u!114 &1807148371
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1354,9 +1341,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68e66f88c9acf0340bcc216372e32189, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  worldPosition: {x: 2.9919573e+11, y: 0, z: 2.991957e+11}
-  signatureRadius: 300
+  worldPosition: {x: 1.4959785e+11, y: -2.991957e+11, z: 2.991957e+11}
+  signatureRadius: 10000
   globalVisibility: 1
+  distanceToCamera: 0
+  distanceToShip: 0
   CMOCommands: 000000000400000008000000
   destination: 
 --- !u!114 &1887826992
@@ -1415,7 +1404,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 702465727553783709, guid: f99137dad64a04b459d04789ce36f3d4, type: 3}
       propertyPath: signatureRadius
-      value: 0
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 702465727553783709, guid: f99137dad64a04b459d04789ce36f3d4, type: 3}
+      propertyPath: worldPosition.y
+      value: 1.121984e+9
       objectReference: {fileID: 0}
     - target: {fileID: 702465727553783709, guid: f99137dad64a04b459d04789ce36f3d4, type: 3}
       propertyPath: worldPosition.z

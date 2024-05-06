@@ -8,6 +8,11 @@ using static UnityEngine.GraphicsBuffer;
 
 public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler {
 
+    // We keep a record of renderMode so we know when the mode has changed, and can perform a one-time fetch request of worldPosition -> transform.position.
+    private enum RenderMode { LOCAL, GLOBAL };
+    RenderMode renderMode = RenderMode.GLOBAL;
+    RenderMode lastRenderMode = RenderMode.GLOBAL;
+    
     public static HUDSticker highlightedHUDSticker = null;
     public static HUDSticker selectedHUDSticker = null;
 
@@ -64,33 +69,50 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
     protected void WorldSpaceToScreenSpace()
     {
         Vector3 cameraPositionOffsetByShip = Ship.LPC.worldPosition + Camera.main.transform.position;
-        Vector3 directionFromCameraToSticker = Direction(worldPosition, cameraPositionOffsetByShip);
-
         distanceToCamera = Vector3.Distance(cameraPositionOffsetByShip, worldPosition);
         distanceToShip = Vector3.Distance(worldPosition, Ship.LPC.worldPosition);
+        // distanceToCamera = -Camera.main.transform.position;
 
-        // new plan. If the HUDSticker is within 70K distance from the camera, stop using worldPosition. Instead, start using transform.position
+            switch(renderMode) {
+                case RenderMode.LOCAL:
+                    RenderLocal();
+                    break;
+                case RenderMode.GLOBAL:
+                    RenderGlobal();
+                    break;
+            }
+        
+        if (model != null)
+            model.transform.position = newWorldPointBasedOnCamera;
+    }
 
-
-        Vector3 newWorldPointBasedOnCamera;
-        if (distanceToCamera < Camera.main.farClipPlane)
-        {
+    private void RenderLocal() {
+            if(renderMode != lastRenderMode) {
+                renderMode = RenderMode.LOCAL;
+                // setup transform.position
+            }
+        
             // ONCE WE'RE HERE WE HAVE TO USE AN ENTIRELY DIFFERENT COORDINATE SYSTEM. WE CANNOT RELY ON WORLDPOSITION BECAUSE IT CAUSES ROUNDING ERRORS
             // THIS CODE DOESN'T FUCKING WORK, FIX IT, LOSER!
 
-            // first project the object away from the ship to its worldPosition, but wouldn't that just be its normal world position?
-            Vector3 directionFromShipToWorldPosition = Direction(worldPosition, Ship.LPC.worldPosition);
-            Vector3 worldPosiitonBasedOnShipAndWorldPosition = directionFromShipToWorldPosition * distanceToShip;
+            // first project the object away from the ship to its transform, but wouldn't that just be its normal world position?
+            Vector3 worldPositonBasedOnShipAndWorldPosition = transform.position.normalized * distanceToShip;
 
             // then project that world position 
-            Vector3 diretionBetweenZeroAndWorldPosition = Direction(worldPosiitonBasedOnShipAndWorldPosition, Vector3.zero);
-            float wp2 = Vector3.Distance(cameraPositionOffsetByShip, worldPosiitonBasedOnShipAndWorldPosition);
+            Vector3 diretionBetweenZeroAndWorldPosition = Direction(worldPositonBasedOnShipAndWorldPosition, Vector3.zero);
+            float wp2 = Vector3.Distance(cameraPositionOffsetByShip, worldPositonBasedOnShipAndWorldPosition);
             newWorldPointBasedOnCamera = diretionBetweenZeroAndWorldPosition * wp2;
+    }
+
+    private void RenderGlobal() {
+            if(renderMode != lastRenderMode) {
+                renderMode = RenderMode.GLOBAL;
+                // setup transform.position
+            }
         
-            // then project that position from the camera
-        }
-        else newWorldPointBasedOnCamera = directionFromCameraToSticker * (Camera.main.farClipPlane - 10.0f);
-        
+        Vector3 directionFromCameraToSticker = Direction(worldPosition, cameraPositionOffsetByShip);
+
+        Vector3 newWorldPointBasedOnCamera = directionFromCameraToSticker * (Camera.main.farClipPlane - 10.0f);        
 
         // transform the new sticker position into screen coordinates
         Vector3 viewportPoint = Camera.main.WorldToViewportPoint(newWorldPointBasedOnCamera);
@@ -101,8 +123,5 @@ public class HUDSticker : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
         if (image.enabled)
             // if it is, set it's transform
             rectTransform.position = Camera.main.WorldToScreenPoint(newWorldPointBasedOnCamera);
-
-        if (model != null)
-            model.transform.position = newWorldPointBasedOnCamera;
     }
 }
